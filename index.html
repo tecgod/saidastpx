@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controle de Saída de Mercadoria</title>
+<style>
+  :root{
+    --azul:#1e5aa8; --azul-esc:#123b73; --verde:#1e8e5a; --amarelo:#c98a08;
+    --vermelho:#c0392b; --cinza:#6b7280; --bg:#f2f4f7; --card:#ffffff;
+    --borda:#e2e6ec; --texto:#1f2937;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--texto);}
+  header{background:var(--azul-esc);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+  header h1{font-size:18px;margin:0;}
+  header .papel{font-size:12px;background:rgba(255,255,255,.15);padding:4px 10px;border-radius:12px;}
+  .container{max-width:1100px;margin:0 auto;padding:16px;}
+  .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .tab-btn{padding:8px 16px;border:1px solid var(--borda);background:#fff;border-radius:8px;cursor:pointer;font-size:14px;}
+  .tab-btn.ativa{background:var(--azul);color:#fff;border-color:var(--azul);}
+  .btn{padding:9px 16px;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;}
+  .btn-primario{background:var(--azul);color:#fff;}
+  .btn-sucesso{background:var(--verde);color:#fff;}
+  .btn-secundario{background:#fff;border:1px solid var(--borda);color:var(--texto);}
+  .btn-perigo{background:var(--vermelho);color:#fff;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
+  .card{background:var(--card);border:1px solid var(--borda);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;}
+  .pedido-num{font-size:16px;font-weight:700;color:var(--azul-esc);}
+  .badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 16px;margin:10px 0;font-size:13.5px;}
+  .grid div b{display:block;font-size:11px;color:var(--cinza);font-weight:600;text-transform:uppercase;letter-spacing:.3px;}
+  .obs{font-size:13.5px;background:#f8f9fb;border-left:3px solid var(--borda);padding:6px 10px;margin-top:8px;border-radius:4px;}
+  .acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+  label{font-size:13px;font-weight:600;color:var(--cinza);display:block;margin-bottom:4px;}
+  input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--borda);border-radius:7px;font-size:14px;font-family:inherit;}
+  textarea{min-height:60px;resize:vertical;}
+  .campo{margin-bottom:12px;}
+  .login-box{max-width:340px;margin:80px auto;background:#fff;padding:28px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);text-align:center;}
+  .login-box h2{margin-top:0;}
+  .msg-erro{color:var(--vermelho);font-size:13px;margin-top:8px;}
+  .vazio{text-align:center;color:var(--cinza);padding:30px;font-size:14px;}
+  .modal-fundo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);align-items:center;justify-content:center;padding:16px;z-index:50;}
+  .modal-fundo.aberto{display:flex;}
+  .modal{background:#fff;border-radius:12px;padding:20px;max-width:520px;width:100%;max-height:90vh;overflow:auto;}
+  .modal h3{margin-top:0;}
+  .fechar-modal{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:var(--cinza);}
+  .check-linha{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+  .check-linha input{width:auto;}
+  .carregando{text-align:center;padding:30px;color:var(--cinza);}
+  .sub-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:#eef1f6;color:var(--cinza);margin-left:6px;}
+</style>
+</head>
+<body>
+
+<div id="telaLogin" class="login-box">
+  <h2>Controle de Saída de Mercadoria</h2>
+  <div class="campo">
+    <label>Senha de acesso</label>
+    <input type="password" id="inputSenha" placeholder="Digite sua senha">
+  </div>
+  <button class="btn btn-primario" style="width:100%" onclick="fazerLogin()">Entrar</button>
+  <div class="msg-erro" id="erroLogin"></div>
+</div>
+
+<div id="app" style="display:none">
+  <header>
+    <h1>📦 Controle de Saída de Mercadoria</h1>
+    <div>
+      <span class="papel" id="labelPapel"></span>
+      <button class="btn btn-secundario" style="margin-left:8px;padding:6px 12px;font-size:12px" onclick="sair()">Sair</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-btn ativa" id="btnTabAtivos" onclick="mudarAba('ativos')">Pedidos Ativos</button>
+      <button class="tab-btn" id="btnTabHistorico" onclick="mudarAba('historico')">Histórico</button>
+      <button class="btn btn-primario" id="btnNovoPedido" style="margin-left:auto" onclick="abrirModalNovoPedido()">+ Novo Pedido</button>
+    </div>
+
+    <div id="areaConteudo"><div class="carregando">Carregando dados...</div></div>
+  </div>
+</div>
+
+<!-- MODAL NOVO PEDIDO -->
+<div class="modal-fundo" id="modalNovoPedido">
+  <div class="modal">
+    <button class="fechar-modal" onclick="fecharModal('modalNovoPedido')">×</button>
+    <h3>Novo Pedido</h3>
+    <div class="form-grid">
+      <div class="campo"><label>Número do pedido</label><input id="fNumero"></div>
+      <div class="campo"><label>Data prevista de entrega</label><input type="date" id="fData"></div>
+      <div class="campo"><label>Cliente</label><input id="fCliente"></div>
+      <div class="campo"><label>Consultor (vendedor)</label><input id="fConsultor"></div>
+      <div class="campo">
+        <label>Destino</label>
+        <select id="fDestino" onchange="atualizarCamposDestino()">
+          <option value="Retirada">Retirada na loja</option>
+          <option value="Entrega">Entrega</option>
+        </select>
+      </div>
+      <div class="campo" id="campoMontagem" style="display:none">
+        <label>Como vai a entrega</label>
+        <select id="fMontagem">
+          <option value="Montada">Levar montada</option>
+          <option value="Desmontada">Levar desmontada (montar no local)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="check-linha">
+      <input type="checkbox" id="fTemSaldo" onchange="atualizarCamposSaldo()">
+      <label style="margin:0">Venda parcial (parte pronta agora, resto fica pendente)</label>
+    </div>
+    <div class="form-grid" id="camposSaldo" style="display:none">
+      <div class="campo"><label>Quantidade vendida (total)</label><input type="number" id="fQtdVendida"></div>
+      <div class="campo"><label>Quantidade disponível agora</label><input type="number" id="fQtdDisponivel"></div>
+    </div>
+
+    <div class="campo"><label>Observações</label><textarea id="fObs"></textarea></div>
+
+    <button class="btn btn-primario" style="width:100%" onclick="salvarNovoPedido()">Salvar Pedido</button>
+    <div class="msg-erro" id="erroNovoPedido"></div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR -->
+<div class="modal-fundo" id="modalEditar">
+  <div class="modal">
+    <button class="fechar-modal" onclick="fecharModal('modalEditar')">×</button>
+    <h3>Atualizar Pedido</h3>
+    <input type="hidden" id="eId">
+    <div class="campo">
+      <label>Status</label>
+      <select id="eStatus">
+        <option>Aguardando separação</option>
+        <option>Separando</option>
+        <option>Separado</option>
+        <option>Aguardando complemento</option>
+        <option>Aguardando montagem</option>
+        <option>Em rota de entrega</option>
+      </select>
+    </div>
+    <div class="form-grid">
+      <div class="campo"><label>Motorista</label><input id="eMotorista"></div>
+      <div class="campo"><label>Montador</label><input id="eMontador"></div>
+    </div>
+    <div class="campo"><label>Observações</label><textarea id="eObs"></textarea></div>
+    <button class="btn btn-primario" style="width:100%" onclick="salvarEdicao()">Salvar Alterações</button>
+    <div class="msg-erro" id="erroEditar"></div>
+  </div>
+</div>
+
+<script>
+// ================== CONFIGURAÇÃO ==================
+const APPS_SCRIPT_URL = 'COLOQUE_AQUI_A_URL_DO_APPS_SCRIPT';
+const FUSO = 'America/Fortaleza';
+
+let SENHA_ATUAL = '';
+let PAPEL_ATUAL = '';
+let DADOS = { ativos: [], historico: [] };
+let ABA_ATUAL = 'ativos';
+
+// ================== LOGIN ==================
+function fazerLogin(){
+  const senha = document.getElementById('inputSenha').value.trim();
+  if (!senha) return;
+  document.getElementById('erroLogin').textContent = '';
+  chamarBackend({ acao: 'login', senha }).then(resp => {
+    if (resp.ok) {
+      SENHA_ATUAL = senha;
+      PAPEL_ATUAL = resp.papel;
+      sessionStorage.setItem('cse_senha', senha);
+      sessionStorage.setItem('cse_papel', resp.papel);
+      entrarNoApp();
+    } else {
+      document.getElementById('erroLogin').textContent = 'Senha incorreta.';
+    }
+  }).catch(() => {
+    document.getElementById('erroLogin').textContent = 'Erro de conexão. Verifique a URL do backend.';
+  });
+}
+
+function sair(){
+  sessionStorage.clear();
+  location.reload();
+}
+
+function entrarNoApp(){
+  document.getElementById('telaLogin').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('labelPapel').textContent = PAPEL_ATUAL === 'cadastro' ? '✏️ Modo Cadastro' : '👁 Somente Visualização';
+  document.getElementById('btnNovoPedido').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
+  carregarDados();
+}
+
+window.addEventListener('load', () => {
+  const s = sessionStorage.getItem('cse_senha');
+  const p = sessionStorage.getItem('cse_papel');
+  if (s && p) { SENHA_ATUAL = s; PAPEL_ATUAL = p; entrarNoApp(); }
+});
+
+// ================== BACKEND ==================
+function chamarBackend(payload){
+  return fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+    .then(r => r.json());
+}
+
+function carregarDados(){
+  document.getElementById('areaConteudo').innerHTML = '<div class="carregando">Carregando dados...</div>';
+  fetch(APPS_SCRIPT_URL).then(r => r.json()).then(dados => {
+    DADOS = dados;
+    renderizar();
+  }).catch(() => {
+    document.getElementById('areaConteudo').innerHTML = '<div class="vazio">Erro ao carregar. Verifique a URL do backend.</div>';
+  });
+}
+
+// ================== ABAS ==================
+function mudarAba(aba){
+  ABA_ATUAL = aba;
+  document.getElementById('btnTabAtivos').classList.toggle('ativa', aba === 'ativos');
+  document.getElementById('btnTabHistorico').classList.toggle('ativa', aba === 'historico');
+  document.getElementById('btnNovoPedido').style.display = (aba === 'ativos' && PAPEL_ATUAL === 'cadastro') ? 'inline-block' : 'none';
+  renderizar();
+}
+
+// ================== RENDER ==================
+const CORES_STATUS = {
+  'Aguardando separação': '#c98a08', 'Separando': '#c98a08', 'Separado': '#1e8e5a',
+  'Aguardando complemento': '#c0392b', 'Aguardando montagem': '#1e5aa8',
+  'Em rota de entrega': '#1e5aa8', 'Concluído': '#6b7280'
+};
+
+function formatarData(valor){
+  if (!valor) return '-';
+  const d = new Date(valor);
+  if (isNaN(d)) return valor;
+  return d.toLocaleDateString('pt-BR', { timeZone: FUSO });
+}
+
+function renderizar(){
+  const lista = ABA_ATUAL === 'ativos' ? DADOS.ativos : DADOS.historico;
+  const area = document.getElementById('areaConteudo');
+
+  if (!lista || lista.length === 0) {
+    area.innerHTML = '<div class="vazio">Nenhum pedido ' + (ABA_ATUAL === 'ativos' ? 'ativo no momento.' : 'no histórico ainda.') + '</div>';
+    return;
+  }
+
+  const ordenada = [...lista].sort((a,b) => new Date(a.DataPrevista) - new Date(b.DataPrevista));
+
+  area.innerHTML = ordenada.map(p => {
+    const cor = CORES_STATUS[p.Status] || '#6b7280';
+    const podeEditar = PAPEL_ATUAL === 'cadastro' && ABA_ATUAL === 'ativos';
+    return `
+    <div class="card">
+      <div class="card-top">
+        <div class="pedido-num">#${p.NumeroPedido}${p.Parte === 'Pendente' ? '<span class="sub-tag">SALDO PENDENTE</span>' : ''}</div>
+        <span class="badge" style="background:${cor}">${p.Status}</span>
+      </div>
+      <div class="grid">
+        <div><b>Cliente</b>${p.Cliente || '-'}</div>
+        <div><b>Consultor</b>${p.Consultor || '-'}</div>
+        <div><b>Previsão</b>${formatarData(p.DataPrevista)}</div>
+        <div><b>Destino</b>${p.TipoDestino || '-'}</div>
+        ${p.TipoDestino === 'Entrega' ? `<div><b>Montagem</b>${p.TipoMontagem || '-'}</div>` : ''}
+        ${p.QuantidadeVendida ? `<div><b>Qtd. vendida</b>${p.QuantidadeVendida}</div>` : ''}
+        ${p.QuantidadeDisponivel !== '' && p.QuantidadeDisponivel !== undefined ? `<div><b>${p.Parte === 'Pendente' ? 'Qtd. pendente' : 'Qtd. disponível'}</b>${p.QuantidadeDisponivel}</div>` : ''}
+        ${p.Motorista ? `<div><b>Motorista</b>${p.Motorista}</div>` : ''}
+        ${p.Montador ? `<div><b>Montador</b>${p.Montador}</div>` : ''}
+        ${ABA_ATUAL === 'historico' ? `<div><b>Concluído em</b>${formatarData(p.DataConclusao)}</div>` : ''}
+      </div>
+      ${p.Observacoes ? `<div class="obs">${p.Observacoes}</div>` : ''}
+      ${podeEditar ? `
+        <div class="acoes">
+          <button class="btn btn-secundario" onclick='abrirModalEditar(${JSON.stringify(p)})'>Atualizar</button>
+          <button class="btn btn-sucesso" onclick="concluirPedido('${p.ID}')">OK - Concluir</button>
+        </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// ================== MODAIS ==================
+function abrirModal(id){ document.getElementById(id).classList.add('aberto'); }
+function fecharModal(id){ document.getElementById(id).classList.remove('aberto'); }
+
+function abrirModalNovoPedido(){
+  ['fNumero','fCliente','fConsultor','fData','fQtdVendida','fQtdDisponivel','fObs'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('fDestino').value = 'Retirada';
+  document.getElementById('fTemSaldo').checked = false;
+  atualizarCamposDestino();
+  atualizarCamposSaldo();
+  document.getElementById('erroNovoPedido').textContent = '';
+  abrirModal('modalNovoPedido');
+}
+
+function atualizarCamposDestino(){
+  document.getElementById('campoMontagem').style.display = document.getElementById('fDestino').value === 'Entrega' ? 'block' : 'none';
+}
+function atualizarCamposSaldo(){
+  document.getElementById('camposSaldo').style.display = document.getElementById('fTemSaldo').checked ? 'grid' : 'none';
+}
+
+function salvarNovoPedido(){
+  const pedido = {
+    numeroPedido: document.getElementById('fNumero').value.trim(),
+    cliente: document.getElementById('fCliente').value.trim(),
+    consultor: document.getElementById('fConsultor').value.trim(),
+    dataPrevista: document.getElementById('fData').value,
+    tipoDestino: document.getElementById('fDestino').value,
+    tipoMontagem: document.getElementById('fDestino').value === 'Entrega' ? document.getElementById('fMontagem').value : '',
+    temSaldoPendente: document.getElementById('fTemSaldo').checked,
+    quantidadeVendida: document.getElementById('fQtdVendida').value,
+    quantidadeDisponivel: document.getElementById('fQtdDisponivel').value,
+    observacoes: document.getElementById('fObs').value.trim()
+  };
+
+  if (!pedido.numeroPedido || !pedido.cliente) {
+    document.getElementById('erroNovoPedido').textContent = 'Preencha ao menos número do pedido e cliente.';
+    return;
+  }
+
+  chamarBackend({ acao: 'criarPedido', senha: SENHA_ATUAL, pedido }).then(resp => {
+    if (resp.ok) { fecharModal('modalNovoPedido'); carregarDados(); }
+    else document.getElementById('erroNovoPedido').textContent = resp.erro || 'Erro ao salvar.';
+  });
+}
+
+function abrirModalEditar(p){
+  document.getElementById('eId').value = p.ID;
+  document.getElementById('eStatus').value = p.Status;
+  document.getElementById('eMotorista').value = p.Motorista || '';
+  document.getElementById('eMontador').value = p.Montador || '';
+  document.getElementById('eObs').value = p.Observacoes || '';
+  document.getElementById('erroEditar').textContent = '';
+  abrirModal('modalEditar');
+}
+
+function salvarEdicao(){
+  const id = document.getElementById('eId').value;
+  const campos = {
+    Status: document.getElementById('eStatus').value,
+    Motorista: document.getElementById('eMotorista').value.trim(),
+    Montador: document.getElementById('eMontador').value.trim(),
+    Observacoes: document.getElementById('eObs').value.trim()
+  };
+  chamarBackend({ acao: 'atualizarPedido', senha: SENHA_ATUAL, id, campos }).then(resp => {
+    if (resp.ok) { fecharModal('modalEditar'); carregarDados(); }
+    else document.getElementById('erroEditar').textContent = resp.erro || 'Erro ao salvar.';
+  });
+}
+
+function concluirPedido(id){
+  if (!confirm('Confirmar conclusão deste pedido? Ele vai para o histórico.')) return;
+  chamarBackend({ acao: 'concluirPedido', senha: SENHA_ATUAL, id }).then(resp => {
+    if (resp.ok) carregarDados();
+    else alert(resp.erro || 'Erro ao concluir.');
+  });
+}
+</script>
+</body>
+</html>
