@@ -16,10 +16,14 @@
   header h1{font-size:18px;margin:0;}
   header .papel{font-size:12px;background:rgba(255,255,255,.15);padding:4px 10px;border-radius:12px;}
   .container{max-width:1380px;margin:0 auto;padding:16px;}
-  .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
   .tab-btn{padding:8px 16px;border:1px solid var(--borda);background:#fff;border-radius:8px;cursor:pointer;font-size:14px;}
   .tab-btn.ativa{background:var(--azul);color:#fff;border-color:var(--azul);}
-  .btn{padding:9px 16px;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;}
+  /* Botões da barra de abas (topo da tela) menores, para caberem em uma única linha
+     em vez de quebrar em duas — não afeta os demais botões do sistema. */
+  .tabs .tab-btn,
+  .tabs > .btn{padding:6px 10px;font-size:12.5px;}
+  .btn{padding:9px 16px;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;min-height:44px;}
   .btn-primario{background:var(--azul);color:#fff;}
   .btn-sucesso{background:var(--verde);color:#fff;}
   .btn-secundario{background:#fff;border:1px solid var(--borda);color:var(--texto);}
@@ -39,7 +43,7 @@
   @media(max-width:850px){.form-grid{grid-template-columns:1fr 1fr;}}
   @media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
   label{font-size:13px;font-weight:600;color:var(--cinza);display:block;margin-bottom:4px;}
-  input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--borda);border-radius:7px;font-size:14px;font-family:inherit;}
+  input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--borda);border-radius:7px;font-size:16px;font-family:inherit;}
   textarea{min-height:60px;resize:vertical;}
   .campo{margin-bottom:12px;}
   .login-box{max-width:340px;margin:80px auto;background:#fff;padding:28px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);text-align:center;}
@@ -48,7 +52,11 @@
   .vazio{text-align:center;color:var(--cinza);padding:30px;font-size:14px;}
   .modal-fundo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);align-items:center;justify-content:center;padding:16px;z-index:50;}
   .modal-fundo.aberto{display:flex;}
-  .modal{background:#fff;border-radius:12px;padding:20px;max-width:980px;width:100%;max-height:90vh;overflow:auto;}
+  .modal{background:#fff;border-radius:12px;padding:20px;max-width:980px;width:100%;max-height:90vh;overflow:auto;
+    /* Trava as cores do modal no tema claro, independente do Dashboard estar no modo escuro
+       (que redefine --texto/--cinza/--card no body). Sem isso, o texto herdava uma cor quase
+       branca do modo escuro enquanto o fundo do modal continuava branco, ficando ilegível. */
+    --texto:#1f2937; --cinza:#6b7280; --card:#ffffff; --borda:#e2e6ec; --bg:#f2f4f7; color:var(--texto);}
   .modal h3{margin-top:0;}
   .fechar-modal{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:var(--cinza);}
   .check-linha{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
@@ -158,15 +166,15 @@
   .situacao-alerta{color:#c98a08;font-weight:800;}
   .situacao-erro{color:#c0392b;font-weight:800;}
   .dashboard-graficos{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-bottom:12px;}
-  .grafico-card{background:#fff;border:1px solid var(--borda);border-radius:12px;padding:14px;min-height:230px;}
+  .grafico-card{background:var(--card);border:1px solid var(--borda);border-radius:12px;padding:14px;min-height:230px;}
   .grafico-card h3{margin:0 0 4px;font-size:15px;color:var(--azul-esc);}
   .grafico-sub{font-size:11px;color:var(--cinza);margin-bottom:12px;}
   .grafico-anel-card{grid-column:span 4;}
   .grafico-status-card{grid-column:span 4;}
   .grafico-tendencia-card{grid-column:span 4;}
   .anel-wrap{display:flex;align-items:center;justify-content:center;gap:18px;min-height:165px;flex-wrap:wrap;}
-  .anel{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(#1e8e5a 0 var(--pct),#e8edf3 var(--pct) 100%);}
-  .anel::after{content:'';width:92px;height:92px;background:#fff;border-radius:50%;position:absolute;}
+  .anel{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(#1e8e5a 0 var(--pct),var(--borda) var(--pct) 100%);}
+  .anel::after{content:'';width:92px;height:92px;background:var(--card);border-radius:50%;position:absolute;}
   .anel-centro{position:relative;z-index:1;text-align:center;}
   .anel-centro b{display:block;font-size:27px;color:var(--azul-esc);line-height:1;}
   .anel-centro span{font-size:10px;font-weight:800;color:var(--cinza);text-transform:uppercase;}
@@ -196,6 +204,227 @@
   .arquivo-toolbar .campo-filtro{min-width:150px}
   .arquivo-aviso{background:#f8fafc;border:1px solid var(--borda);border-radius:9px;padding:10px 12px;font-size:12px;color:var(--cinza);margin-bottom:10px}
   .arquivo-aviso b{color:var(--azul-esc)}
+
+  /* ============================================================
+     DASHBOARD EXECUTIVO
+     ============================================================ */
+
+  /* --- Cabeçalho --- */
+  .dash-cabecalho{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;padding:14px 18px;background:var(--card);border:1px solid var(--borda);border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .dash-neon-title{margin:0;color:var(--azul-esc);font-size:21px;font-weight:800;letter-spacing:-.2px;}
+  .dash-cabecalho .grafico-sub{margin:2px 0 0;}
+  .dash-controles{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .dash-controles .btn{padding:8px 12px;font-size:12.5px;}
+  .dash-atualizacao{font-size:11.5px;color:var(--cinza);background:var(--bg);border:1px solid var(--borda);border-radius:9px;padding:8px 11px;max-width:260px;line-height:1.35;}
+
+  /* --- Linha principal de KPIs --- */
+  .dash-kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:12px;}
+  .dash-kpi{background:var(--card);border:1px solid var(--borda);border-left:4px solid var(--cinza);border-radius:12px;padding:14px 16px;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;min-height:100px;}
+  .dash-kpi:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(18,59,115,.10);}
+  .dash-kpi:focus-visible{outline:2px solid var(--azul);outline-offset:2px;}
+  .dash-kpi b{display:block;font-size:30px;font-weight:800;color:var(--azul-esc);line-height:1.05;}
+  .dash-kpi span{display:block;font-size:12.5px;font-weight:700;color:var(--texto);margin-top:4px;}
+  .dash-kpi small{display:block;font-size:10.5px;color:var(--cinza);margin-top:4px;}
+  .dash-kpi.ok{border-left-color:#1e8e5a;}
+  .dash-kpi.ok b{color:#1e8e5a;}
+  .dash-kpi.alerta{border-left-color:#c98a08;}
+  .dash-kpi.alerta b{color:#c98a08;}
+  .dash-kpi.erro{border-left-color:#c0392b;}
+  .dash-kpi.erro b{color:#c0392b;}
+  .dash-kpi.azul{border-left-color:#1e5aa8;}
+  .dash-kpi.azul b{color:#1e5aa8;}
+
+  /* --- Grade secundária de indicadores --- */
+  .dash-grid-secundario{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px;}
+  .mini-indicador{background:var(--card);border:1px solid var(--borda);border-radius:12px;padding:13px 14px;min-height:92px;}
+  .mini-indicador.clicavel{cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;}
+  .mini-indicador.clicavel:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(18,59,115,.10);}
+  .mini-indicador b{display:block;font-size:24px;font-weight:800;color:var(--azul-esc);line-height:1.1;}
+  .mini-indicador span{display:block;font-size:12px;font-weight:700;color:var(--texto);margin-top:3px;}
+  .mini-indicador small{display:block;font-size:10.5px;color:var(--cinza);margin-top:3px;}
+  .mini-indicador.destaque-retorno{border-color:#c9a6ec;background:linear-gradient(180deg,#faf6ff,var(--card) 60%);}
+  .mini-indicador.destaque-retorno b{color:#7c3aed;}
+
+  .resumo-dia-card{display:flex;flex-direction:column;}
+  .resumo-dia-sub{display:flex;gap:10px;margin-top:8px;}
+  .resumo-dia-sub div{flex:1;background:var(--bg);border:1px solid var(--borda);border-radius:8px;padding:6px 8px;text-align:center;}
+  .resumo-dia-sub strong{display:block;font-size:15px;font-weight:800;color:var(--azul-esc);}
+  .resumo-dia-sub small{display:block;font-size:9.5px;color:var(--cinza);text-transform:uppercase;font-weight:700;letter-spacing:.3px;margin-top:1px;}
+
+  /* --- Gráficos lado a lado (fluxo + tendência) --- */
+  .dashboard-graficos-duplo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+  .dashboard-graficos-duplo .grafico-card{grid-column:auto;min-height:0;}
+
+  .desempenho-compacto{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--borda);}
+  .desempenho-compacto div{text-align:center;}
+  .desempenho-compacto span{display:block;font-size:10px;font-weight:700;color:var(--cinza);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px;}
+  .desempenho-compacto b{display:block;font-size:18px;font-weight:800;color:var(--azul-esc);}
+
+  /* --- Faixa de indicadores em gauge --- */
+  .dash-faixa{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-top:12px;}
+  .gauge-card{background:var(--card);border:1px solid var(--borda);border-radius:12px;padding:14px 16px;}
+  .gauge-card h3{margin:0;font-size:13.5px;font-weight:700;color:var(--azul-esc);}
+  .gauge-card strong{display:block;font-size:28px;font-weight:800;color:var(--texto);margin-top:6px;}
+  .gauge-linha{height:12px;border-radius:999px;background:#e5e7eb;overflow:hidden;margin:10px 0 6px;}
+  .gauge-fill{height:100%;width:var(--pct);border-radius:999px;background:linear-gradient(90deg,#1e8e5a,#22c55e);transition:width .3s ease;}
+  .gauge-fill.erro{background:linear-gradient(90deg,#c0392b,#ef4444);}
+
+  /* --- Gráfico de tendência (linha) --- */
+  .pulso-wrap{height:165px;display:flex;flex-direction:column;}
+  .pulso-svg{flex:1 1 auto;width:100%;display:block;}
+  .pulso-grid{stroke:var(--borda);stroke-width:1;}
+  .pulso-line{fill:none;stroke:#1e5aa8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
+  .pulso-area{fill:rgba(30,90,168,.08);}
+  .pulso-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--cinza);margin-top:2px;}
+  .pulso-resumo{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:11px;color:var(--cinza);}
+  .pulso-resumo b{font-size:13px;color:var(--azul-esc);}
+
+  .dash-rodape-info{font-size:11px;color:var(--cinza);margin-top:14px;padding:10px 12px;background:var(--card);border:1px solid var(--borda);border-radius:9px;}
+
+  @media(max-width:1200px){
+    .dash-kpis{grid-template-columns:repeat(3,1fr);}
+    .dash-grid-secundario{grid-template-columns:repeat(2,1fr);}
+    .dashboard-graficos-duplo{grid-template-columns:1fr;}
+    .dash-faixa{grid-template-columns:1fr;}
+  }
+  @media(max-width:650px){
+    .dash-kpis{grid-template-columns:repeat(2,1fr);}
+    .resumo-dia-sub{flex-direction:column;gap:6px;}
+    .desempenho-compacto{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ------------------------------------------------------------
+     TEMA ESCURO DO DASHBOARD
+     ------------------------------------------------------------ */
+  body.dashboard-escuro{
+    --bg:#0a101c; --card:#121b2c; --borda:#233047; --texto:#e7edf6; --cinza:#8fa0b8;
+    background:var(--bg);
+  }
+  body.dashboard-escuro header{background:#0a101c;border-bottom:1px solid #1c2942;}
+  body.dashboard-escuro .tabs{background:#0e1626;padding:8px;border-radius:12px;}
+  body.dashboard-escuro .tab-btn{background:#121b2c;color:#b7c4d8;border-color:#233047;}
+  body.dashboard-escuro .tab-btn.ativa{background:#1e5aa8;color:#fff;border-color:#1e5aa8;}
+  body.dashboard-escuro .btn-secundario{background:#121b2c;color:#dbe7fb;border-color:#2a3a55;}
+  body.dashboard-escuro .btn-secundario:hover{border-color:#3b82f6;}
+  body.dashboard-escuro .dash-neon-title{color:#f4f8ff;}
+  body.dashboard-escuro .status-trilho{background:#1c2942;}
+  body.dashboard-escuro .gauge-linha{background:#1c2942;}
+  body.dashboard-escuro .desempenho-compacto{border-top-color:#233047;}
+  body.dashboard-escuro .mini-indicador.destaque-retorno{background:linear-gradient(180deg,#1c1730,var(--card) 65%);border-color:#4c3a78;}
+
+  /* Números e títulos com boa leitura no fundo escuro (nada de azul-escuro sobre fundo escuro) */
+  body.dashboard-escuro .grafico-card h3,
+  body.dashboard-escuro .gauge-card h3{color:#f1f5f9;}
+  body.dashboard-escuro .tend-valor,
+  body.dashboard-escuro .anel-centro b{color:#f1f5f9;}
+  body.dashboard-escuro .dash-kpi b,
+  body.dashboard-escuro .mini-indicador b,
+  body.dashboard-escuro .resumo-dia-sub strong,
+  body.dashboard-escuro .desempenho-compacto b,
+  body.dashboard-escuro .pulso-resumo b{color:#f8fafc;}
+
+  /* Cores de destaque por status — nunca azul-escuro */
+  body.dashboard-escuro .mini-indicador.destaque-retorno b{color:#c4b5fd;}
+  body.dashboard-escuro .dash-kpi.ok b{color:#34d399;}
+  body.dashboard-escuro .dash-kpi.alerta b{color:#fbbf24;}
+  body.dashboard-escuro .dash-kpi.erro b{color:#fb923c;}
+  body.dashboard-escuro .dash-kpi.azul b{color:#7dd3fc;}
+  body.dashboard-escuro .dash-kpi:hover,
+  body.dashboard-escuro .mini-indicador.clicavel:hover{box-shadow:0 8px 20px rgba(0,0,0,.35);}
+  body.dashboard-escuro .pulso-line{stroke:#60a5fa;}
+  body.dashboard-escuro .pulso-area{fill:rgba(96,165,250,.10);}
+
+  /* ------------------------------------------------------------
+     TEMA CLARO DO DASHBOARD
+     ------------------------------------------------------------ */
+  body.dashboard-claro .container{max-width:none;}
+
+  /* ------------------------------------------------------------
+     MODO TELA CHEIA (painel / TV)
+     ------------------------------------------------------------ */
+  body.dashboard-fullscreen header,
+  body.dashboard-fullscreen .tabs{display:none;}
+  body.dashboard-fullscreen .container{max-width:none;padding:clamp(8px,1.2vw,18px);}
+  body.dashboard-fullscreen #areaConteudo{min-height:100vh;display:flex;flex-direction:column;gap:clamp(8px,1vw,14px);}
+  body.dashboard-fullscreen .dash-cabecalho{position:sticky;top:0;z-index:10;margin:0;padding:clamp(10px,1.4vh,16px) clamp(12px,1.6vw,20px);}
+  body.dashboard-fullscreen .dash-neon-title{font-size:clamp(22px,2.4vw,34px);}
+  body.dashboard-fullscreen .dash-cabecalho .grafico-sub{font-size:clamp(11px,1vw,14px);}
+  body.dashboard-fullscreen .dash-atualizacao{font-size:clamp(10px,.9vw,13px);}
+  body.dashboard-fullscreen .dash-controles .btn{font-size:clamp(11px,1vw,13px);padding:8px 12px;}
+
+  body.dashboard-fullscreen .dash-kpis{grid-template-columns:repeat(6,1fr);gap:clamp(8px,1vw,14px);margin:0;}
+  body.dashboard-fullscreen .dash-kpi{min-height:clamp(88px,12vh,128px);padding:clamp(10px,1.2vw,16px);}
+  body.dashboard-fullscreen .dash-kpi b{font-size:clamp(26px,2.6vw,42px);}
+  body.dashboard-fullscreen .dash-kpi span{font-size:clamp(11px,1vw,14px);}
+  body.dashboard-fullscreen .dash-kpi small{font-size:clamp(9px,.8vw,11px);}
+
+  body.dashboard-fullscreen .dash-grid-secundario{grid-template-columns:repeat(9,1fr);gap:clamp(6px,.8vw,10px);margin:0;}
+  body.dashboard-fullscreen .mini-indicador{min-height:clamp(76px,10vh,104px);padding:clamp(8px,1vw,13px);}
+  body.dashboard-fullscreen .mini-indicador b{font-size:clamp(18px,1.8vw,28px);}
+  body.dashboard-fullscreen .mini-indicador span{font-size:clamp(9.5px,.85vw,12px);}
+  body.dashboard-fullscreen .mini-indicador small{font-size:clamp(8px,.7vw,10px);}
+  @media(max-width:1450px){
+    body.dashboard-fullscreen .dash-grid-secundario{grid-template-columns:repeat(6,1fr);}
+  }
+
+  body.dashboard-fullscreen .dashboard-graficos-duplo{grid-template-columns:1fr 1fr;gap:clamp(8px,1vw,14px);margin:0;flex:1 1 auto;min-height:0;}
+  body.dashboard-fullscreen .grafico-card{min-height:0;height:100%;display:flex;flex-direction:column;padding:clamp(10px,1.2vw,16px);}
+  body.dashboard-fullscreen .grafico-card h3{font-size:clamp(14px,1.3vw,18px);}
+  body.dashboard-fullscreen .grafico-card .grafico-sub{font-size:clamp(10px,.85vw,12px);}
+  body.dashboard-fullscreen .pulso-wrap{flex:1 1 auto;height:auto;min-height:0;}
+  body.dashboard-fullscreen .status-barras{flex:1 1 auto;display:flex;flex-direction:column;justify-content:space-evenly;}
+  body.dashboard-fullscreen .desempenho-compacto{margin-top:auto;}
+
+  body.dashboard-fullscreen .dash-faixa{grid-template-columns:2fr 1fr 1fr;gap:clamp(6px,.8vw,12px);margin:0;}
+  body.dashboard-fullscreen .gauge-card{padding:clamp(8px,1vw,14px);}
+  body.dashboard-fullscreen .gauge-card h3{font-size:clamp(11px,.9vw,13.5px);}
+  body.dashboard-fullscreen .gauge-card strong{font-size:clamp(20px,1.8vw,28px);}
+  body.dashboard-fullscreen .gauge-linha{height:clamp(8px,.9vh,12px);margin:clamp(6px,.7vh,10px) 0 4px;}
+  body.dashboard-fullscreen .dash-rodape-info{font-size:clamp(9px,.8vw,11px);margin-top:0;padding:clamp(6px,.8vh,10px) 12px;}
+
+  @media(max-width:900px){
+    body.dashboard-fullscreen .dash-kpis{grid-template-columns:repeat(3,1fr);}
+    body.dashboard-fullscreen .dash-grid-secundario{grid-template-columns:repeat(3,1fr);}
+    body.dashboard-fullscreen .dashboard-graficos-duplo,
+    body.dashboard-fullscreen .dash-faixa{grid-template-columns:1fr;}
+  }
+  /* PERFIL ENTREGA - MOBILE FIRST */
+  #telaEntrega{display:none;min-height:100vh;background:#eef2f7}
+  .entrega-header{position:sticky;top:0;z-index:20;background:#123b73;color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .entrega-header h1{font-size:17px;margin:0}
+  .entrega-main{max-width:760px;margin:0 auto;padding:12px}
+  .entrega-identidade{background:#fff;border:1px solid var(--borda);border-radius:12px;padding:15px;margin-bottom:12px}
+  .entrega-identidade h2{font-size:18px;margin:0 0 10px}
+  .entrega-lista-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+  .entrega-lista-top h2{font-size:18px;margin:0}
+  .entrega-card{background:#fff;border:1px solid var(--borda);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .entrega-card-num{font-size:19px;font-weight:800;color:var(--azul-esc)}
+  .entrega-card-cliente{font-size:18px;font-weight:800;margin:5px 0 10px}
+  .entrega-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+  .entrega-card-grid div{background:#f8fafc;border-radius:8px;padding:8px;font-size:13px}
+  .entrega-card-grid b{display:block;color:var(--cinza);font-size:10px;text-transform:uppercase;margin-bottom:2px}
+  .entrega-acoes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .entrega-acoes .btn{min-height:46px;font-size:14px}
+  .entrega-status{font-size:11px;font-weight:800;background:#e8f1ff;color:#1e5aa8;padding:4px 8px;border-radius:999px}
+  .entrega-vazio{text-align:center;background:#fff;border:1px solid var(--borda);border-radius:12px;padding:28px 15px;color:var(--cinza)}
+  @media(max-width:560px){
+    .entrega-main{padding:9px}
+    .entrega-header{padding:10px}
+    .entrega-header h1{font-size:15px}
+    .entrega-card{padding:12px}
+    .entrega-card-grid{grid-template-columns:1fr}
+    .entrega-acoes{grid-template-columns:1fr}
+    .entrega-acoes .btn{width:100%}
+  }
+
+
+  /* ENTRADAS TEXTUAIS EM CAIXA ALTA */
+  input:not([type="password"]):not([type="date"]):not([type="number"]):not([type="checkbox"]),
+  textarea{
+    text-transform:uppercase;
+  }
+
+
 </style>
 </head>
 <body>
@@ -203,11 +432,38 @@
 <div id="telaLogin" class="login-box">
   <h2>Controle de Saída de Mercadoria</h2>
   <div class="campo">
+    <label>Usuário</label>
+    <input id="inputUsuario" placeholder="Motorista/Entregador (opcional para Estoque/Consulta)" autocomplete="username">
+  </div>
+  <div class="campo">
     <label>Senha de acesso</label>
-    <input type="password" id="inputSenha" placeholder="Digite sua senha">
+    <input type="password" id="inputSenha" placeholder="Digite sua senha" autocomplete="current-password">
   </div>
   <button class="btn btn-primario" style="width:100%" onclick="fazerLogin()">Entrar</button>
   <div class="msg-erro" id="erroLogin"></div>
+</div>
+
+
+<div id="telaEntrega">
+  <div class="entrega-header">
+    <h1>🚚 Entregas em rota</h1>
+    <button class="btn btn-secundario" style="padding:6px 10px;font-size:12px" onclick="sair()">Sair</button>
+  </div>
+  <div class="entrega-main">
+    <div id="entregaOperacao">
+      <div class="entrega-identidade" style="padding:10px 12px">
+        <b id="entregaUsuarioLabel">Motorista/Entregador</b>
+        <div style="font-size:11px;color:var(--cinza);margin-top:3px">A confirmação das entregas será registrada automaticamente neste usuário.</div>
+      </div>
+      <div class="entrega-lista-top">
+        <div>
+          <h2>Entregas em andamento</h2>
+        </div>
+        <button class="btn btn-secundario" onclick="carregarEntregasMobile()">↻ Atualizar</button>
+      </div>
+      <div id="listaEntregasMobile"><div class="carregando">Carregando entregas...</div></div>
+    </div>
+  </div>
 </div>
 
 <div id="app" style="display:none">
@@ -223,6 +479,7 @@
     <div class="tabs">
       <button class="tab-btn ativa" id="btnTabAtivos" onclick="mudarAba('ativos')">Pedidos Ativos</button>
       <button class="tab-btn" id="btnTabHistorico" onclick="mudarAba('historico')">Histórico</button>
+      <button class="tab-btn" id="btnTabDashboard" onclick="mudarAba('dashboard')">📈 Dashboard</button>
       <button class="tab-btn" id="btnTabRelatorios" onclick="mudarAba('relatorios')">📊 Relatórios</button>
       <button class="tab-btn" id="btnTabAnteriores" onclick="mudarAba('anteriores')">🗄️ Anos anteriores</button>
       <button class="btn btn-secundario" id="btnAtualizarConsulta" style="display:none;margin-left:auto" onclick="atualizarAgoraConsulta()">↻ Atualizar agora</button>
@@ -253,11 +510,12 @@
           <option value="Entrega">Entrega</option>
         </select>
       </div>
-      <div class="campo" id="campoMontagem" style="display:none">
-        <label>Como vai a entrega</label>
+      <div class="campo" id="campoMontagem">
+        <label>Condição de montagem</label>
         <select id="fMontagem">
-          <option value="Montada">Levar montada</option>
-          <option value="Desmontada">Levar desmontada (montar no local)</option>
+          <option value="Montada">Montada</option>
+          <option value="Desmontada">Desmontada</option>
+          <option value="Parcialmente montada">Parcialmente montada</option>
         </select>
       </div>
     </div>
@@ -291,6 +549,7 @@
         <option>Separando</option>
         <option>Aguardando complemento</option>
         <option>Aguardando montagem</option>
+        <option>Aguardando entrega</option>
         <option>Pronto para entrega</option>
         <option>Pronto para retirada</option>
         <option>Saiu para entrega</option>
@@ -302,7 +561,7 @@
       <small id="eResumoQtd" style="display:block;margin-top:4px;color:var(--cinza)"></small>
     </div>
     <div class="form-grid">
-      <div class="campo"><label>Motorista</label><select id="eMotorista"><option value="">Selecione o motorista</option></select></div>
+      <div class="campo"><label>Motorista/Entregador</label><select id="eMotorista"><option value="">Selecione o motorista/entregador</option></select></div>
       <div class="campo"><label>Montador</label><select id="eMontador"><option value="">Selecione o montador</option></select></div>
     </div>
     <div class="campo"><label>Observações</label><textarea id="eObs"></textarea></div>
@@ -328,6 +587,57 @@
   </div>
 </div>
 
+
+
+<!-- MODAL CONFIRMAR ENTREGA -->
+<div class="modal-fundo" id="modalConfirmarEntrega">
+  <div class="modal" style="max-width:620px">
+    <button class="fechar-modal" onclick="fecharModal('modalConfirmarEntrega')">×</button>
+    <h3>✓ Confirmar entrega</h3>
+    <input type="hidden" id="ceId">
+    <div class="obs" id="ceResumo" style="margin-bottom:12px"></div>
+    <div class="campo">
+      <label>Quem recebeu a mercadoria? *</label>
+      <input id="ceRecebedor" placeholder="Nome da pessoa que recebeu">
+    </div>
+    <div class="campo">
+      <label>Observação da entrega</label>
+      <textarea id="ceObservacao" placeholder="Opcional"></textarea>
+    </div>
+    <div class="msg-erro" id="erroConfirmarEntrega"></div>
+    <button class="btn btn-sucesso" style="width:100%" onclick="confirmarEntregaFinal()">✓ Confirmar que foi entregue</button>
+  </div>
+</div>
+
+<!-- MODAL RETORNO DE MERCADORIA -->
+<div class="modal-fundo" id="modalRetornoEntrega">
+  <div class="modal">
+    <button class="fechar-modal" onclick="fecharModal('modalRetornoEntrega')">×</button>
+    <h3>↩ Mercadoria retornou</h3>
+    <input type="hidden" id="rId">
+    <div id="rResumo" class="obs" style="margin-bottom:12px"></div>
+    <div class="campo">
+      <label>Motivo do retorno</label>
+      <select id="rMotivo" onchange="atualizarCampoDetalheRetorno()">
+        <option value="">Selecione o motivo</option>
+        <option>Cliente ausente</option>
+        <option>Endereço não localizado</option>
+        <option>Recusa do cliente</option>
+        <option>Fora do horário</option>
+        <option>Estabelecimento fechado</option>
+        <option>Problema no veículo</option>
+        <option>Outro</option>
+      </select>
+    </div>
+    <div class="campo">
+      <label>Detalhes / observação</label>
+      <textarea id="rDetalhe" placeholder="Informe detalhes que ajudem na próxima tentativa"></textarea>
+    </div>
+    <button class="btn btn-perigo" style="width:100%" onclick="confirmarRetornoEntrega()">Confirmar retorno da mercadoria</button>
+    <div class="msg-erro" id="erroRetornoEntrega"></div>
+  </div>
+</div>
+
 <!-- MODAL SAÍDA PARA ENTREGA -->
 <div class="modal-fundo" id="modalSaidaEntrega">
   <div class="modal">
@@ -336,7 +646,7 @@
     <input type="hidden" id="sId">
     <div class="obs" id="sResumo" style="margin-bottom:12px"></div>
     <div class="form-grid">
-      <div class="campo"><label>Motorista *</label><select id="sMotorista"><option value="">Selecione o motorista</option></select></div>
+      <div class="campo"><label>Motorista *</label><select id="sMotorista"><option value="">Selecione o motorista/entregador</option></select></div>
       <div class="campo" id="campoSaidaMontador"><label>Montador *</label><select id="sMontador"><option value="">Selecione o montador</option></select></div>
     </div>
     <div class="msg-erro" id="erroSaidaEntrega"></div>
@@ -351,7 +661,7 @@
     <h3>Cadastros da equipe</h3>
     <div class="cadastro-tabs">
       <button class="tab-btn ativa" id="cadTabConsultor" onclick="selecionarTipoCadastro('Consultor')">Consultores</button>
-      <button class="tab-btn" id="cadTabMotorista" onclick="selecionarTipoCadastro('Motorista')">Motoristas</button>
+      <button class="tab-btn" id="cadTabMotorista" onclick="selecionarTipoCadastro('Motorista')">Motoristas/Entregadores</button>
       <button class="tab-btn" id="cadTabMontador" onclick="selecionarTipoCadastro('Montador')">Montadores</button>
     </div>
     <div class="form-grid" style="grid-template-columns:1fr auto;align-items:end">
@@ -362,6 +672,7 @@
     <div id="listaEquipeCadastro" class="equipe-lista"></div>
   </div>
 </div>
+
 
 <!-- MODAL DETALHES DOS RELATÓRIOS -->
 <div class="modal-fundo" id="modalDetalhesRelatorio">
@@ -385,6 +696,60 @@
   </div>
 </div>
 
+
+<!-- MODAL ACESSO MOTORISTA/ENTREGADOR -->
+<div class="modal-fundo" id="modalAcessoMotorista">
+  <div class="modal" style="max-width:520px">
+    <button class="fechar-modal" onclick="fecharModal('modalAcessoMotorista')">×</button>
+    <h3>🔐 Acesso Motorista/Entregador</h3>
+    <input type="hidden" id="amId">
+
+    <div class="obs" id="amNome" style="margin-bottom:12px"></div>
+
+    <div class="campo">
+      <label>Usuário de acesso</label>
+      <input id="amUsuario" placeholder="EX.: VITOR">
+    </div>
+
+    <div class="campo">
+      <label>Senha de acesso</label>
+      <input type="password" id="amSenha" placeholder="Mínimo 4 caracteres">
+    </div>
+
+    <button class="btn btn-primario" style="width:100%" onclick="salvarAcessoMotorista()">Salvar acesso</button>
+    <div class="msg-erro" id="erroAcessoMotorista"></div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR CADASTRO DE EQUIPE -->
+<div class="modal-fundo" id="modalEditarEquipe">
+  <div class="modal" style="max-width:520px">
+    <button class="fechar-modal" onclick="fecharModal('modalEditarEquipe')">×</button>
+    <h3>✏️ Editar cadastro</h3>
+    <input type="hidden" id="eeId">
+
+    <div class="campo">
+      <label>Nome</label>
+      <input id="eeNome" placeholder="Nome completo">
+    </div>
+
+    <div id="eeCamposMotorista">
+      <div class="campo">
+        <label>Usuário de acesso</label>
+        <input id="eeUsuario" placeholder="EX.: VITOR">
+      </div>
+      <div class="campo">
+        <label>Nova senha</label>
+        <input type="password" id="eeSenha" placeholder="Deixe em branco para manter a senha atual">
+      </div>
+    </div>
+
+    <button class="btn btn-primario" style="width:100%" onclick="salvarEdicaoEquipe()">Salvar</button>
+    <div class="msg-erro" id="erroEditarEquipe"></div>
+  </div>
+</div>
+
+
 <script>
 // ================== CONFIGURAÇÃO ==================
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxUnA-VNxTLRj-mCkXL8HWAnK7GTiNDQ5Yj0FpiKqr_CWplCa0JSWPOWQyWPP8R7GS25g/exec';
@@ -392,6 +757,9 @@ const FUSO = 'America/Fortaleza';
 
 let SENHA_ATUAL = '';
 let PAPEL_ATUAL = '';
+let ENTREGA_NOME = '';
+let ENTREGA_USUARIO = '';
+let TIMER_ENTREGA = null;
 let TIMER_ATUALIZACAO_CONSULTA = null;
 const INTERVALO_CONSULTA_MS = 60 * 1000;
 let DADOS = { ativos: [], historico: [], equipe: [] };
@@ -435,20 +803,49 @@ function mostrarHistoricoHoje(){
   renderizar();
 }
 
+
+// ================== CAIXA ALTA ==================
+document.addEventListener('input', (e) => {
+  const el = e.target;
+  if (!el) return;
+  const tag = String(el.tagName || '').toUpperCase();
+  if (tag !== 'INPUT' && tag !== 'TEXTAREA') return;
+
+  const tipo = String(el.type || '').toLowerCase();
+  if (['password','date','number','checkbox','radio','hidden'].includes(tipo)) return;
+
+  const inicio = typeof el.selectionStart === 'number' ? el.selectionStart : null;
+  const fim = typeof el.selectionEnd === 'number' ? el.selectionEnd : null;
+  const valor = String(el.value || '');
+  const upper = valor.toUpperCase();
+
+  if (valor !== upper) {
+    el.value = upper;
+    if (inicio !== null && fim !== null && typeof el.setSelectionRange === 'function') {
+      try { el.setSelectionRange(inicio, fim); } catch(e) {}
+    }
+  }
+});
+
 // ================== LOGIN ==================
 function fazerLogin(){
+  const usuario = document.getElementById('inputUsuario').value.trim();
   const senha = document.getElementById('inputSenha').value.trim();
   if (!senha) return;
   document.getElementById('erroLogin').textContent = '';
-  chamarBackend({ acao: 'login', senha }).then(resp => {
+  chamarBackend({ acao: 'login', usuario, senha }).then(resp => {
     if (resp.ok) {
       SENHA_ATUAL = senha;
       PAPEL_ATUAL = resp.papel;
+      ENTREGA_NOME = resp.nome || '';
+      ENTREGA_USUARIO = resp.usuario || usuario || '';
       sessionStorage.setItem('cse_senha', senha);
       sessionStorage.setItem('cse_papel', resp.papel);
+      sessionStorage.setItem('cse_usuario', ENTREGA_USUARIO);
+      sessionStorage.setItem('cse_entrega_nome', ENTREGA_NOME);
       entrarNoApp();
     } else {
-      document.getElementById('erroLogin').textContent = 'Senha incorreta.';
+      document.getElementById('erroLogin').textContent = usuario ? 'Usuário ou senha incorretos.' : 'Senha incorreta.';
     }
   }).catch((erro) => {
     console.error('Erro de login:', erro);
@@ -458,6 +855,7 @@ function fazerLogin(){
 
 function sair(){
   pararAtualizacaoAutomaticaConsulta();
+  if (TIMER_ENTREGA) clearInterval(TIMER_ENTREGA);
   sessionStorage.clear();
   location.reload();
 }
@@ -478,21 +876,41 @@ function podeAtualizarConsultaAgora(){
 
 function iniciarAtualizacaoAutomaticaConsulta(){
   pararAtualizacaoAutomaticaConsulta();
-  if (PAPEL_ATUAL === 'cadastro') return;
   TIMER_ATUALIZACAO_CONSULTA = setInterval(() => {
-    if (PAPEL_ATUAL !== 'cadastro' && podeAtualizarConsultaAgora()) {
+    // Nunca atualiza sozinho se houver um modal aberto (ex.: Novo Pedido) ou se o usuário
+    // estiver com o foco em um campo de digitação — evita perder o que está sendo preenchido.
+    if (!podeAtualizarConsultaAgora()) return;
+
+    if (PAPEL_ATUAL === 'consulta' && ABA_ATUAL === 'dashboard') {
+      carregarDados(true);
+      return;
+    }
+
+    if (PAPEL_ATUAL === 'cadastro' && ABA_ATUAL === 'ativos') {
       carregarDados(true);
     }
   }, INTERVALO_CONSULTA_MS);
 }
 
+function atualizarVisibilidadeBotaoAtualizar(){
+  const btn = document.getElementById('btnAtualizarConsulta');
+  if (!btn) return;
+  const mostrar = PAPEL_ATUAL === 'consulta' || (PAPEL_ATUAL === 'cadastro' && ABA_ATUAL === 'ativos');
+  btn.style.display = mostrar ? 'inline-block' : 'none';
+}
+
 function entrarNoApp(){
   document.getElementById('telaLogin').style.display = 'none';
+  if (PAPEL_ATUAL === 'entrega') {
+    entrarModoEntrega();
+    return;
+  }
+  document.getElementById('telaEntrega').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   document.getElementById('labelPapel').textContent = PAPEL_ATUAL === 'cadastro' ? '✏️ Modo Cadastro' : '👁 Somente Visualização';
   document.getElementById('btnNovoPedido').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
   const btnAtualizarConsulta = document.getElementById('btnAtualizarConsulta');
-  if (btnAtualizarConsulta) btnAtualizarConsulta.style.display = PAPEL_ATUAL === 'consulta' ? 'inline-block' : 'none';
+  if (btnAtualizarConsulta) atualizarVisibilidadeBotaoAtualizar();
   document.getElementById('btnBackup').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
   document.getElementById('btnEquipe').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
   document.getElementById('btnEncerrarAno').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
@@ -501,13 +919,108 @@ function entrarNoApp(){
 }
 
 window.addEventListener('load', () => {
+  document.getElementById('inputUsuario')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('inputSenha')?.focus(); }
+  });
   document.getElementById('inputSenha')?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') { e.preventDefault(); fazerLogin(); }
   });
   const s = sessionStorage.getItem('cse_senha');
   const p = sessionStorage.getItem('cse_papel');
+  ENTREGA_NOME = sessionStorage.getItem('cse_entrega_nome') || '';
+  ENTREGA_USUARIO = sessionStorage.getItem('cse_usuario') || '';
   if (s && p) { SENHA_ATUAL = s; PAPEL_ATUAL = p; entrarNoApp(); }
 });
+
+
+// ================== PERFIL ENTREGA ==================
+function entrarModoEntrega(){
+  document.getElementById('app').style.display='none';
+  document.getElementById('telaEntrega').style.display='block';
+  document.getElementById('entregaUsuarioLabel').textContent = ENTREGA_NOME
+    ? (ENTREGA_NOME + ' · Motorista/Entregador')
+    : 'Motorista/Entregador';
+  carregarEntregasMobile();
+  iniciarAtualizacaoEntrega();
+}
+
+function iniciarAtualizacaoEntrega(){
+  if(TIMER_ENTREGA) clearInterval(TIMER_ENTREGA);
+  TIMER_ENTREGA=setInterval(()=>{
+    if(PAPEL_ATUAL==='entrega' && !document.querySelector('.modal-fundo.aberto')) carregarEntregasMobile(true);
+  },60000);
+}
+async function carregarEntregasMobile(silencioso=false){
+  const area=document.getElementById('listaEntregasMobile');
+  if(!silencioso) area.innerHTML='<div class="carregando">Carregando entregas...</div>';
+  try{
+    const resp=await chamarBackend({acao:'carregarEntregas',usuario:ENTREGA_USUARIO,senha:SENHA_ATUAL});
+    if(resp.erro) throw new Error(resp.erro);
+    renderizarEntregasMobile(resp.entregas||[]);
+  }catch(e){
+    area.innerHTML='<div class="entrega-vazio">Erro ao carregar entregas.<br>'+escaparHtml(e.message||e)+'</div>';
+  }
+}
+function renderizarEntregasMobile(lista){
+  const area=document.getElementById('listaEntregasMobile');
+  if(!lista.length){
+    area.innerHTML='<div class="entrega-vazio"><b>Nenhuma entrega em rota.</b><br>Quando o estoque marcar “Saiu para entrega”, o pedido aparecerá aqui.</div>';
+    return;
+  }
+  area.innerHTML=lista.map(p=>`
+    <div class="entrega-card">
+      <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
+        <div class="entrega-card-num">#${escaparHtml(p.NumeroPedido||'')}</div>
+        <span class="entrega-status">${escaparHtml(p.Status||'Em rota')}</span>
+      </div>
+      <div class="entrega-card-cliente">${escaparHtml(p.Cliente||'-')}</div>
+      <div class="entrega-card-grid">
+        <div><b>Motorista</b>${escaparHtml(p.Motorista||'-')}</div>
+        <div><b>Montador</b>${escaparHtml(p.Montador||'-')}</div>
+        <div><b>Saiu em</b>${p.DataSaidaEntrega?formatarDataHora(p.DataSaidaEntrega):'-'}</div>
+        <div><b>Previsão</b>${formatarData(p.DataPrevista)}</div>
+      </div>
+      ${p.Observacoes?`<div class="obs">${escaparHtml(p.Observacoes)}</div>`:''}
+      <div class="entrega-acoes">
+        <button class="btn btn-sucesso" onclick='abrirModalConfirmarEntrega(${JSON.stringify(p)})'>✓ Entreguei</button>
+        <button class="btn btn-perigo" onclick='abrirModalRetornoEntrega(${JSON.stringify(p)})'>↩ Mercadoria voltou</button>
+      </div>
+    </div>`).join('');
+}
+
+function abrirModalConfirmarEntrega(p){
+  document.getElementById('ceId').value=p.ID;
+  document.getElementById('ceRecebedor').value='';
+  document.getElementById('ceObservacao').value='';
+  document.getElementById('erroConfirmarEntrega').textContent='';
+  document.getElementById('ceResumo').innerHTML=`<b>Pedido #${escaparHtml(p.NumeroPedido||'')}</b><br>Cliente: ${escaparHtml(p.Cliente||'-')}<br>Motorista: ${escaparHtml(p.Motorista||'-')}`;
+  abrirModal('modalConfirmarEntrega');
+  setTimeout(()=>document.getElementById('ceRecebedor')?.focus(),50);
+}
+function confirmarEntregaFinal(){
+  const id=document.getElementById('ceId').value;
+  const recebedor=document.getElementById('ceRecebedor').value.trim();
+  const observacao=document.getElementById('ceObservacao').value.trim();
+  const erro=document.getElementById('erroConfirmarEntrega');
+  erro.textContent='';
+  if(!recebedor){erro.textContent='Informe quem recebeu a mercadoria.';return;}
+  if(!confirm('Confirmar entrega para '+recebedor+'? A data e a hora serão registradas automaticamente.')) return;
+  const entrega={ recebedor, observacao };
+  chamarBackend({
+    acao:'concluirEntrega',
+    usuario:ENTREGA_USUARIO,
+    senha:SENHA_ATUAL,
+    id,
+    entrega
+  }).then(resp=>{
+    if(resp.ok){
+      fecharModal('modalConfirmarEntrega');
+      if(PAPEL_ATUAL==='entrega') carregarEntregasMobile();
+      else carregarDados();
+    }else erro.textContent=resp.erro||'Erro ao concluir a entrega.';
+  }).catch(e=>erro.textContent=e.message||String(e));
+}
+
 
 // ================== BACKEND ==================
 async function lerRespostaBackend(resposta){
@@ -566,12 +1079,15 @@ function atualizarAgoraConsulta(){
 
 // ================== ABAS ==================
 function mudarAba(aba){
+  if (ABA_ATUAL === 'dashboard' && aba !== 'dashboard') sairDoDashboardVisual();
   ABA_ATUAL = aba;
   document.getElementById('btnTabAtivos').classList.toggle('ativa', aba === 'ativos');
   document.getElementById('btnTabHistorico').classList.toggle('ativa', aba === 'historico');
+  document.getElementById('btnTabDashboard').classList.toggle('ativa', aba === 'dashboard');
   document.getElementById('btnTabRelatorios').classList.toggle('ativa', aba === 'relatorios');
   document.getElementById('btnTabAnteriores').classList.toggle('ativa', aba === 'anteriores');
   document.getElementById('btnNovoPedido').style.display = (aba === 'ativos' && PAPEL_ATUAL === 'cadastro') ? 'inline-block' : 'none';
+  atualizarVisibilidadeBotaoAtualizar();
   if (aba === 'anteriores') { carregarAnosArquivados(); return; }
   renderizar();
 }
@@ -581,7 +1097,9 @@ const CORES_STATUS = {
   'Aguardando separação': '#c98a08', 'Separando': '#c98a08',
   'Aguardando complemento': '#c0392b', 'Aguardando montagem': '#1e5aa8',
   'Pronto para entrega': '#1e8e5a', 'Pronto para retirada': '#1e8e5a',
+  'Aguardando entrega': '#c98a08',
   'Saiu para entrega': '#1e5aa8', 'Em rota de entrega': '#1e5aa8',
+  'Mercadoria retornada': '#7c3aed',
   'Entregue': '#6b7280', 'Concluído': '#6b7280'
 };
 
@@ -627,6 +1145,9 @@ function infoUrgenciaPedido(p){
   if (status === 'Saiu para entrega' || status === 'Em rota de entrega') {
     return { classe:'em-rota', texto:'SAIU PARA ENTREGA', nivel:'Em rota', largura:100, ordem:-999999 };
   }
+  if (status === 'Mercadoria retornada') {
+    return { classe:'critico', texto:'MERCADORIA RETORNADA', nivel:'Necessita nova ação', largura:100, ordem:-999998 };
+  }
 
   const dias = diasParaEntrega(p?.DataPrevista);
   if (dias === null) return { classe:'sem-data', texto:'Sem data prevista de entrega', nivel:'Sem prazo', largura:15, ordem:999999 };
@@ -666,6 +1187,28 @@ function compararDatasSomenteDia(a,b){
   if(!da||!db) return null;
   return da<db?-1:da>db?1:0;
 }
+
+function textoNormalizado(v){
+  return String(v ?? '').trim().toUpperCase();
+}
+function ehEntregaExterna(p){
+  return textoNormalizado(p?.TipoDestino) === 'ENTREGA';
+}
+function ehConcluido(p){
+  return !!p?.DataConclusao || ['ENTREGUE','CONCLUÍDO','CONCLUIDO'].includes(textoNormalizado(p?.Status));
+}
+
+function ehRetiradaLoja(p){
+  return textoNormalizado(p?.TipoDestino) === 'RETIRADA';
+}
+function retiradasHistorico(){
+  return (DADOS.historico || []).filter(p => ehRetiradaLoja(p) && ehConcluido(p));
+}
+
+function entregasHistorico(){
+  return (DADOS.historico || []).filter(p => ehEntregaExterna(p) && ehConcluido(p));
+}
+
 function situacaoEntrega(p){
   const c=compararDatasSomenteDia(p.DataConclusao,p.DataPrevista);
   if(c===null) return {texto:'Sem comparação',classe:''};
@@ -680,8 +1223,10 @@ function dentroPeriodo(valor){
   return true;
 }
 function listasRelatorioAtual(){
-  const ativosEntrega=(DADOS.ativos||[]).filter(p=>String(p.TipoDestino||'').toLowerCase()==='entrega');
-  const concluidasPeriodo=(DADOS.historico||[]).filter(p=>dentroPeriodo(p.DataConclusao));
+  const ativosEntrega=(DADOS.ativos||[]).filter(p=>ehEntregaExterna(p));
+  const concluidasPeriodo=entregasHistorico().filter(p=>dentroPeriodo(p.DataConclusao));
+  const retiradasPeriodo=retiradasHistorico().filter(p=>dentroPeriodo(p.DataConclusao));
+  const concluidosTodosPeriodo=[...concluidasPeriodo,...retiradasPeriodo];
   const emRota=ativosEntrega.filter(p=>['Saiu para entrega','Em rota de entrega'].includes(p.Status));
   const pendentesEntrega=ativosEntrega.filter(p=>!['Saiu para entrega','Em rota de entrega'].includes(p.Status));
   const antes=concluidasPeriodo.filter(p=>compararDatasSomenteDia(p.DataConclusao,p.DataPrevista)<0);
@@ -690,8 +1235,11 @@ function listasRelatorioAtual(){
   const dentroPrazo=[...antes,...noPrazo];
   const aguardSep=ativosEntrega.filter(p=>['Aguardando separação','Separando'].includes(p.Status));
   const aguardComp=ativosEntrega.filter(p=>p.Status==='Aguardando complemento');
-  const prontos=ativosEntrega.filter(p=>['Pronto para entrega','Separado'].includes(p.Status) && !['Saiu para entrega','Em rota de entrega'].includes(p.Status));
-  return {concluidasPeriodo,pendentesEntrega,antes,noPrazo,atrasadas,dentroPrazo,aguardSep,aguardComp,prontos,emRota,ativosEntrega};
+  const prontos=ativosEntrega.filter(p=>['Aguardando entrega','Pronto para entrega','Separado'].includes(p.Status) && !['Saiu para entrega','Em rota de entrega'].includes(p.Status));
+  const retornados=ativosEntrega.filter(p=>p.Status==='Mercadoria retornada');
+  // Pedidos de retirada na loja (não são "entrega externa") que já estão prontos, faltando só o cliente vir buscar.
+  const prontosRetirada=(DADOS.ativos||[]).filter(p=>!ehEntregaExterna(p) && p.Status==='Pronto para retirada');
+  return {concluidasPeriodo,retiradasPeriodo,concluidosTodosPeriodo,pendentesEntrega,antes,noPrazo,atrasadas,dentroPrazo,aguardSep,aguardComp,prontos,emRota,retornados,ativosEntrega,prontosRetirada};
 }
 
 function abrirDetalhesRelatorio(chave,titulo){
@@ -756,13 +1304,344 @@ function htmlBarrasOperacao(L){
   return '<div class="status-barras">'+itens.map(i=>`<div class="status-linha ${i.c}"><span>${i.n}</span><div class="status-trilho"><div class="status-preenchimento" style="--w:${Math.round(i.v/max*100)}%"></div></div><b>${i.v}</b></div>`).join('')+'</div>';
 }
 
+
+function irParaRelatorioDetalhe(chave, titulo){
+  // Mantém o detalhamento atual e leva o usuário à área de Relatórios.
+  sairDoDashboardVisual();
+  ABA_ATUAL = 'relatorios';
+  document.getElementById('btnTabAtivos').classList.remove('ativa');
+  document.getElementById('btnTabHistorico').classList.remove('ativa');
+  document.getElementById('btnTabDashboard').classList.remove('ativa');
+  document.getElementById('btnTabAnteriores').classList.remove('ativa');
+  document.getElementById('btnTabRelatorios').classList.add('ativa');
+  document.getElementById('btnNovoPedido').style.display = 'none';
+  renderizarRelatorios();
+  setTimeout(() => abrirDetalhesRelatorio(chave, titulo), 0);
+}
+
+function htmlBarrasOperacaoDashboard(L){
+  const itens=[
+    {n:'Separação',v:L.aguardSep.length,c:'',ch:'aguardSep',t:'Pedidos em separação'},
+    {n:'Complemento',v:L.aguardComp.length,c:'erro',ch:'aguardComp',t:'Aguardando complemento'},
+    {n:'Prontos',v:L.prontos.length,c:'ok',ch:'prontos',t:'Pedidos prontos para saída'},
+    {n:'Em rota',v:L.emRota.length,c:'azul',ch:'emRota',t:'Pedidos em rota agora'}
+  ];
+  const max=Math.max(...itens.map(i=>i.v),1);
+  return '<div class="status-barras">'+itens.map(i=>`<div class="status-linha clicavel ${i.c}" tabindex="0" onclick="irParaRelatorioDetalhe('${i.ch}','${i.t}')" onkeydown="if(event.key==='Enter')this.click()"><span>${i.n}</span><div class="status-trilho"><div class="status-preenchimento" style="--w:${Math.round(i.v/max*100)}%"></div></div><b>${i.v}</b></div>`).join('')+'</div>';
+}
+
+
+function temaDashboardAtual(){
+  return localStorage.getItem('cse_dash_tema') || 'escuro';
+}
+function aplicarTemaDashboard(tema){
+  const t = tema === 'claro' ? 'claro' : 'escuro';
+  localStorage.setItem('cse_dash_tema',t);
+  document.body.classList.remove('dashboard-claro','dashboard-escuro');
+  if(ABA_ATUAL==='dashboard') document.body.classList.add('dashboard-'+t);
+}
+function alternarTemaDashboard(){
+  aplicarTemaDashboard(temaDashboardAtual()==='escuro'?'claro':'escuro');
+  if(ABA_ATUAL==='dashboard') renderizarDashboard();
+}
+async function alternarTelaCheiaDashboard(){
+  try{
+    if(!document.fullscreenElement){
+      await document.documentElement.requestFullscreen();
+      document.body.classList.add('dashboard-fullscreen');
+    }else{
+      await document.exitFullscreen();
+      document.body.classList.remove('dashboard-fullscreen');
+    }
+  }catch(e){
+    alert('O navegador não permitiu o modo tela cheia.');
+  }
+}
+document.addEventListener('fullscreenchange',()=>{
+  if(!document.fullscreenElement) document.body.classList.remove('dashboard-fullscreen');
+});
+function sairDoDashboardVisual(){
+  document.body.classList.remove('dashboard-claro','dashboard-escuro','dashboard-fullscreen');
+}
+function num(v){ const n=Number(v); return Number.isFinite(n)?n:0; }
+function metricasEstoqueDashboard(){
+  const ativos=DADOS.ativos||[];
+  const incompletos=ativos.filter(p=>num(p.QuantidadeVendida)>0 && num(p.QuantidadeDisponivel)<num(p.QuantidadeVendida));
+  const unidadesFaltantes=incompletos.reduce((s,p)=>s+Math.max(0,num(p.QuantidadeVendida)-num(p.QuantidadeDisponivel)),0);
+  const totalUnidadesAtivas=ativos.reduce((s,p)=>s+num(p.QuantidadeVendida),0);
+  const unidadesProntas=ativos.reduce((s,p)=>s+Math.min(num(p.QuantidadeVendida),num(p.QuantidadeDisponivel)),0);
+  return {incompletos,unidadesFaltantes,totalUnidadesAtivas,unidadesProntas};
+}
+function abrirPedidosEstoqueIncompleto(){
+  const lista=metricasEstoqueDashboard().incompletos;
+  if(!lista.length){ alert('Não há pedidos incompletos por falta de estoque neste momento.'); return; }
+  const html=lista.map(p=>`
+    <div class="detalhe-pedido">
+      <div class="detalhe-pedido-top"><span class="detalhe-pedido-num">#${p.NumeroPedido||'-'} · ${p.Cliente||'-'}</span><span class="detalhe-pedido-status">${p.Status||'-'}</span></div>
+      <div class="detalhe-pedido-grid">
+        <div><b>Consultor</b>${p.Consultor||'-'}</div>
+        <div><b>Vendidas</b>${num(p.QuantidadeVendida)}</div>
+        <div><b>Prontas</b>${num(p.QuantidadeDisponivel)}</div>
+        <div><b>Faltam</b>${Math.max(0,num(p.QuantidadeVendida)-num(p.QuantidadeDisponivel))}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('detRelTitulo').textContent='Pedidos incompletos por falta de estoque';
+  document.getElementById('detRelResumo').textContent=lista.length+' pedido'+(lista.length===1?'':'s')+' com falta de estoque.';
+  document.getElementById('detRelLista').innerHTML=html;
+  abrirModal('modalDetalhesRelatorio');
+}
+
+
+function dadosPulsoEntregas(){
+  const hist=DADOS.historico||[];
+  const dias=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date();
+    d.setHours(12,0,0,0);
+    d.setDate(d.getDate()-i);
+    const iso=d.toISOString().slice(0,10);
+    const rotulo=d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+    const total=hist.filter(p=>dataISOnoFuso(p.DataConclusao)===iso).length;
+    dias.push({iso,rotulo,total});
+  }
+  return dias;
+}
+function htmlGraficoPulso(){
+  const dados=dadosPulsoEntregas();
+  const max=Math.max(...dados.map(d=>d.total),1);
+  const w=700,h=160,padX=18,padY=18;
+  const pts=dados.map((d,i)=>{
+    const x=padX + (i*(w-padX*2)/(Math.max(dados.length-1,1)));
+    const y=h-padY - (d.total/max)*(h-padY*2);
+    return {x,y,...d};
+  });
+  const linha=pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+  const area=`${padX},${h-padY} ${linha} ${w-padX},${h-padY}`;
+  const tendencia=dados.length>1?dados[dados.length-1].total-dados[0].total:0;
+  const sinal=tendencia>0?'↑':tendencia<0?'↓':'→';
+  const texto=tendencia>0?'Subindo':tendencia<0?'Caindo':'Estável';
+  return `<div class="pulso-wrap">
+    <svg viewBox="0 0 ${w} ${h}" class="pulso-svg" preserveAspectRatio="none">
+      <line class="pulso-grid" x1="0" y1="${h*.25}" x2="${w}" y2="${h*.25}"></line>
+      <line class="pulso-grid" x1="0" y1="${h*.5}" x2="${w}" y2="${h*.5}"></line>
+      <line class="pulso-grid" x1="0" y1="${h*.75}" x2="${w}" y2="${h*.75}"></line>
+      <polygon class="pulso-area" points="${area}"></polygon>
+      <polyline class="pulso-line" points="${linha}"></polyline>
+    </svg>
+    <div class="pulso-labels">${dados.map(d=>`<span>${d.rotulo}</span>`).join('')}</div>
+    <div class="pulso-resumo"><span>Entregas concluídas nos últimos 7 dias</span><b>${sinal} ${texto}</b></div>
+  </div>`;
+}
+
+
+function horaNoFuso(valor){
+  if(!valor) return -1;
+  const d=new Date(valor);
+  if(isNaN(d)) return -1;
+  return Number(new Intl.DateTimeFormat('pt-BR',{timeZone:FUSO,hour:'2-digit',hour12:false}).format(d));
+}
+
+
+function abrirEntregasFaixaHoje(faixa){
+  const hoje=dataHojeISO();
+  const lista=(DADOS.historico||[]).filter(p=>{
+    if(!ehEntregaExterna(p) || dataISOnoFuso(p.DataConclusao)!==hoje) return false;
+    const h=horaNoFuso(p.DataConclusao);
+    return faixa==='manha' ? (h>=0 && h<12) : h>=12;
+  });
+  const titulo=faixa==='manha'?'Entregas concluídas pela manhã':'Entregas concluídas à tarde';
+  document.getElementById('detRelTitulo').textContent=titulo;
+  document.getElementById('detRelResumo').textContent=lista.length+' entrega'+(lista.length===1?'':'s')+' hoje.';
+  document.getElementById('detRelLista').innerHTML=lista.length?lista.map(p=>`
+    <div class="detalhe-pedido">
+      <div class="detalhe-pedido-top"><span class="detalhe-pedido-num">#${escaparHtml(p.NumeroPedido||'-')} · ${escaparHtml(p.Cliente||'-')}</span><span class="detalhe-pedido-status">${p.DataConclusao?formatarDataHora(p.DataConclusao):'-'}</span></div>
+      <div class="detalhe-pedido-grid">
+        <div><b>Motorista</b>${escaparHtml(p.Motorista||'-')}</div>
+        <div><b>Recebido por</b>${escaparHtml(p.Recebedor||'-')}</div>
+        <div><b>Confirmado por</b>${escaparHtml(p.ConfirmadoPor||'-')}</div>
+        <div><b>Resultado</b>${situacaoEntrega(p).texto}</div>
+      </div>
+    </div>`).join(''):'<div class="vazio">Nenhuma entrega nesta faixa hoje.</div>';
+  abrirModal('modalDetalhesRelatorio');
+}
+
+
+function abrirConcluidosHojePorTipo(tipo){
+  const hoje=dataHojeISO();
+  const lista=(tipo==='retirada' ? retiradasHistorico() : entregasHistorico())
+    .filter(p=>dataISOnoFuso(p.DataConclusao)===hoje);
+  const titulo=tipo==='retirada'?'Retiradas na loja hoje':'Entregas externas hoje';
+
+  document.getElementById('detRelTitulo').textContent=titulo;
+  document.getElementById('detRelResumo').textContent=lista.length+' pedido'+(lista.length===1?'':'s')+' concluído'+(lista.length===1?'':'s')+' hoje.';
+  document.getElementById('detRelLista').innerHTML=lista.length?lista.map(p=>`
+    <div class="detalhe-pedido">
+      <div class="detalhe-pedido-top">
+        <span class="detalhe-pedido-num">#${escaparHtml(p.NumeroPedido||'-')} · ${escaparHtml(p.Cliente||'-')}</span>
+        <span class="detalhe-pedido-status">${tipo==='retirada'?'RETIRADA NA LOJA':'ENTREGA EXTERNA'}</span>
+      </div>
+      <div class="detalhe-pedido-grid">
+        <div><b>Consultor</b>${escaparHtml(p.Consultor||'-')}</div>
+        <div><b>Concluído em</b>${p.DataConclusao?formatarDataHora(p.DataConclusao):'-'}</div>
+        <div><b>Montagem</b>${escaparHtml(p.TipoMontagem||'-')}</div>
+        ${tipo==='entrega'?`<div><b>Motorista/Entregador</b>${escaparHtml(p.Motorista||'-')}</div>`:''}
+        ${tipo==='entrega'?`<div><b>Recebido por</b>${escaparHtml(p.Recebedor||'-')}</div>`:''}
+      </div>
+    </div>`).join(''):'<div class="vazio">Nenhum pedido concluído hoje nesta categoria.</div>';
+  abrirModal('modalDetalhesRelatorio');
+}
+
+function abrirConcluidosHojeTodos(){
+  const hoje=dataHojeISO();
+  const lista=[
+    ...entregasHistorico().filter(p=>dataISOnoFuso(p.DataConclusao)===hoje),
+    ...retiradasHistorico().filter(p=>dataISOnoFuso(p.DataConclusao)===hoje)
+  ].sort((a,b)=>new Date(a.DataConclusao||0)-new Date(b.DataConclusao||0));
+
+  document.getElementById('detRelTitulo').textContent='Concluídos hoje';
+  document.getElementById('detRelResumo').textContent=lista.length+' pedido'+(lista.length===1?'':'s')+' concluído'+(lista.length===1?'':'s')+' hoje.';
+  document.getElementById('detRelLista').innerHTML=lista.length?lista.map(p=>`
+    <div class="detalhe-pedido">
+      <div class="detalhe-pedido-top">
+        <span class="detalhe-pedido-num">#${escaparHtml(p.NumeroPedido||'-')} · ${escaparHtml(p.Cliente||'-')}</span>
+        <span class="detalhe-pedido-status">${ehRetiradaLoja(p)?'RETIRADA NA LOJA':'ENTREGA EXTERNA'}</span>
+      </div>
+      <div class="detalhe-pedido-grid">
+        <div><b>Destino</b>${ehRetiradaLoja(p)?'Retirada na loja':'Entrega externa'}</div>
+        <div><b>Concluído em</b>${p.DataConclusao?formatarDataHora(p.DataConclusao):'-'}</div>
+        <div><b>Montagem</b>${escaparHtml(p.TipoMontagem||'-')}</div>
+        <div><b>Consultor</b>${escaparHtml(p.Consultor||'-')}</div>
+      </div>
+    </div>`).join(''):'<div class="vazio">Nenhum pedido concluído hoje.</div>';
+  abrirModal('modalDetalhesRelatorio');
+}
+
+function renderizarDashboard(){
+  const area=document.getElementById('areaConteudo');
+  aplicarTemaDashboard(temaDashboardAtual());
+
+  const L=listasRelatorioAtual();
+  const hoje=dataHojeISO();
+  const entregasHoje=entregasHistorico().filter(p=>dataISOnoFuso(p.DataConclusao)===hoje);
+  const retiradasHoje=retiradasHistorico().filter(p=>dataISOnoFuso(p.DataConclusao)===hoje);
+  const concluidasHoje=[...entregasHoje,...retiradasHoje];
+  const manhaHoje=entregasHoje.filter(p=>{const h=horaNoFuso(p.DataConclusao);return h>=0 && h<12;});
+  const tardeHoje=entregasHoje.filter(p=>{const h=horaNoFuso(p.DataConclusao);return h>=12;});
+  const retiradasManhaHoje=retiradasHoje.filter(p=>{const h=horaNoFuso(p.DataConclusao);return h>=0 && h<12;});
+  const retiradasTardeHoje=retiradasHoje.filter(p=>{const h=horaNoFuso(p.DataConclusao);return h>=12;});
+  const antesHoje=entregasHoje.filter(p=>situacaoEntrega(p).texto==='Antes do prazo');
+  const noPrazoHoje=entregasHoje.filter(p=>situacaoEntrega(p).texto==='No prazo');
+  const atrasadasHoje=entregasHoje.filter(p=>situacaoEntrega(p).texto==='Atrasada');
+  const dentroHoje=antesHoje.length+noPrazoHoje.length;
+  const taxaHoje=entregasHoje.length?Math.round((dentroHoje/entregasHoje.length)*100):0;
+  const taxaAtraso=entregasHoje.length?Math.round((atrasadasHoje.length/entregasHoje.length)*100):0;
+  const est=metricasEstoqueDashboard();
+  const pctProntas=est.totalUnidadesAtivas?Math.round(est.unidadesProntas/est.totalUnidadesAtivas*100):100;
+
+  const atualizacaoTexto='Ao vivo: atualização automática a cada 1 minuto somente nesta tela. O botão Atualizar agora continua disponível.';
+
+  area.innerHTML=`
+    <div class="dash-cabecalho">
+      <div><h2 class="dash-neon-title">📈 Dashboard Executivo</h2><div class="grafico-sub">Operação, desempenho, estoque e produtividade</div></div>
+      <div class="dash-controles">
+        <div class="dash-atualizacao">${atualizacaoTexto}</div>
+        <button class="btn btn-secundario" onclick="carregarDados()">↻ Atualizar agora</button>
+        <button class="btn btn-secundario" onclick="alternarTemaDashboard()">${temaDashboardAtual()==='escuro'?'☀️ Tema claro':'🌙 Tema escuro'}</button>
+        <button class="btn btn-secundario" onclick="alternarTelaCheiaDashboard()">⛶ Tela cheia</button>
+      </div>
+    </div>
+
+    <div class="dash-kpis">
+      <div class="dash-kpi azul" onclick="irParaRelatorioDetalhe('emRota','Pedidos em rota agora')" tabindex="0"><b>${L.emRota.length}</b><span>Em rota agora</span><small>Clique para identificar</small></div>
+      <div class="dash-kpi alerta" onclick="irParaRelatorioDetalhe('pendentesEntrega','Entregas pendentes agora')" tabindex="0"><b>${L.pendentesEntrega.length}</b><span>Pendentes de entrega</span><small>Ainda não saíram</small></div>
+      <div class="dash-kpi erro" onclick="irParaRelatorioDetalhe('aguardComp','Aguardando complemento')" tabindex="0"><b>${L.aguardComp.length}</b><span>Aguardando complemento</span><small>Falta estoque / produção</small></div>
+      <div class="dash-kpi ok" onclick="irParaRelatorioDetalhe('prontos','Pedidos prontos para saída')" tabindex="0"><b>${L.prontos.length}</b><span>Prontos p/ entrega externa</span><small>Só entrega, veja retirada abaixo</small></div>
+      <div class="dash-kpi" onclick="irParaRelatorioDetalhe('aguardSep','Pedidos em separação')" tabindex="0"><b>${L.aguardSep.length}</b><span>Em separação</span><small>Operação atual</small></div>
+      <div class="dash-kpi ok" onclick="abrirConcluidosHojeTodos()" tabindex="0"><b>${concluidasHoje.length}</b><span>Concluídos hoje</span><small>${entregasHoje.length} externa(s) · ${retiradasHoje.length} retirada(s)</small></div>
+    </div>
+
+    <div class="dash-grid-secundario">
+      <div class="mini-indicador clicavel" onclick="abrirPedidosEstoqueIncompleto()"><b>${est.incompletos.length}</b><span>Pedidos incompletos</span><small>Venda sem estoque completo</small></div>
+      <div class="mini-indicador clicavel" onclick="abrirPedidosEstoqueIncompleto()"><b>${est.unidadesFaltantes}</b><span>Unidades faltando</span><small>Quantidade ainda a produzir/montar</small></div>
+      <div class="mini-indicador"><b>${pctProntas}%</b><span>Unidades prontas</span><small>Dos itens ativos com quantidade informada</small></div>
+      <div class="mini-indicador"><b>${dentroHoje}</b><span>Sucesso hoje</span><small>Entregas antes ou no prazo</small></div>
+      <div class="mini-indicador"><b>${taxaAtraso}%</b><span>Taxa de atraso hoje</span><small>${atrasadasHoje.length} entrega(s) atrasada(s)</small></div>
+      <div class="mini-indicador clicavel destaque-retorno" onclick="abrirRetornosAtuaisDashboard()"><b>${(DADOS.ativos||[]).filter(p=>p.Status==='Mercadoria retornada').length}</b><span>Mercadoria retornada</span><small>Todo retorno exige justificativa e permanece auditável</small></div>
+      <div class="mini-indicador clicavel" tabindex="0" onclick="abrirDetalhesRelatorio('ativosEntrega','Entregas em aberto')" onkeydown="if(event.key==='Enter')this.click()"><b>${L.ativosEntrega.length}</b><span>Entregas em aberto</span><small>Clique para ver motorista e montador de cada uma</small></div>
+      <div class="mini-indicador clicavel" tabindex="0" onclick="abrirDetalhesRelatorio('prontosRetirada','Aguardando retirada na loja')" onkeydown="if(event.key==='Enter')this.click()"><b>${L.prontosRetirada.length}</b><span>Aguardando retirada</span><small>Pronto, só falta o cliente retirar na loja</small></div>
+
+      <div class="mini-indicador clicavel resumo-dia-card" onclick="abrirConcluidosHojePorTipo('entrega')">
+        <b>${entregasHoje.length}</b>
+        <span>Entregas externas hoje</span>
+        <div class="resumo-dia-sub">
+          <div><strong>${manhaHoje.length}</strong><small>Manhã</small></div>
+          <div><strong>${tardeHoje.length}</strong><small>Tarde</small></div>
+        </div>
+      </div>
+
+      <div class="mini-indicador clicavel resumo-dia-card" onclick="abrirConcluidosHojePorTipo('retirada')">
+        <b>${retiradasHoje.length}</b>
+        <span>Retiradas na loja hoje</span>
+        <div class="resumo-dia-sub">
+          <div><strong>${retiradasManhaHoje.length}</strong><small>Manhã</small></div>
+          <div><strong>${retiradasTardeHoje.length}</strong><small>Tarde</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-graficos dashboard-graficos-duplo">
+      <div class="grafico-card grafico-status-card">
+        <h3>Fluxo operacional atual</h3>
+        <div class="grafico-sub">Clique em qualquer linha para ver os pedidos</div>
+        ${htmlBarrasOperacaoDashboard(L)}
+        <div class="desempenho-compacto">
+          <div><span>Dentro do prazo hoje</span><b>${taxaHoje}%</b></div>
+          <div><span>Antes</span><b>${antesHoje.length}</b></div>
+          <div><span>No dia</span><b>${noPrazoHoje.length}</b></div>
+          <div><span>Atrasadas</span><b>${atrasadasHoje.length}</b></div>
+        </div>
+      </div>
+
+      <div class="grafico-card grafico-tendencia-card">
+        <h3>Tendência de produtividade</h3>
+        <div class="grafico-sub">Evolução das entregas concluídas nos últimos 7 dias</div>
+        ${htmlGraficoPulso()}
+      </div>
+    </div>
+
+    <div class="dash-faixa">
+      <div class="gauge-card">
+        <h3>Disponibilidade dos itens em pedidos ativos</h3>
+        <strong>${pctProntas}%</strong>
+        <div class="gauge-linha"><div class="gauge-fill" style="--pct:${pctProntas}%"></div></div>
+        <div class="grafico-sub">${est.unidadesProntas} unidade(s) pronta(s) de ${est.totalUnidadesAtivas} informada(s)</div>
+      </div>
+      <div class="gauge-card">
+        <h3>Entregas dentro do prazo hoje</h3>
+        <strong>${taxaHoje}%</strong>
+        <div class="gauge-linha"><div class="gauge-fill" style="--pct:${taxaHoje}%"></div></div>
+        <div class="grafico-sub">${dentroHoje} de ${concluidasHoje.length}</div>
+      </div>
+      <div class="gauge-card">
+        <h3>Atrasos hoje</h3>
+        <strong>${taxaAtraso}%</strong>
+        <div class="gauge-linha"><div class="gauge-fill erro" style="--pct:${taxaAtraso}%"></div></div>
+        <div class="grafico-sub">${atrasadasHoje.length} entrega(s)</div>
+      </div>
+    </div>
+
+    <div class="dash-rodape-info">
+      Todo problema que impeça a conclusão da entrega deve ser registrado como “Mercadoria retornada”, com motivo obrigatório. Assim, o Dashboard trabalha com um único indicador confiável de retorno.
+    </div>`;
+}
+
 function renderizarRelatorios(){
   const area=document.getElementById('areaConteudo');
   const L=listasRelatorioAtual();
   const concluidas=L.concluidasPeriodo, pendentes=L.pendentesEntrega, antes=L.antes, noPrazo=L.noPrazo, atrasadas=L.atrasadas;
   const aguardSep=L.aguardSep, aguardComp=L.aguardComp, prontos=L.prontos, emRota=L.emRota;
   const taxaPrazo=concluidas.length?Math.round((L.dentroPrazo.length/concluidas.length)*100):0;
-  const linhas=concluidas.map(p=>{const sit=situacaoEntrega(p);return `<tr><td>#${p.NumeroPedido}</td><td>${p.Cliente||'-'}</td><td>${p.Consultor||'-'}</td><td>${formatarData(p.DataPrevista)}</td><td>${formatarData(p.DataConclusao)}</td><td>${p.Motorista||'-'}</td><td>${p.Montador||'-'}</td><td class="${sit.classe}">${sit.texto}</td></tr>`}).join('');
+  const linhas=concluidas.map(p=>{const sit=situacaoEntrega(p);return `<tr><td>#${p.NumeroPedido}</td><td>${p.Cliente||'-'}</td><td>${p.Consultor||'-'}</td><td>${formatarData(p.DataPrevista)}</td><td>${p.DataConclusao?formatarDataHora(p.DataConclusao):'-'}</td><td>${p.Motorista||'-'}</td><td>${p.Montador||'-'}</td><td>${p.Recebedor||'-'}</td><td>${p.ConfirmadoPor||'-'}</td><td class="${sit.classe}">${sit.texto}</td></tr>`}).join('');
   area.innerHTML=`
     <div class="relatorio-toolbar">
       <div class="campo-filtro"><label>Data inicial</label><input type="date" id="relInicio" value="${REL_INICIO}"></div>
@@ -773,7 +1652,7 @@ function renderizarRelatorios(){
       <button class="btn btn-secundario" onclick="carregarDados()">↻ Atualizar agora</button>
       <button class="btn btn-secundario" onclick="window.print()">🖨️ Imprimir / PDF</button>
     </div>
-    <div class="dashboard-aviso">${PAPEL_ATUAL === 'cadastro' ? 'Modo estoque: os dados só são atualizados quando você clicar em <b>↻ Atualizar agora</b>, evitando interrupções durante cadastros e alterações.' : 'Modo consulta: <b>atualização automática a cada 1 minuto</b>. Se você estiver usando um campo ou com uma janela aberta, a atualização aguarda para não interromper sua consulta. Você também pode usar <b>↻ Atualizar agora</b> a qualquer momento.'}</div>
+    <div class="dashboard-aviso">${PAPEL_ATUAL === 'cadastro' ? 'Modo estoque: os dados só são atualizados quando você clicar em <b>↻ Atualizar agora</b>, evitando interrupções durante cadastros e alterações.' : 'Modo consulta: nesta aba a atualização é <b>manual</b>. A atualização automática de 1 minuto fica exclusivamente no <b>Dashboard</b>. Use <b>↻ Atualizar agora</b> quando quiser atualizar estes relatórios.'}</div>
     <div class="dashboard-graficos">
       <div class="grafico-card grafico-anel-card">
         <h3>Índice de entregas no prazo</h3><div class="grafico-sub">Desempenho das entregas concluídas no período</div>
@@ -800,16 +1679,18 @@ function renderizarRelatorios(){
       <div class="relatorio-kpis" style="margin-bottom:0">
         <div class="kpi clicavel" tabindex="0" onclick="abrirDetalhesRelatorio('aguardSep','Pedidos em separação')" onkeydown="if(event.key==='Enter')this.click()"><b>${aguardSep.length}</b><span>Em separação</span><span class="kpi-dica">Clique para ver</span></div>
         <div class="kpi clicavel destaque-erro" tabindex="0" onclick="abrirDetalhesRelatorio('aguardComp','Aguardando complemento')" onkeydown="if(event.key==='Enter')this.click()"><b>${aguardComp.length}</b><span>Aguardando complemento</span><span class="kpi-dica">Clique para ver</span></div>
-        <div class="kpi clicavel destaque-ok" tabindex="0" onclick="abrirDetalhesRelatorio('prontos','Pedidos prontos para saída')" onkeydown="if(event.key==='Enter')this.click()"><b>${prontos.length}</b><span>Prontos para saída</span><span class="kpi-dica">Clique para ver</span></div>
+        <div class="kpi clicavel destaque-ok" tabindex="0" onclick="abrirDetalhesRelatorio('prontos','Pedidos prontos para saída')" onkeydown="if(event.key==='Enter')this.click()"><b>${prontos.length}</b><span>Prontos para entrega externa</span><span class="kpi-dica">Clique para ver</span></div>
+        <div class="kpi clicavel destaque-ok" tabindex="0" onclick="abrirDetalhesRelatorio('prontosRetirada','Aguardando retirada na loja')" onkeydown="if(event.key==='Enter')this.click()"><b>${L.prontosRetirada.length}</b><span>Aguardando retirada</span><span class="kpi-dica">Pronto, falta o cliente vir buscar</span></div>
         <div class="kpi clicavel" tabindex="0" onclick="abrirDetalhesRelatorio('emRota','Pedidos em rota agora')" onkeydown="if(event.key==='Enter')this.click()"><b>${emRota.length}</b><span>Em rota agora</span><span class="kpi-dica">Clique para ver quais são</span></div>
       </div>
     </div>
     <div class="relatorio-bloco"><h3>📋 Entregas concluídas de ${formatarData(REL_INICIO+'T12:00:00')} até ${formatarData(REL_FIM+'T12:00:00')}</h3>
-      <div class="relatorio-tabela-wrap"><table class="relatorio-tabela"><thead><tr><th>Pedido</th><th>Cliente</th><th>Consultor</th><th>Previsão</th><th>Entregue</th><th>Motorista</th><th>Montador</th><th>Resultado</th></tr></thead><tbody>${linhas||'<tr><td colspan="8">Nenhuma entrega concluída no período.</td></tr>'}</tbody></table></div>
+      <div class="relatorio-tabela-wrap"><table class="relatorio-tabela"><thead><tr><th>Pedido</th><th>Cliente</th><th>Consultor</th><th>Previsão</th><th>Entregue em</th><th>Motorista</th><th>Montador</th><th>Recebido por</th><th>Confirmado por</th><th>Resultado</th></tr></thead><tbody>${linhas||'<tr><td colspan="10">Nenhuma entrega concluída no período.</td></tr>'}</tbody></table></div>
     </div>`;
 }
 
 function renderizar(){
+  if (ABA_ATUAL === 'dashboard') { renderizarDashboard(); return; }
   if (ABA_ATUAL === 'relatorios') { renderizarRelatorios(); return; }
   if (ABA_ATUAL === 'anteriores') { renderizarArquivoAnual(); return; }
   const area = document.getElementById('areaConteudo');
@@ -853,42 +1734,29 @@ function renderizar(){
     const temQtd = total > 0;
     const incompleto = temQtd && pendente > 0;
     const emRota = p.Status === 'Saiu para entrega' || p.Status === 'Em rota de entrega';
-    const pronto = !incompleto && (p.Status === 'Pronto para entrega' || p.Status === 'Pronto para retirada' || p.Status === 'Separado');
+    const aguardandoEntrega = p.Status === 'Aguardando entrega';
+    const aguardandoSeparacao = p.Status === 'Aguardando separação' || p.Status === 'Separando';
+    const prontoRetirada = p.Status === 'Pronto para retirada';
+    const retornado = p.Status === 'Mercadoria retornada';
     const urg = infoUrgenciaPedido(p);
 
     let botoes = '';
     if (podeEditar) {
       botoes += `<button class="btn btn-secundario" onclick='abrirModalEditar(${JSON.stringify(p)})'>Atualizar</button>`;
-      if (incompleto) botoes += `<button class="btn btn-sucesso" onclick="completarPedido('${p.ID}')">✓ Complemento pronto</button>`;
-      else if (p.TipoDestino === 'Entrega' && !emRota) botoes += `<button class="btn btn-primario" onclick='abrirModalSaidaEntrega(${JSON.stringify(p)})'>🚚 Saiu para entrega</button>`;
-      else if (p.TipoDestino === 'Entrega' && emRota) botoes += `<button class="btn btn-sucesso" onclick="concluirPedido('${p.ID}')">✓ Concluir entrega</button>`;
-      else if (p.TipoDestino === 'Retirada' && pronto) botoes += `<button class="btn btn-sucesso" onclick="concluirPedido('${p.ID}')">✓ Confirmar retirada</button>`;
-      else if (p.TipoDestino === 'Retirada' && !incompleto) botoes += `<button class="btn btn-primario" onclick="marcarProntoRetirada('${p.ID}')">✓ Pronto para retirada</button>`;
-    }
 
-    if (ABA_ATUAL === 'historico') {
-      return `
-      <div class="card card-historico">
-        <div class="card-top">
-          <div class="pedido-num">#${p.NumeroPedido}</div>
-          <span class="badge" style="background:#1e8e5a">ENTREGUE</span>
-        </div>
-        <div class="entregue-banner">
-          <strong>✓ Pedido entregue</strong>
-          <span>Entregue em ${formatarData(p.DataConclusao)}</span>
-        </div>
-        <div class="historico-auditoria">
-          <div class="hist-item"><b>Cliente</b><span>${p.Cliente || '-'}</span></div>
-          <div class="hist-item"><b>Consultor</b><span>${p.Consultor || '-'}</span></div>
-          <div class="hist-item"><b>Previsão</b><span>${formatarData(p.DataPrevista)}</span></div>
-          <div class="hist-item"><b>Destino</b><span>${p.TipoDestino || '-'}</span></div>
-          <div class="hist-item"><b>Montagem</b><span>${p.TipoDestino === 'Entrega' ? (p.TipoMontagem || '-') : 'Não se aplica'}</span></div>
-          <div class="hist-item equipe"><b>Motorista</b><span>${p.Motorista || '-'}</span></div>
-          <div class="hist-item equipe"><b>Montador</b><span>${p.Montador || '-'}</span></div>
-          <div class="hist-item tempo"><b>Saiu em</b><span>${p.DataSaidaEntrega ? formatarData(p.DataSaidaEntrega) : '-'}</span></div>
-          <div class="hist-item tempo"><b>Concluído em</b><span>${formatarData(p.DataConclusao)}</span></div>
-        </div>
-      </div>`;
+      if (incompleto) {
+        botoes += `<button class="btn btn-sucesso" onclick="completarPedido('${p.ID}')">✓ Complemento pronto</button>`;
+      } else if (aguardandoSeparacao) {
+        botoes += `<button class="btn btn-sucesso" onclick="marcarProdutoSeparado('${p.ID}')">✓ Produto separado</button>`;
+      } else if (p.TipoDestino === 'Entrega' && retornado) {
+        botoes += `<button class="btn btn-primario" onclick='abrirModalSaidaEntrega(${JSON.stringify(p)})'>🔄 Sair para nova tentativa de entrega</button>`;
+      } else if (p.TipoDestino === 'Entrega' && aguardandoEntrega) {
+        botoes += `<button class="btn btn-primario" onclick='abrirModalSaidaEntrega(${JSON.stringify(p)})'>🚚 Saiu para entrega</button>`;
+      } else if (p.TipoDestino === 'Entrega' && emRota) {
+        botoes += `<span class="sub-tag" style="background:#e8f1ff;color:#1e5aa8;padding:7px 10px">AGUARDANDO CONFIRMAÇÃO DO ENTREGADOR</span>`;
+      } else if (p.TipoDestino === 'Retirada' && prontoRetirada) {
+        botoes += `<button class="btn btn-sucesso" onclick="concluirPedido('${p.ID}')">✓ Produto entregue</button>`;
+      }
     }
 
     return `
@@ -917,6 +1785,7 @@ function renderizar(){
       </div>
       ${temQtd ? `<div class="quantidades"><div class="qtd-box"><b>${total}</b><span>Vendidas</span></div><div class="qtd-box pronta"><b>${pronta}</b><span>Prontas</span></div><div class="qtd-box ${pendente > 0 ? 'pendente' : ''}"><b>${pendente}</b><span>Pendentes</span></div></div>` : ''}
       ${incompleto ? '<div class="obs" style="border-left-color:#c0392b;background:#fff7f6;color:#8f2d23"><b>Pedido incompleto:</b> aguardando o complemento dos itens pendentes antes da liberação.</div>' : ''}
+      ${retornado ? `<div class="obs" style="border-left-color:#7c3aed;background:#faf6ff;color:#5b21b6"><b>Mercadoria retornou${p.DataRetornoEntrega ? ' em ' + formatarDataHora(p.DataRetornoEntrega) : ''}:</b> ${p.MotivoRetornoEntrega || 'motivo não informado'}.${p.DetalheRetornoEntrega ? ' ' + p.DetalheRetornoEntrega : ''} Corrija o que for necessário e libere uma nova tentativa de entrega.</div>` : ''}
       ${p.Observacoes ? `<div class="obs">${p.Observacoes}</div>` : ''}
       ${podeEditar ? `<div class="acoes">${botoes}</div>` : ''}
     </div>`;
@@ -962,8 +1831,11 @@ function renderizarArquivoAnual(){
   <div class="hist-item"><b>Cliente</b><span>${escaparHtml(p.Cliente||'-')}</span></div><div class="hist-item"><b>Consultor</b><span>${escaparHtml(p.Consultor||'-')}</span></div>
   <div class="hist-item"><b>Previsão</b><span>${formatarData(p.DataPrevista)}</span></div><div class="hist-item"><b>Destino</b><span>${escaparHtml(p.TipoDestino||'-')}</span></div>
   <div class="hist-item"><b>Montagem</b><span>${escaparHtml(p.TipoMontagem||'-')}</span></div><div class="hist-item"><b>Motorista</b><span>${escaparHtml(p.Motorista||'-')}</span></div>
-  <div class="hist-item"><b>Montador</b><span>${escaparHtml(p.Montador||'-')}</span></div><div class="hist-item"><b>Saiu em</b><span>${p.DataSaidaEntrega?formatarData(p.DataSaidaEntrega):'-'}</span></div>
-  <div class="hist-item"><b>Concluído em</b><span>${formatarData(p.DataConclusao)}</span></div></div></div>`).join('');
+  <div class="hist-item"><b>Montador</b><span>${escaparHtml(p.Montador||'-')}</span></div>
+  <div class="hist-item"><b>Recebido por</b><span>${escaparHtml(p.Recebedor||'-')}</span></div>
+  <div class="hist-item"><b>Confirmado por</b><span>${escaparHtml(p.ConfirmadoPor||'-')}</span></div>
+  <div class="hist-item"><b>Saiu em</b><span>${p.DataSaidaEntrega?formatarDataHora(p.DataSaidaEntrega):'-'}</span></div>
+  <div class="hist-item"><b>Concluído em</b><span>${p.DataConclusao?formatarDataHora(p.DataConclusao):'-'}</span></div></div></div>`).join('');
   area.innerHTML=topo+cards;
 }
 function abrirEncerramentoAno(){
@@ -982,6 +1854,45 @@ async function confirmarEncerramentoAno(){
     fecharModal('modalEncerrarAno');
     alert('Ano '+ano+' arquivado. '+resp.removidosDoHistoricoAtual+' registro(s) movido(s) para '+resp.aba+'.');
     await carregarDados();
+  }catch(e){erro.textContent=e.message||e;}
+}
+
+
+
+function abrirAcessoMotoristaPorId(id){
+  const x=(DADOS.equipe||[]).find(item=>String(item.ID)===String(id));
+  if(!x){
+    alert('Não foi possível localizar este motorista. Clique em Atualizar e tente novamente.');
+    return;
+  }
+  abrirAcessoMotorista(x);
+}
+function abrirAcessoMotorista(x){
+  const modal=document.getElementById('modalAcessoMotorista');
+  if(!modal){
+    alert('A janela de configuração de acesso não foi carregada.');
+    return;
+  }
+  document.getElementById('amId').value=x.ID;
+  document.getElementById('amNome').innerHTML='<b>'+escaparHtml(x.Nome||'Motorista')+'</b><br>Motorista/Entregador';
+  document.getElementById('amUsuario').value=(x.Usuario||'').toUpperCase();
+  document.getElementById('amSenha').value='';
+  document.getElementById('erroAcessoMotorista').textContent='';
+  abrirModal('modalAcessoMotorista');
+}
+async function salvarAcessoMotorista(){
+  const id=document.getElementById('amId').value;
+  const usuario=document.getElementById('amUsuario').value.trim().toLowerCase();
+  const novaSenha=document.getElementById('amSenha').value;
+  const erro=document.getElementById('erroAcessoMotorista');
+  erro.textContent='';
+  if(!usuario||!novaSenha){erro.textContent='Informe usuário e senha.';return;}
+  try{
+    const resp=await chamarBackend({acao:'configurarAcessoMotorista',senha:SENHA_ATUAL,id,usuario,novaSenha});
+    if(resp.erro){erro.textContent=resp.erro;return;}
+    fecharModal('modalAcessoMotorista');
+    await carregarDados();
+    await carregarEquipe();
   }catch(e){erro.textContent=e.message||e;}
 }
 
@@ -1027,10 +1938,27 @@ function ativoEquipe(item){
 function renderizarListaEquipeCadastro(){
   const area = document.getElementById('listaEquipeCadastro');
   const itens = (DADOS.equipe || []).filter(x => x.Tipo === TIPO_CADASTRO_ATUAL).sort((a,b) => String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
-  if (!itens.length) { area.innerHTML = '<div class="vazio" style="padding:18px">Nenhum cadastro ainda.</div>'; return; }
+  if (!itens.length) {
+    const total=(DADOS.equipe||[]).length;
+    area.innerHTML = '<div class="vazio" style="padding:18px">'+
+      (total ? 'Nenhum cadastro nesta categoria.' : 'Nenhum cadastro carregado. Clique em Atualizar agora se necessário.')+
+      '</div>';
+    return;
+  }
   area.innerHTML = itens.map(x => {
     const ativo = ativoEquipe(x);
-    return `<div class="equipe-linha ${ativo ? '' : 'inativo'}"><div><div class="equipe-nome">${escaparHtml(x.Nome)}</div><span class="equipe-status">${ativo ? 'ATIVO' : 'INATIVO'}</span></div><button class="btn ${ativo ? 'btn-perigo' : 'btn-sucesso'}" style="padding:6px 10px;font-size:12px" onclick="alterarStatusEquipe('${x.ID}', ${ativo ? 'false' : 'true'})">${ativo ? 'Inativar' : 'Reativar'}</button></div>`;
+    return `<div class="equipe-linha ${ativo ? '' : 'inativo'}">
+      <div>
+        <div class="equipe-nome">${escaparHtml(x.Nome)}</div>
+        ${x.Tipo==='Motorista' ? `<div style="font-size:11px;color:var(--cinza)">Usuário: <b>${escaparHtml(x.Usuario||'não configurado')}</b>${x.Usuario?'':' · clique em Acesso para configurar'}</div>` : ''}
+        <span class="equipe-status">${ativo ? 'ATIVO' : 'INATIVO'}</span>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btn-secundario" style="padding:6px 10px;font-size:12px" onclick="abrirEditarEquipe('${x.ID}')">✏️ Editar</button>
+        ${x.Tipo==='Motorista' ? `<button class="btn btn-secundario" style="padding:6px 10px;font-size:12px" onclick="abrirAcessoMotoristaPorId('${x.ID}')">🔐 Acesso</button>` : ''}
+        <button class="btn ${ativo ? 'btn-perigo' : 'btn-sucesso'}" style="padding:6px 10px;font-size:12px" onclick="alterarStatusEquipe('${x.ID}', ${ativo ? 'false' : 'true'})">${ativo ? 'Inativar' : 'Reativar'}</button>
+      </div>
+    </div>`;
   }).join('');
 }
 function cadastrarEquipe(){
@@ -1049,6 +1977,33 @@ function alterarStatusEquipe(id, ativo){
     carregarDados().then(() => renderizarListaEquipeCadastro());
   }).catch(e => alert(e.message || e));
 }
+function abrirEditarEquipe(id){
+  const x = (DADOS.equipe || []).find(item => String(item.ID) === String(id));
+  if (!x) { alert('Não foi possível localizar este cadastro. Clique em Atualizar e tente novamente.'); return; }
+  document.getElementById('eeId').value = x.ID;
+  document.getElementById('eeNome').value = x.Nome || '';
+  const camposMotorista = document.getElementById('eeCamposMotorista');
+  camposMotorista.style.display = x.Tipo === 'Motorista' ? 'block' : 'none';
+  document.getElementById('eeUsuario').value = (x.Usuario || '').toUpperCase();
+  document.getElementById('eeSenha').value = '';
+  document.getElementById('erroEditarEquipe').textContent = '';
+  abrirModal('modalEditarEquipe');
+  setTimeout(() => document.getElementById('eeNome')?.focus(), 50);
+}
+function salvarEdicaoEquipe(){
+  const id = document.getElementById('eeId').value;
+  const nome = document.getElementById('eeNome').value.trim();
+  const usuario = document.getElementById('eeUsuario').value.trim();
+  const novaSenha = document.getElementById('eeSenha').value;
+  const erro = document.getElementById('erroEditarEquipe');
+  erro.textContent = '';
+  if (!nome) { erro.textContent = 'Informe o nome.'; return; }
+  chamarBackend({acao:'editarEquipe', senha:SENHA_ATUAL, id, nome, usuario, novaSenha}).then(resp => {
+    if (!resp.ok) { erro.textContent = resp.erro || 'Erro ao salvar a edição.'; return; }
+    fecharModal('modalEditarEquipe');
+    carregarDados().then(() => renderizarListaEquipeCadastro());
+  }).catch(e => erro.textContent = e.message || e);
+}
 
 // ================== MODAIS ==================
 function abrirModal(id){ document.getElementById(id).classList.add('aberto'); }
@@ -1058,6 +2013,7 @@ function abrirModalNovoPedido(){
   ['fNumero','fCliente','fData','fQtdVendida','fQtdDisponivel','fObs'].forEach(id => document.getElementById(id).value = '');
   preencherSelectEquipe('fConsultor','Consultor','');
   document.getElementById('fDestino').value = 'Retirada';
+  document.getElementById('fMontagem').value = 'Montada';
   document.getElementById('fTemSaldo').checked = false;
   atualizarCamposDestino();
   atualizarCamposSaldo();
@@ -1066,7 +2022,8 @@ function abrirModalNovoPedido(){
 }
 
 function atualizarCamposDestino(){
-  document.getElementById('campoMontagem').style.display = document.getElementById('fDestino').value === 'Entrega' ? 'block' : 'none';
+  const campo = document.getElementById('campoMontagem');
+  if (campo) campo.style.display = 'block';
 }
 function atualizarCamposSaldo(){
   document.getElementById('camposSaldo').style.display = document.getElementById('fTemSaldo').checked ? 'grid' : 'none';
@@ -1077,15 +2034,15 @@ function salvarNovoPedido(){
   if (botao.disabled) return;
   const pedido = {
     numeroPedido: document.getElementById('fNumero').value.trim(),
-    cliente: document.getElementById('fCliente').value.trim(),
+    cliente: document.getElementById('fCliente').value.trim().toUpperCase(),
     consultor: document.getElementById('fConsultor').value.trim(),
     dataPrevista: document.getElementById('fData').value,
     tipoDestino: document.getElementById('fDestino').value,
-    tipoMontagem: document.getElementById('fDestino').value === 'Entrega' ? document.getElementById('fMontagem').value : '',
+    tipoMontagem: document.getElementById('fMontagem').value,
     temSaldoPendente: document.getElementById('fTemSaldo').checked,
     quantidadeVendida: document.getElementById('fQtdVendida').value,
     quantidadeDisponivel: document.getElementById('fQtdDisponivel').value,
-    observacoes: document.getElementById('fObs').value.trim()
+    observacoes: document.getElementById('fObs').value.trim().toUpperCase()
   };
 
   if (!pedido.numeroPedido || !pedido.cliente || !pedido.consultor) {
@@ -1132,7 +2089,7 @@ function salvarEdicao(){
     Status: document.getElementById('eStatus').value,
     Motorista: document.getElementById('eMotorista').value.trim(),
     Montador: document.getElementById('eMontador').value.trim(),
-    Observacoes: document.getElementById('eObs').value.trim(),
+    Observacoes: document.getElementById('eObs').value.trim().toUpperCase(),
     QuantidadeDisponivel: document.getElementById('eQtdPronta').value
   };
   chamarBackend({ acao: 'atualizarPedido', senha: SENHA_ATUAL, id, campos }).then(resp => {
@@ -1181,13 +2138,85 @@ function confirmarComplementoRetirada(){
   }).catch(e => erro.textContent = e.message || String(e));
 }
 
+
+function abrirRetornosAtuaisDashboard(){
+  const lista=(DADOS.ativos||[]).filter(p=>p.Status==='Mercadoria retornada');
+  if(!lista.length){ alert('Não há mercadorias retornadas aguardando nova ação.'); return; }
+  const area=document.getElementById('detRelLista');
+  document.getElementById('detRelTitulo').textContent='Mercadorias retornadas';
+  document.getElementById('detRelResumo').textContent=lista.length+' pedido'+(lista.length===1?'':'s')+' aguardando nova tentativa.';
+  area.innerHTML=lista.map(p=>`
+    <div class="detalhe-pedido">
+      <div class="detalhe-pedido-top"><span class="detalhe-pedido-num">#${escaparHtml(p.NumeroPedido||'-')} · ${escaparHtml(p.Cliente||'-')}</span><span class="detalhe-pedido-status">RETORNOU</span></div>
+      <div class="detalhe-pedido-grid">
+        <div><b>Motorista</b>${escaparHtml(p.Motorista||'-')}</div>
+        <div><b>Montador</b>${escaparHtml(p.Montador||'-')}</div>
+        <div><b>Motivo</b>${escaparHtml(p.MotivoRetornoEntrega||'-')}</div>
+        <div><b>Retornou em</b>${p.DataRetornoEntrega?formatarDataHora(p.DataRetornoEntrega):'-'}</div>
+      </div>
+      ${p.DetalheRetornoEntrega?`<div class="obs">${escaparHtml(p.DetalheRetornoEntrega)}</div>`:''}
+    </div>`).join('');
+  abrirModal('modalDetalhesRelatorio');
+}
+
+function abrirModalRetornoEntrega(p){
+  document.getElementById('rId').value=p.ID;
+  document.getElementById('rMotivo').value='';
+  document.getElementById('rDetalhe').value='';
+  document.getElementById('erroRetornoEntrega').textContent='';
+  document.getElementById('rResumo').innerHTML=`<b>Pedido #${escaparHtml(p.NumeroPedido||'')}</b><br>Cliente: ${escaparHtml(p.Cliente||'-')}<br>Motorista: ${escaparHtml(p.Motorista||'-')}`;
+  abrirModal('modalRetornoEntrega');
+}
+function atualizarCampoDetalheRetorno(){
+  const motivo=document.getElementById('rMotivo').value;
+  document.getElementById('rDetalhe').placeholder=motivo==='Outro'?'Descreva obrigatoriamente o motivo do retorno':'Informe detalhes que ajudem na próxima tentativa';
+}
+function confirmarRetornoEntrega(){
+  const id=document.getElementById('rId').value;
+  const motivo=document.getElementById('rMotivo').value;
+  const detalhe=document.getElementById('rDetalhe').value.trim();
+  const erro=document.getElementById('erroRetornoEntrega');
+  erro.textContent='';
+  if(!motivo){ erro.textContent='Selecione o motivo do retorno.'; return; }
+  if(motivo==='Outro' && !detalhe){ erro.textContent='Descreva o motivo do retorno.'; return; }
+  if(!confirm('Confirmar que a mercadoria retornou sem concluir a entrega? O pedido continuará ativo para nova tentativa.')) return;
+
+  chamarBackend({
+    acao:'retornarEntrega',
+    usuario:ENTREGA_USUARIO,
+    senha:SENHA_ATUAL,
+    id,motivo,detalhe
+  }).then(resp=>{
+    if(resp.ok){
+      fecharModal('modalRetornoEntrega');
+      if(PAPEL_ATUAL==='entrega') carregarEntregasMobile();
+      else carregarDados();
+    }
+    else erro.textContent=resp.erro||'Erro ao registrar o retorno.';
+  }).catch(e=>erro.textContent=e.message||String(e));
+}
+
+
+function marcarProdutoSeparado(id){
+  if(!confirm('Confirmar que o produto foi separado?')) return;
+  chamarBackend({acao:'marcarProdutoSeparado',senha:SENHA_ATUAL,id}).then(resp=>{
+    if(resp.ok) carregarDados();
+    else alert(resp.erro||'Erro ao atualizar o pedido.');
+  }).catch(e=>alert(e.message||String(e)));
+}
+
 function abrirModalSaidaEntrega(p){
   document.getElementById('sId').value = p.ID;
   preencherSelectEquipe('sMotorista','Motorista',p.Motorista || '');
   preencherSelectEquipe('sMontador','Montador',p.Montador || '');
   const precisaMontador = p.TipoMontagem === 'Desmontada';
   document.getElementById('campoSaidaMontador').style.display = precisaMontador ? 'block' : 'none';
-  document.getElementById('sResumo').innerHTML = `<b>Pedido #${p.NumeroPedido}</b><br>${precisaMontador ? 'Entrega com montagem no local. Informe motorista e montador.' : 'Informe o motorista.'}`;
+  const ehNovaTentativa = p.Status === 'Mercadoria retornada';
+  const instrucao = precisaMontador ? 'Entrega com montagem no local. Informe motorista e montador.' : 'Informe o motorista.';
+  const avisoRetorno = ehNovaTentativa
+    ? `<div class="obs" style="border-left-color:#7c3aed;background:#faf6ff;color:#5b21b6;margin-top:6px"><b>Nova tentativa após retorno:</b> ${p.MotivoRetornoEntrega || 'motivo não informado'}.${p.DetalheRetornoEntrega ? ' ' + p.DetalheRetornoEntrega : ''}</div>`
+    : '';
+  document.getElementById('sResumo').innerHTML = `<b>Pedido #${p.NumeroPedido}</b><br>${instrucao}${avisoRetorno}`;
   document.getElementById('erroSaidaEntrega').textContent = '';
   abrirModal('modalSaidaEntrega');
 }
@@ -1228,10 +2257,15 @@ function fazerBackup(){
 }
 
 function concluirPedido(id){
-  if (!confirm('Confirmar que a entrega/retirada foi concluída? Só agora o pedido irá para o histórico.')) return;
-  chamarBackend({ acao: 'concluirEntrega', senha: SENHA_ATUAL, id }).then(resp => {
-    if (resp.ok) carregarDados();
-    else alert(resp.erro || 'Erro ao concluir.');
+  const p=(DADOS.ativos||[]).find(x=>String(x.ID)===String(id));
+  if(p && p.TipoDestino==='Entrega'){
+    alert('Entregas externas só podem ser concluídas pelo usuário Entrega.');
+    return;
+  }
+  if (!confirm('Confirmar que a retirada na loja foi concluída?')) return;
+  chamarBackend({acao:'concluirEntrega',senha:SENHA_ATUAL,id,entrega:{}}).then(resp=>{
+    if(resp.ok) carregarDados();
+    else alert(resp.erro||'Erro ao concluir.');
   });
 }
 </script>
