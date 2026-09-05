@@ -15,7 +15,7 @@
   header{background:var(--azul-esc);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
   header h1{font-size:18px;margin:0;}
   header .papel{font-size:12px;background:rgba(255,255,255,.15);padding:4px 10px;border-radius:12px;}
-  .container{max-width:1100px;margin:0 auto;padding:16px;}
+  .container{max-width:1380px;margin:0 auto;padding:16px;}
   .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
   .tab-btn{padding:8px 16px;border:1px solid var(--borda);background:#fff;border-radius:8px;cursor:pointer;font-size:14px;}
   .tab-btn.ativa{background:var(--azul);color:#fff;border-color:var(--azul);}
@@ -30,10 +30,13 @@
   .pedido-num{font-size:16px;font-weight:700;color:var(--azul-esc);}
   .badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 16px;margin:10px 0;font-size:13.5px;}
-  .grid div b{display:block;font-size:11px;color:var(--cinza);font-weight:600;text-transform:uppercase;letter-spacing:.3px;}
+  .grid div b{display:block;font-size:11px;color:var(--cinza);font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+  .dado-destaque{font-size:16px;font-weight:800;color:var(--azul-esc);line-height:1.25;}
+  .dado-destaque b{font-size:11px;color:var(--cinza);margin-bottom:3px;}
   .obs{font-size:13.5px;background:#f8f9fb;border-left:3px solid var(--borda);padding:6px 10px;margin-top:8px;border-radius:4px;}
   .acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+  @media(max-width:850px){.form-grid{grid-template-columns:1fr 1fr;}}
   @media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
   label{font-size:13px;font-weight:600;color:var(--cinza);display:block;margin-bottom:4px;}
   input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--borda);border-radius:7px;font-size:14px;font-family:inherit;}
@@ -45,13 +48,154 @@
   .vazio{text-align:center;color:var(--cinza);padding:30px;font-size:14px;}
   .modal-fundo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);align-items:center;justify-content:center;padding:16px;z-index:50;}
   .modal-fundo.aberto{display:flex;}
-  .modal{background:#fff;border-radius:12px;padding:20px;max-width:520px;width:100%;max-height:90vh;overflow:auto;}
+  .modal{background:#fff;border-radius:12px;padding:20px;max-width:980px;width:100%;max-height:90vh;overflow:auto;}
   .modal h3{margin-top:0;}
   .fechar-modal{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:var(--cinza);}
   .check-linha{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
   .check-linha input{width:auto;}
   .carregando{text-align:center;padding:30px;color:var(--cinza);}
   .sub-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:#eef1f6;color:var(--cinza);margin-left:6px;}
+  .quantidades{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0;}
+  .qtd-box{border:1px solid var(--borda);border-radius:8px;padding:10px;text-align:center;background:#fafbfc;}
+  .qtd-box b{display:block;font-size:20px;color:var(--azul-esc);}
+  .qtd-box span{font-size:11px;text-transform:uppercase;color:var(--cinza);font-weight:700;}
+  .qtd-box.pendente{background:#fff2f0;border-color:#f1b7b0;}
+  .qtd-box.pendente b,.qtd-box.pendente span{color:var(--vermelho);}
+  .qtd-box.pronta{background:#eef9f3;border-color:#b9dfca;}
+  .qtd-box.pronta b,.qtd-box.pronta span{color:var(--verde);}
+  @media(max-width:600px){.quantidades{grid-template-columns:1fr 1fr 1fr;}.qtd-box{padding:8px 4px}.qtd-box b{font-size:18px}.qtd-box span{font-size:9px;}}
+
+  .urgencia{margin:10px 0 12px;padding:10px 12px;border-radius:9px;border:1px solid var(--borda);background:#f8fafc;}
+  .urgencia-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:7px;}
+  .urgencia-titulo{font-size:11px;font-weight:800;letter-spacing:.45px;text-transform:uppercase;color:var(--cinza);}
+  .urgencia-texto{font-size:13px;font-weight:800;}
+  .termometro{height:8px;background:#e5e7eb;border-radius:999px;overflow:hidden;}
+  .termometro-fill{height:100%;border-radius:999px;transition:width .25s ease;}
+  .urgencia.atrasado{background:#fff0ef;border-color:#efb3ad}.urgencia.atrasado .urgencia-texto{color:#a92d20}.urgencia.atrasado .termometro-fill{background:#c0392b}
+  .urgencia.critico{background:#fff4ef;border-color:#f3c0a7}.urgencia.critico .urgencia-texto{color:#b54708}.urgencia.critico .termometro-fill{background:#e85d04}
+  .urgencia.alto{background:#fff8e8;border-color:#efd79b}.urgencia.alto .urgencia-texto{color:#9a6700}.urgencia.alto .termometro-fill{background:#d99a00}
+  .urgencia.medio{background:#f5f9ee;border-color:#cfe1ad}.urgencia.medio .urgencia-texto{color:#527a22}.urgencia.medio .termometro-fill{background:#79a83b}
+  .urgencia.baixo{background:#eef8f3;border-color:#b9dfca}.urgencia.baixo .urgencia-texto{color:#1e7a4d}.urgencia.baixo .termometro-fill{background:#1e8e5a}
+  .urgencia.sem-data{background:#f7f7f8}.urgencia.sem-data .termometro-fill{background:#9ca3af}
+
+  .historico-auditoria{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 12px;margin:12px 0;}
+  .hist-item{border:1px solid var(--borda);border-radius:9px;padding:10px 12px;background:#fafbfc;min-height:62px;}
+  .hist-item b{display:block;font-size:11px;color:var(--cinza);text-transform:uppercase;letter-spacing:.35px;margin-bottom:5px;}
+  .hist-item span{display:block;font-size:15px;font-weight:700;color:var(--texto);line-height:1.25;word-break:break-word;}
+  .hist-item.equipe{background:#f7f9fc;}
+  .hist-item.tempo{background:#f7faf8;}
+  .urgencia.em-rota{background:#eef5ff;border-color:#b7d0f3}.urgencia.em-rota .urgencia-texto{color:#1e5aa8}.urgencia.em-rota .termometro-fill{background:#1e5aa8}
+  .urgencia.entregue{background:#eef9f3;border-color:#b9dfca}.urgencia.entregue .urgencia-texto{color:#1e8e5a}.urgencia.entregue .termometro-fill{background:#1e8e5a}
+  @media(max-width:760px){.historico-auditoria{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.historico-auditoria{grid-template-columns:1fr;}}
+
+
+  /* HISTÓRICO COMPACTO + FILTRO */
+  .filtro-historico{display:flex;align-items:end;gap:8px;flex-wrap:wrap;background:#fff;border:1px solid var(--borda);border-radius:9px;padding:9px 10px;margin-bottom:10px;}
+  .filtro-historico .campo-filtro{min-width:150px;flex:0 1 180px;}
+  .filtro-historico label{font-size:10px;margin-bottom:3px;}
+  .filtro-historico input{padding:7px 8px;font-size:13px;}
+  .filtro-resumo{font-size:12px;color:var(--cinza);font-weight:700;margin-left:auto;padding-bottom:7px;}
+  .card.card-historico{padding:9px 10px;margin-bottom:8px;border-radius:8px;}
+  .card-historico .card-top{align-items:center;}
+  .card-historico .pedido-num{font-size:14px;}
+  .historico-auditoria{grid-template-columns:repeat(5,minmax(115px,1fr));gap:6px;margin:7px 0 0;}
+  .hist-item{padding:6px 8px;min-height:46px;border-radius:7px;}
+  .hist-item b{font-size:9px;margin-bottom:2px;letter-spacing:.25px;}
+  .hist-item span{font-size:12.5px;line-height:1.15;}
+  .entregue-banner{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#eef9f3;border:1px solid #b9dfca;border-radius:7px;padding:6px 9px;margin:6px 0 7px;}
+  .entregue-banner strong{color:#1e8e5a;font-size:12px;}
+  .entregue-banner span{font-size:12px;font-weight:800;color:#1e8e5a;}
+  @media(max-width:900px){.historico-auditoria{grid-template-columns:repeat(3,minmax(110px,1fr));}}
+  @media(max-width:620px){.historico-auditoria{grid-template-columns:repeat(2,minmax(0,1fr));}.filtro-resumo{width:100%;margin-left:0;padding-bottom:0;}}
+
+
+  /* CADASTRO DE EQUIPE */
+  .equipe-lista{display:grid;gap:8px;margin-top:10px;}
+  .equipe-linha{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--borda);border-radius:8px;padding:9px 10px;background:#fafbfc;}
+  .equipe-linha.inativo{opacity:.62;background:#f3f4f6;}
+  .equipe-nome{font-weight:700;}
+  .equipe-status{font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;background:#e9f7ef;color:var(--verde);}
+  .equipe-linha.inativo .equipe-status{background:#f1f1f1;color:var(--cinza);}
+  .cadastro-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+  .cadastro-tabs button{padding:7px 10px;}
+
+
+  .card:not(.card-historico) .grid > div{font-size:16px;font-weight:800;color:var(--texto);line-height:1.25;}
+  .card:not(.card-historico) .grid > div b{font-size:11px;font-weight:800;color:var(--cinza);margin-bottom:3px;}
+  .card:not(.card-historico) .grid{grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px 16px;}
+
+
+  /* RELATÓRIOS GERENCIAIS */
+  .relatorio-toolbar{display:flex;gap:10px;align-items:end;flex-wrap:wrap;background:#fff;border:1px solid var(--borda);border-radius:10px;padding:12px;margin-bottom:14px;}
+  .relatorio-toolbar .campo-filtro{min-width:150px;}
+  .relatorio-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin-bottom:14px;}
+  .kpi{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:12px 14px;}
+  .kpi b{display:block;font-size:25px;color:var(--azul-esc);line-height:1.1;margin-bottom:4px;}
+  .kpi span{font-size:12px;font-weight:700;color:var(--cinza);text-transform:uppercase;}
+  .kpi.destaque-ok{border-left:5px solid #1e8e5a;}
+  .kpi.destaque-alerta{border-left:5px solid #c98a08;}
+  .kpi.destaque-erro{border-left:5px solid #c0392b;}
+  .kpi.clicavel{cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;}
+  .kpi.clicavel:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08);border-color:#b8c4d6;}
+  .kpi.clicavel:focus{outline:2px solid var(--azul);outline-offset:2px;}
+  .kpi-dica{display:block!important;margin-top:5px;font-size:10px!important;color:#8a94a3!important;text-transform:none!important;font-weight:600!important;}
+  .detalhes-relatorio-resumo{font-size:13px;color:var(--cinza);margin:-4px 0 12px;}
+  .detalhes-relatorio-lista{display:grid;gap:8px;}
+  .detalhe-pedido{border:1px solid var(--borda);border-radius:9px;padding:10px 12px;background:#fafbfc;}
+  .detalhe-pedido-top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:7px;}
+  .detalhe-pedido-num{font-weight:800;color:var(--azul-esc);font-size:14px;}
+  .detalhe-pedido-status{font-size:11px;font-weight:800;padding:3px 8px;border-radius:10px;background:#eef1f6;color:#4b5563;}
+  .detalhe-pedido-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:6px 12px;font-size:12px;}
+  .detalhe-pedido-grid b{display:block;font-size:9px;text-transform:uppercase;color:var(--cinza);margin-bottom:1px;}
+  .relatorio-bloco{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:14px;margin-bottom:12px;}
+  .relatorio-bloco h3{margin:0 0 10px;font-size:15px;color:var(--azul-esc);}
+  .relatorio-tabela-wrap{overflow:auto;}
+  .relatorio-tabela{width:100%;border-collapse:collapse;font-size:13px;min-width:820px;}
+  .relatorio-tabela th,.relatorio-tabela td{padding:8px 9px;border-bottom:1px solid var(--borda);text-align:left;white-space:nowrap;}
+  .relatorio-tabela th{background:#f7f9fc;color:var(--cinza);font-size:11px;text-transform:uppercase;}
+  .situacao-ok{color:#1e8e5a;font-weight:800;}
+  .situacao-alerta{color:#c98a08;font-weight:800;}
+  .situacao-erro{color:#c0392b;font-weight:800;}
+  .dashboard-graficos{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-bottom:12px;}
+  .grafico-card{background:#fff;border:1px solid var(--borda);border-radius:12px;padding:14px;min-height:230px;}
+  .grafico-card h3{margin:0 0 4px;font-size:15px;color:var(--azul-esc);}
+  .grafico-sub{font-size:11px;color:var(--cinza);margin-bottom:12px;}
+  .grafico-anel-card{grid-column:span 4;}
+  .grafico-status-card{grid-column:span 4;}
+  .grafico-tendencia-card{grid-column:span 4;}
+  .anel-wrap{display:flex;align-items:center;justify-content:center;gap:18px;min-height:165px;flex-wrap:wrap;}
+  .anel{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(#1e8e5a 0 var(--pct),#e8edf3 var(--pct) 100%);}
+  .anel::after{content:'';width:92px;height:92px;background:#fff;border-radius:50%;position:absolute;}
+  .anel-centro{position:relative;z-index:1;text-align:center;}
+  .anel-centro b{display:block;font-size:27px;color:var(--azul-esc);line-height:1;}
+  .anel-centro span{font-size:10px;font-weight:800;color:var(--cinza);text-transform:uppercase;}
+  .legenda-lista{display:grid;gap:7px;font-size:12px;min-width:135px;}
+  .legenda-item{display:flex;justify-content:space-between;gap:12px;align-items:center;}
+  .legenda-item span:first-child::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:6px;}
+  .legenda-item.ok{color:#1e8e5a}.legenda-item.alerta{color:#c98a08}.legenda-item.erro{color:#c0392b}.legenda-item.azul{color:#1e5aa8}
+  .status-barras{display:grid;gap:10px;margin-top:10px;}
+  .status-linha{display:grid;grid-template-columns:120px 1fr 30px;gap:8px;align-items:center;font-size:11px;}
+  .status-trilho{height:12px;background:#eef1f5;border-radius:999px;overflow:hidden;}
+  .status-preenchimento{height:100%;border-radius:999px;background:linear-gradient(90deg,#8aa9d1,#1e5aa8);width:var(--w);}
+  .status-linha.alerta .status-preenchimento{background:linear-gradient(90deg,#efc56f,#c98a08);}
+  .status-linha.erro .status-preenchimento{background:linear-gradient(90deg,#eaa59d,#c0392b);}
+  .status-linha.ok .status-preenchimento{background:linear-gradient(90deg,#84cba8,#1e8e5a);}
+  .mini-tendencia{height:165px;display:flex;align-items:flex-end;gap:7px;border-bottom:1px solid var(--borda);padding:5px 4px 0;overflow:hidden;}
+  .tend-col{flex:1;min-width:14px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;}
+  .tend-valor{font-size:9px;font-weight:800;color:var(--azul-esc);}
+  .tend-barra{width:min(24px,80%);height:var(--h);min-height:2px;border-radius:5px 5px 0 0;background:linear-gradient(180deg,#6f98c8,#1e5aa8);}
+  .tend-dia{font-size:8px;color:var(--cinza);white-space:nowrap;}
+  .dashboard-aviso{font-size:11px;color:var(--cinza);margin:0 0 12px;padding:8px 10px;background:#f8fafc;border:1px solid var(--borda);border-radius:8px;}
+  @media(max-width:900px){.grafico-anel-card,.grafico-status-card,.grafico-tendencia-card{grid-column:span 12;}}
+  @media print{header,.tabs,.relatorio-toolbar{display:none!important}.container{max-width:none;padding:0}.relatorio-bloco,.kpi{box-shadow:none;break-inside:avoid}body{background:#fff}}
+
+
+  /* ARQUIVO ANUAL */
+  .arquivo-toolbar{display:flex;gap:9px;align-items:end;flex-wrap:wrap;background:#fff;border:1px solid var(--borda);border-radius:10px;padding:12px;margin-bottom:12px}
+  .arquivo-toolbar .campo-filtro{min-width:150px}
+  .arquivo-aviso{background:#f8fafc;border:1px solid var(--borda);border-radius:9px;padding:10px 12px;font-size:12px;color:var(--cinza);margin-bottom:10px}
+  .arquivo-aviso b{color:var(--azul-esc)}
 </style>
 </head>
 <body>
@@ -79,7 +223,13 @@
     <div class="tabs">
       <button class="tab-btn ativa" id="btnTabAtivos" onclick="mudarAba('ativos')">Pedidos Ativos</button>
       <button class="tab-btn" id="btnTabHistorico" onclick="mudarAba('historico')">Histórico</button>
-      <button class="btn btn-primario" id="btnNovoPedido" style="margin-left:auto" onclick="abrirModalNovoPedido()">+ Novo Pedido</button>
+      <button class="tab-btn" id="btnTabRelatorios" onclick="mudarAba('relatorios')">📊 Relatórios</button>
+      <button class="tab-btn" id="btnTabAnteriores" onclick="mudarAba('anteriores')">🗄️ Anos anteriores</button>
+      <button class="btn btn-secundario" id="btnAtualizarConsulta" style="display:none;margin-left:auto" onclick="atualizarAgoraConsulta()">↻ Atualizar agora</button>
+      <button class="btn btn-secundario" id="btnEquipe" style="margin-left:auto" onclick="abrirCadastros()">👥 Cadastros</button>
+      <button class="btn btn-secundario" id="btnBackup" onclick="fazerBackup()">💾 Backup</button>
+      <button class="btn btn-secundario" id="btnEncerrarAno" onclick="abrirEncerramentoAno()">📦 Encerrar ano</button>
+      <button class="btn btn-primario" id="btnNovoPedido" onclick="abrirModalNovoPedido()">+ Novo Pedido</button>
     </div>
 
     <div id="areaConteudo"><div class="carregando">Carregando dados...</div></div>
@@ -95,7 +245,7 @@
       <div class="campo"><label>Número do pedido</label><input id="fNumero"></div>
       <div class="campo"><label>Data prevista de entrega</label><input type="date" id="fData"></div>
       <div class="campo"><label>Cliente</label><input id="fCliente"></div>
-      <div class="campo"><label>Consultor (vendedor)</label><input id="fConsultor"></div>
+      <div class="campo"><label>Consultor (vendedor)</label><select id="fConsultor"><option value="">Selecione o consultor</option></select></div>
       <div class="campo">
         <label>Destino</label>
         <select id="fDestino" onchange="atualizarCamposDestino()">
@@ -123,7 +273,7 @@
 
     <div class="campo"><label>Observações</label><textarea id="fObs"></textarea></div>
 
-    <button class="btn btn-primario" style="width:100%" onclick="salvarNovoPedido()">Salvar Pedido</button>
+    <button class="btn btn-primario" id="btnSalvarPedido" style="width:100%" onclick="salvarNovoPedido()">Salvar Pedido</button>
     <div class="msg-erro" id="erroNovoPedido"></div>
   </div>
 </div>
@@ -139,15 +289,21 @@
       <select id="eStatus">
         <option>Aguardando separação</option>
         <option>Separando</option>
-        <option>Separado</option>
         <option>Aguardando complemento</option>
         <option>Aguardando montagem</option>
-        <option>Em rota de entrega</option>
+        <option>Pronto para entrega</option>
+        <option>Pronto para retirada</option>
+        <option>Saiu para entrega</option>
       </select>
     </div>
+    <div class="campo" id="campoQtdProntaEditar">
+      <label>Quantidade pronta agora</label>
+      <input type="number" id="eQtdPronta" min="0">
+      <small id="eResumoQtd" style="display:block;margin-top:4px;color:var(--cinza)"></small>
+    </div>
     <div class="form-grid">
-      <div class="campo"><label>Motorista</label><input id="eMotorista"></div>
-      <div class="campo"><label>Montador</label><input id="eMontador"></div>
+      <div class="campo"><label>Motorista</label><select id="eMotorista"><option value="">Selecione o motorista</option></select></div>
+      <div class="campo"><label>Montador</label><select id="eMontador"><option value="">Selecione o montador</option></select></div>
     </div>
     <div class="campo"><label>Observações</label><textarea id="eObs"></textarea></div>
     <button class="btn btn-primario" style="width:100%" onclick="salvarEdicao()">Salvar Alterações</button>
@@ -155,15 +311,129 @@
   </div>
 </div>
 
+
+<!-- MODAL COMPLEMENTO PARA RETIRADA -->
+<div class="modal-fundo" id="modalComplementoRetirada">
+  <div class="modal" style="max-width:620px">
+    <button class="fechar-modal" onclick="fecharModal('modalComplementoRetirada')">×</button>
+    <h3>Finalizar complemento para retirada</h3>
+    <input type="hidden" id="crId">
+    <div class="obs" id="crResumo" style="margin-bottom:12px"></div>
+    <div class="campo">
+      <label>Montador *</label>
+      <select id="crMontador"><option value="">Selecione o montador</option></select>
+    </div>
+    <div class="msg-erro" id="erroComplementoRetirada"></div>
+    <button class="btn btn-sucesso" style="width:100%;margin-top:8px" onclick="confirmarComplementoRetirada()">✓ Confirmar complemento pronto</button>
+  </div>
+</div>
+
+<!-- MODAL SAÍDA PARA ENTREGA -->
+<div class="modal-fundo" id="modalSaidaEntrega">
+  <div class="modal">
+    <button class="fechar-modal" onclick="fecharModal('modalSaidaEntrega')">×</button>
+    <h3>Liberar para entrega</h3>
+    <input type="hidden" id="sId">
+    <div class="obs" id="sResumo" style="margin-bottom:12px"></div>
+    <div class="form-grid">
+      <div class="campo"><label>Motorista *</label><select id="sMotorista"><option value="">Selecione o motorista</option></select></div>
+      <div class="campo" id="campoSaidaMontador"><label>Montador *</label><select id="sMontador"><option value="">Selecione o montador</option></select></div>
+    </div>
+    <div class="msg-erro" id="erroSaidaEntrega"></div>
+    <button class="btn btn-primario" style="width:100%;margin-top:8px" onclick="confirmarSaidaEntrega()">🚚 Confirmar saída para entrega</button>
+  </div>
+</div>
+
+<!-- MODAL CADASTROS -->
+<div class="modal-fundo" id="modalCadastros">
+  <div class="modal" style="max-width:620px">
+    <button class="fechar-modal" onclick="fecharModal('modalCadastros')">×</button>
+    <h3>Cadastros da equipe</h3>
+    <div class="cadastro-tabs">
+      <button class="tab-btn ativa" id="cadTabConsultor" onclick="selecionarTipoCadastro('Consultor')">Consultores</button>
+      <button class="tab-btn" id="cadTabMotorista" onclick="selecionarTipoCadastro('Motorista')">Motoristas</button>
+      <button class="tab-btn" id="cadTabMontador" onclick="selecionarTipoCadastro('Montador')">Montadores</button>
+    </div>
+    <div class="form-grid" style="grid-template-columns:1fr auto;align-items:end">
+      <div class="campo" style="margin-bottom:0"><label id="labelNovoCadastro">Novo consultor</label><input id="novoNomeEquipe" placeholder="Digite o nome completo"></div>
+      <button class="btn btn-primario" onclick="cadastrarEquipe()">+ Cadastrar</button>
+    </div>
+    <div class="msg-erro" id="erroCadastroEquipe"></div>
+    <div id="listaEquipeCadastro" class="equipe-lista"></div>
+  </div>
+</div>
+
+<!-- MODAL DETALHES DOS RELATÓRIOS -->
+<div class="modal-fundo" id="modalDetalhesRelatorio">
+  <div class="modal" style="max-width:920px">
+    <button class="fechar-modal" onclick="fecharModal('modalDetalhesRelatorio')">×</button>
+    <h3 id="detRelTitulo">Detalhes do indicador</h3>
+    <div class="detalhes-relatorio-resumo" id="detRelResumo"></div>
+    <div class="detalhes-relatorio-lista" id="detRelLista"></div>
+  </div>
+</div>
+
+<!-- MODAL ENCERRAMENTO ANUAL -->
+<div class="modal-fundo" id="modalEncerrarAno">
+  <div class="modal">
+    <button class="fechar-modal" onclick="fecharModal('modalEncerrarAno')">×</button>
+    <h3>📦 Encerrar ano</h3>
+    <div class="arquivo-aviso">Arquiva somente pedidos <b>já concluídos</b>. Pedidos ativos permanecem intactos. A cópia é conferida antes da limpeza do Histórico operacional.</div>
+    <div class="campo"><label>Ano a encerrar</label><input type="number" id="anoEncerrar" min="2020" max="2100" placeholder="Ex.: 2026"></div>
+    <button class="btn btn-primario" style="width:100%" onclick="confirmarEncerramentoAno()">Arquivar histórico deste ano</button>
+    <div class="msg-erro" id="erroEncerrarAno"></div>
+  </div>
+</div>
+
 <script>
 // ================== CONFIGURAÇÃO ==================
-const APPS_SCRIPT_URL = 'COLOQUE_AQUI_A_URL_DO_APPS_SCRIPT';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxUnA-VNxTLRj-mCkXL8HWAnK7GTiNDQ5Yj0FpiKqr_CWplCa0JSWPOWQyWPP8R7GS25g/exec';
 const FUSO = 'America/Fortaleza';
 
 let SENHA_ATUAL = '';
 let PAPEL_ATUAL = '';
-let DADOS = { ativos: [], historico: [] };
+let TIMER_ATUALIZACAO_CONSULTA = null;
+const INTERVALO_CONSULTA_MS = 60 * 1000;
+let DADOS = { ativos: [], historico: [], equipe: [] };
+let DADOS_ARQUIVO = [];
+let ANOS_ARQUIVADOS = [];
+let ANO_ARQUIVO_ATUAL = '';
+let TIPO_CADASTRO_ATUAL = 'Consultor';
 let ABA_ATUAL = 'ativos';
+let FILTRO_HIST_INICIO = dataHojeISO();
+let FILTRO_HIST_FIM = dataHojeISO();
+let REL_INICIO = dataHojeISO();
+let REL_FIM = dataHojeISO();
+
+function dataHojeISO(){
+  const partes = new Intl.DateTimeFormat('en-CA', { timeZone: FUSO, year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date());
+  const o = Object.fromEntries(partes.filter(x => x.type !== 'literal').map(x => [x.type,x.value]));
+  return `${o.year}-${o.month}-${o.day}`;
+}
+
+function dataISOnoFuso(valor){
+  if (!valor) return '';
+  const d = new Date(valor);
+  if (isNaN(d)) {
+    const m = String(valor).match(/^(\d{4})-(\d{2})-(\d{2})/);
+    return m ? `${m[1]}-${m[2]}-${m[3]}` : '';
+  }
+  const partes = new Intl.DateTimeFormat('en-CA', { timeZone: FUSO, year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(d);
+  const o = Object.fromEntries(partes.filter(x => x.type !== 'literal').map(x => [x.type,x.value]));
+  return `${o.year}-${o.month}-${o.day}`;
+}
+
+function aplicarFiltroHistorico(){
+  FILTRO_HIST_INICIO = document.getElementById('histDataInicio')?.value || '';
+  FILTRO_HIST_FIM = document.getElementById('histDataFim')?.value || '';
+  renderizar();
+}
+
+function mostrarHistoricoHoje(){
+  FILTRO_HIST_INICIO = dataHojeISO();
+  FILTRO_HIST_FIM = dataHojeISO();
+  renderizar();
+}
 
 // ================== LOGIN ==================
 function fazerLogin(){
@@ -180,14 +450,40 @@ function fazerLogin(){
     } else {
       document.getElementById('erroLogin').textContent = 'Senha incorreta.';
     }
-  }).catch(() => {
-    document.getElementById('erroLogin').textContent = 'Erro de conexão. Verifique a URL do backend.';
+  }).catch((erro) => {
+    console.error('Erro de login:', erro);
+    document.getElementById('erroLogin').textContent = 'Erro de conexão: ' + (erro.message || erro);
   });
 }
 
 function sair(){
+  pararAtualizacaoAutomaticaConsulta();
   sessionStorage.clear();
   location.reload();
+}
+
+function pararAtualizacaoAutomaticaConsulta(){
+  if (TIMER_ATUALIZACAO_CONSULTA) {
+    clearInterval(TIMER_ATUALIZACAO_CONSULTA);
+    TIMER_ATUALIZACAO_CONSULTA = null;
+  }
+}
+
+function podeAtualizarConsultaAgora(){
+  const modalAberto = document.querySelector('.modal-fundo.aberto');
+  const el = document.activeElement;
+  const editandoCampo = el && ['INPUT','SELECT','TEXTAREA'].includes(el.tagName);
+  return !modalAberto && !editandoCampo;
+}
+
+function iniciarAtualizacaoAutomaticaConsulta(){
+  pararAtualizacaoAutomaticaConsulta();
+  if (PAPEL_ATUAL === 'cadastro') return;
+  TIMER_ATUALIZACAO_CONSULTA = setInterval(() => {
+    if (PAPEL_ATUAL !== 'cadastro' && podeAtualizarConsultaAgora()) {
+      carregarDados(true);
+    }
+  }, INTERVALO_CONSULTA_MS);
 }
 
 function entrarNoApp(){
@@ -195,28 +491,76 @@ function entrarNoApp(){
   document.getElementById('app').style.display = 'block';
   document.getElementById('labelPapel').textContent = PAPEL_ATUAL === 'cadastro' ? '✏️ Modo Cadastro' : '👁 Somente Visualização';
   document.getElementById('btnNovoPedido').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
+  const btnAtualizarConsulta = document.getElementById('btnAtualizarConsulta');
+  if (btnAtualizarConsulta) btnAtualizarConsulta.style.display = PAPEL_ATUAL === 'consulta' ? 'inline-block' : 'none';
+  document.getElementById('btnBackup').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
+  document.getElementById('btnEquipe').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
+  document.getElementById('btnEncerrarAno').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
   carregarDados();
+  iniciarAtualizacaoAutomaticaConsulta();
 }
 
 window.addEventListener('load', () => {
+  document.getElementById('inputSenha')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); fazerLogin(); }
+  });
   const s = sessionStorage.getItem('cse_senha');
   const p = sessionStorage.getItem('cse_papel');
   if (s && p) { SENHA_ATUAL = s; PAPEL_ATUAL = p; entrarNoApp(); }
 });
 
 // ================== BACKEND ==================
-function chamarBackend(payload){
-  return fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
-    .then(r => r.json());
+async function lerRespostaBackend(resposta){
+  const texto = await resposta.text();
+  if (!resposta.ok) {
+    throw new Error('HTTP ' + resposta.status + ': ' + (texto || resposta.statusText));
+  }
+  try {
+    return JSON.parse(texto);
+  } catch (e) {
+    throw new Error('O backend não retornou JSON. Resposta recebida: ' + texto.slice(0, 300));
+  }
 }
 
-function carregarDados(){
-  document.getElementById('areaConteudo').innerHTML = '<div class="carregando">Carregando dados...</div>';
-  fetch(APPS_SCRIPT_URL).then(r => r.json()).then(dados => {
+async function chamarBackend(payload){
+  const resposta = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    redirect: 'follow',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+  return lerRespostaBackend(resposta);
+}
+
+async function carregarDados(silencioso = false){
+  if (!silencioso) {
+    document.getElementById('areaConteudo').innerHTML = '<div class="carregando">Carregando dados...</div>';
+  }
+  try {
+    const resposta = await fetch(APPS_SCRIPT_URL + '?t=' + Date.now(), { redirect: 'follow', cache: 'no-store' });
+    const dados = await lerRespostaBackend(resposta);
+    if (dados.erro) throw new Error(dados.erro);
     DADOS = dados;
+    atualizarListasEquipe();
     renderizar();
-  }).catch(() => {
-    document.getElementById('areaConteudo').innerHTML = '<div class="vazio">Erro ao carregar. Verifique a URL do backend.</div>';
+  } catch (erro) {
+    console.error('Erro ao carregar backend:', erro);
+    if (!silencioso) {
+      document.getElementById('areaConteudo').innerHTML = '<div class="vazio"><b>Erro ao carregar os dados.</b><br>' + escaparHtml(String(erro.message || erro)) + '</div>';
+    }
+  }
+}
+
+function escaparHtml(valor){
+  return String(valor).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+
+function atualizarAgoraConsulta(){
+  const btn = document.getElementById('btnAtualizarConsulta');
+  const original = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = 'Atualizando...'; }
+  carregarDados().finally(() => {
+    if (btn) { btn.disabled = false; btn.textContent = original || '↻ Atualizar agora'; }
   });
 }
 
@@ -225,15 +569,20 @@ function mudarAba(aba){
   ABA_ATUAL = aba;
   document.getElementById('btnTabAtivos').classList.toggle('ativa', aba === 'ativos');
   document.getElementById('btnTabHistorico').classList.toggle('ativa', aba === 'historico');
+  document.getElementById('btnTabRelatorios').classList.toggle('ativa', aba === 'relatorios');
+  document.getElementById('btnTabAnteriores').classList.toggle('ativa', aba === 'anteriores');
   document.getElementById('btnNovoPedido').style.display = (aba === 'ativos' && PAPEL_ATUAL === 'cadastro') ? 'inline-block' : 'none';
+  if (aba === 'anteriores') { carregarAnosArquivados(); return; }
   renderizar();
 }
 
 // ================== RENDER ==================
 const CORES_STATUS = {
-  'Aguardando separação': '#c98a08', 'Separando': '#c98a08', 'Separado': '#1e8e5a',
+  'Aguardando separação': '#c98a08', 'Separando': '#c98a08',
   'Aguardando complemento': '#c0392b', 'Aguardando montagem': '#1e5aa8',
-  'Em rota de entrega': '#1e5aa8', 'Concluído': '#6b7280'
+  'Pronto para entrega': '#1e8e5a', 'Pronto para retirada': '#1e8e5a',
+  'Saiu para entrega': '#1e5aa8', 'Em rota de entrega': '#1e5aa8',
+  'Entregue': '#6b7280', 'Concluído': '#6b7280'
 };
 
 function formatarData(valor){
@@ -243,46 +592,462 @@ function formatarData(valor){
   return d.toLocaleDateString('pt-BR', { timeZone: FUSO });
 }
 
-function renderizar(){
-  const lista = ABA_ATUAL === 'ativos' ? DADOS.ativos : DADOS.historico;
-  const area = document.getElementById('areaConteudo');
+function formatarDataHora(valor){
+  if (!valor) return '-';
+  const d = new Date(valor);
+  if (isNaN(d)) return valor;
+  return d.toLocaleString('pt-BR', { timeZone: FUSO, day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
 
-  if (!lista || lista.length === 0) {
-    area.innerHTML = '<div class="vazio">Nenhum pedido ' + (ABA_ATUAL === 'ativos' ? 'ativo no momento.' : 'no histórico ainda.') + '</div>';
+
+function hojeNoFuso(){
+  const partes = new Intl.DateTimeFormat('en-CA', { timeZone: FUSO, year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date());
+  const obj = Object.fromEntries(partes.filter(p => p.type !== 'literal').map(p => [p.type, p.value]));
+  return Date.UTC(Number(obj.year), Number(obj.month) - 1, Number(obj.day));
+}
+
+function diasParaEntrega(valor){
+  if (!valor) return null;
+  const m = String(valor).match(/^(\d{4})-(\d{2})-(\d{2})/);
+  let alvo;
+  if (m) alvo = Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  else {
+    const d = new Date(valor);
+    if (isNaN(d)) return null;
+    alvo = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+  }
+  return Math.round((alvo - hojeNoFuso()) / 86400000);
+}
+
+function infoUrgenciaPedido(p){
+  const status = String(p?.Status || '').trim();
+  if (status === 'Concluído') {
+    return { classe:'entregue', texto:'ENTREGUE', nivel:'Entrega concluída', largura:100, ordem:999999 };
+  }
+  if (status === 'Saiu para entrega' || status === 'Em rota de entrega') {
+    return { classe:'em-rota', texto:'SAIU PARA ENTREGA', nivel:'Em rota', largura:100, ordem:-999999 };
+  }
+
+  const dias = diasParaEntrega(p?.DataPrevista);
+  if (dias === null) return { classe:'sem-data', texto:'Sem data prevista de entrega', nivel:'Sem prazo', largura:15, ordem:999999 };
+  if (dias < 0) {
+    const n = Math.abs(dias);
+    return { classe:'atrasado', texto:`ATRASADO HÁ ${n} ${n === 1 ? 'DIA' : 'DIAS'}`, nivel:'Urgência máxima', largura:100, ordem:dias };
+  }
+  if (dias === 0) return { classe:'atrasado', texto:'ENTREGA HOJE', nivel:'Urgência máxima', largura:100, ordem:0 };
+  if (dias === 1) return { classe:'atrasado', texto:'FALTA 1 DIA PARA A ENTREGA', nivel:'Urgência máxima', largura:100, ordem:1 };
+  if (dias === 2) return { classe:'critico', texto:'FALTAM 2 DIAS PARA A ENTREGA', nivel:'Atenção', largura:78, ordem:2 };
+  return { classe:'baixo', texto:`FALTAM ${dias} DIAS PARA A ENTREGA`, nivel:'Dentro do prazo', largura:25, ordem:dias };
+}
+
+
+function inicioDaSemanaISO(){
+  const hoje = new Date();
+  const partes = new Intl.DateTimeFormat('en-CA',{timeZone:FUSO,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(hoje);
+  const o=Object.fromEntries(partes.filter(x=>x.type!=='literal').map(x=>[x.type,x.value]));
+  const d=new Date(`${o.year}-${o.month}-${o.day}T12:00:00`);
+  const dia=d.getDay();
+  const diff=dia===0?-6:1-dia;
+  d.setDate(d.getDate()+diff);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function definirRelatorio(tipo){
+  if(tipo==='hoje'){ REL_INICIO=dataHojeISO(); REL_FIM=dataHojeISO(); }
+  if(tipo==='semana'){ REL_INICIO=inicioDaSemanaISO(); REL_FIM=dataHojeISO(); }
+  renderizarRelatorios();
+}
+function aplicarPeriodoRelatorio(){
+  REL_INICIO=document.getElementById('relInicio')?.value||'';
+  REL_FIM=document.getElementById('relFim')?.value||'';
+  renderizarRelatorios();
+}
+function compararDatasSomenteDia(a,b){
+  const da=dataISOnoFuso(a), db=dataISOnoFuso(b);
+  if(!da||!db) return null;
+  return da<db?-1:da>db?1:0;
+}
+function situacaoEntrega(p){
+  const c=compararDatasSomenteDia(p.DataConclusao,p.DataPrevista);
+  if(c===null) return {texto:'Sem comparação',classe:''};
+  if(c<0) return {texto:'Antes do prazo',classe:'situacao-ok'};
+  if(c===0) return {texto:'No prazo',classe:'situacao-ok'};
+  return {texto:'Atrasada',classe:'situacao-erro'};
+}
+function dentroPeriodo(valor){
+  const d=dataISOnoFuso(valor); if(!d) return false;
+  if(REL_INICIO && d<REL_INICIO) return false;
+  if(REL_FIM && d>REL_FIM) return false;
+  return true;
+}
+function listasRelatorioAtual(){
+  const ativosEntrega=(DADOS.ativos||[]).filter(p=>String(p.TipoDestino||'').toLowerCase()==='entrega');
+  const concluidasPeriodo=(DADOS.historico||[]).filter(p=>dentroPeriodo(p.DataConclusao));
+  const emRota=ativosEntrega.filter(p=>['Saiu para entrega','Em rota de entrega'].includes(p.Status));
+  const pendentesEntrega=ativosEntrega.filter(p=>!['Saiu para entrega','Em rota de entrega'].includes(p.Status));
+  const antes=concluidasPeriodo.filter(p=>compararDatasSomenteDia(p.DataConclusao,p.DataPrevista)<0);
+  const noPrazo=concluidasPeriodo.filter(p=>compararDatasSomenteDia(p.DataConclusao,p.DataPrevista)===0);
+  const atrasadas=concluidasPeriodo.filter(p=>compararDatasSomenteDia(p.DataConclusao,p.DataPrevista)>0);
+  const dentroPrazo=[...antes,...noPrazo];
+  const aguardSep=ativosEntrega.filter(p=>['Aguardando separação','Separando'].includes(p.Status));
+  const aguardComp=ativosEntrega.filter(p=>p.Status==='Aguardando complemento');
+  const prontos=ativosEntrega.filter(p=>['Pronto para entrega','Separado'].includes(p.Status) && !['Saiu para entrega','Em rota de entrega'].includes(p.Status));
+  return {concluidasPeriodo,pendentesEntrega,antes,noPrazo,atrasadas,dentroPrazo,aguardSep,aguardComp,prontos,emRota,ativosEntrega};
+}
+
+function abrirDetalhesRelatorio(chave,titulo){
+  const listas=listasRelatorioAtual();
+  const lista=listas[chave]||[];
+  document.getElementById('detRelTitulo').textContent=titulo;
+  document.getElementById('detRelResumo').textContent=lista.length+' pedido'+(lista.length===1?'':'s')+' neste indicador.';
+  const area=document.getElementById('detRelLista');
+  if(!lista.length){
+    area.innerHTML='<div class="vazio" style="padding:18px">Nenhum pedido neste indicador.</div>';
+  } else {
+    const ehHistorico=['concluidasPeriodo','antes','noPrazo','atrasadas','dentroPrazo'].includes(chave);
+    area.innerHTML=[...lista].sort((a,b)=>{
+      const da=new Date((ehHistorico?a.DataConclusao:a.DataPrevista)||0);
+      const db=new Date((ehHistorico?b.DataConclusao:b.DataPrevista)||0);
+      return da-db;
+    }).map(p=>`<div class="detalhe-pedido">
+      <div class="detalhe-pedido-top">
+        <span class="detalhe-pedido-num">#${p.NumeroPedido||'-'} · ${p.Cliente||'-'}</span>
+        <span class="detalhe-pedido-status">${ehHistorico?'Entregue':(p.Status||'-')}</span>
+      </div>
+      <div class="detalhe-pedido-grid">
+        <div><b>Consultor</b>${p.Consultor||'-'}</div>
+        <div><b>Previsão</b>${formatarData(p.DataPrevista)}</div>
+        ${ehHistorico?`<div><b>Entregue em</b>${formatarData(p.DataConclusao)}</div>`:''}
+        <div><b>Motorista</b>${p.Motorista||'-'}</div>
+        <div><b>Montador</b>${p.Montador||'-'}</div>
+        ${!ehHistorico?`<div><b>Prontas</b>${p.QuantidadeDisponivel||0} de ${p.QuantidadeVendida||0}</div>`:''}
+      </div>
+    </div>`).join('');
+  }
+  abrirModal('modalDetalhesRelatorio');
+}
+
+function dadosTendenciaRelatorio(concluidas){
+  const mapa={};
+  concluidas.forEach(p=>{const d=dataISOnoFuso(p.DataConclusao);if(d) mapa[d]=(mapa[d]||0)+1;});
+  const chaves=Object.keys(mapa).sort();
+  if(!chaves.length) return [];
+  // Limita a 14 pontos para manter legibilidade, agrupando por dia dentro do período selecionado.
+  const ultimas=chaves.slice(-14);
+  return ultimas.map(d=>({dia:d,qtd:mapa[d]}));
+}
+function htmlGraficoTendencia(concluidas){
+  const dados=dadosTendenciaRelatorio(concluidas);
+  if(!dados.length) return '<div class="vazio" style="padding:55px 10px">Sem entregas concluídas no período.</div>';
+  const max=Math.max(...dados.map(x=>x.qtd),1);
+  return '<div class="mini-tendencia">'+dados.map(x=>{
+    const pct=Math.max(4,Math.round((x.qtd/max)*100));
+    const [,m,d]=x.dia.split('-');
+    return `<div class="tend-col" title="${x.qtd} entrega(s) em ${d}/${m}"><span class="tend-valor">${x.qtd}</span><div class="tend-barra" style="--h:${pct}%"></div><span class="tend-dia">${d}/${m}</span></div>`;
+  }).join('')+'</div>';
+}
+function htmlBarrasOperacao(L){
+  const itens=[
+    {n:'Separação',v:L.aguardSep.length,c:''},
+    {n:'Complemento',v:L.aguardComp.length,c:'erro'},
+    {n:'Prontos',v:L.prontos.length,c:'ok'},
+    {n:'Em rota',v:L.emRota.length,c:'azul'}
+  ];
+  const max=Math.max(...itens.map(i=>i.v),1);
+  return '<div class="status-barras">'+itens.map(i=>`<div class="status-linha ${i.c}"><span>${i.n}</span><div class="status-trilho"><div class="status-preenchimento" style="--w:${Math.round(i.v/max*100)}%"></div></div><b>${i.v}</b></div>`).join('')+'</div>';
+}
+
+function renderizarRelatorios(){
+  const area=document.getElementById('areaConteudo');
+  const L=listasRelatorioAtual();
+  const concluidas=L.concluidasPeriodo, pendentes=L.pendentesEntrega, antes=L.antes, noPrazo=L.noPrazo, atrasadas=L.atrasadas;
+  const aguardSep=L.aguardSep, aguardComp=L.aguardComp, prontos=L.prontos, emRota=L.emRota;
+  const taxaPrazo=concluidas.length?Math.round((L.dentroPrazo.length/concluidas.length)*100):0;
+  const linhas=concluidas.map(p=>{const sit=situacaoEntrega(p);return `<tr><td>#${p.NumeroPedido}</td><td>${p.Cliente||'-'}</td><td>${p.Consultor||'-'}</td><td>${formatarData(p.DataPrevista)}</td><td>${formatarData(p.DataConclusao)}</td><td>${p.Motorista||'-'}</td><td>${p.Montador||'-'}</td><td class="${sit.classe}">${sit.texto}</td></tr>`}).join('');
+  area.innerHTML=`
+    <div class="relatorio-toolbar">
+      <div class="campo-filtro"><label>Data inicial</label><input type="date" id="relInicio" value="${REL_INICIO}"></div>
+      <div class="campo-filtro"><label>Data final</label><input type="date" id="relFim" value="${REL_FIM}"></div>
+      <button class="btn btn-primario" onclick="aplicarPeriodoRelatorio()">Aplicar período</button>
+      <button class="btn btn-secundario" onclick="definirRelatorio('hoje')">Hoje</button>
+      <button class="btn btn-secundario" onclick="definirRelatorio('semana')">Esta semana</button>
+      <button class="btn btn-secundario" onclick="carregarDados()">↻ Atualizar agora</button>
+      <button class="btn btn-secundario" onclick="window.print()">🖨️ Imprimir / PDF</button>
+    </div>
+    <div class="dashboard-aviso">${PAPEL_ATUAL === 'cadastro' ? 'Modo estoque: os dados só são atualizados quando você clicar em <b>↻ Atualizar agora</b>, evitando interrupções durante cadastros e alterações.' : 'Modo consulta: <b>atualização automática a cada 1 minuto</b>. Se você estiver usando um campo ou com uma janela aberta, a atualização aguarda para não interromper sua consulta. Você também pode usar <b>↻ Atualizar agora</b> a qualquer momento.'}</div>
+    <div class="dashboard-graficos">
+      <div class="grafico-card grafico-anel-card">
+        <h3>Índice de entregas no prazo</h3><div class="grafico-sub">Desempenho das entregas concluídas no período</div>
+        <div class="anel-wrap"><div class="anel" style="--pct:${taxaPrazo}%"><div class="anel-centro"><b>${taxaPrazo}%</b><span>Sucesso</span></div></div>
+          <div class="legenda-lista">
+            <div class="legenda-item ok"><span>Antes do prazo</span><b>${antes.length}</b></div>
+            <div class="legenda-item azul"><span>No dia previsto</span><b>${noPrazo.length}</b></div>
+            <div class="legenda-item erro"><span>Atrasadas</span><b>${atrasadas.length}</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="grafico-card grafico-status-card"><h3>Fluxo operacional atual</h3><div class="grafico-sub">Separação, complemento, pronto e rota</div>${htmlBarrasOperacao(L)}</div>
+      <div class="grafico-card grafico-tendencia-card"><h3>Produtividade de entregas</h3><div class="grafico-sub">Quantidade concluída por dia no período selecionado</div>${htmlGraficoTendencia(concluidas)}</div>
+    </div>
+    <div class="relatorio-kpis">
+      <div class="kpi clicavel" tabindex="0" onclick="abrirDetalhesRelatorio('concluidasPeriodo','Entregas concluídas no período')" onkeydown="if(event.key==='Enter')this.click()"><b>${concluidas.length}</b><span>Entregas concluídas</span><span class="kpi-dica">Clique para ver os pedidos</span></div>
+      <div class="kpi clicavel destaque-alerta" tabindex="0" onclick="abrirDetalhesRelatorio('pendentesEntrega','Entregas pendentes agora')" onkeydown="if(event.key==='Enter')this.click()"><b>${pendentes.length}</b><span>Entregas pendentes agora</span><span class="kpi-dica">Não inclui pedidos que já saíram</span></div>
+      <div class="kpi clicavel destaque-ok" tabindex="0" onclick="abrirDetalhesRelatorio('antes','Entregas antes do prazo')" onkeydown="if(event.key==='Enter')this.click()"><b>${antes.length}</b><span>Antes do prazo</span><span class="kpi-dica">Clique para detalhar</span></div>
+      <div class="kpi clicavel destaque-ok" tabindex="0" onclick="abrirDetalhesRelatorio('noPrazo','Entregas no dia previsto')" onkeydown="if(event.key==='Enter')this.click()"><b>${noPrazo.length}</b><span>No dia previsto</span><span class="kpi-dica">Clique para detalhar</span></div>
+      <div class="kpi clicavel destaque-erro" tabindex="0" onclick="abrirDetalhesRelatorio('atrasadas','Entregas atrasadas')" onkeydown="if(event.key==='Enter')this.click()"><b>${atrasadas.length}</b><span>Entregas atrasadas</span><span class="kpi-dica">Clique para detalhar</span></div>
+      <div class="kpi clicavel destaque-ok" tabindex="0" onclick="abrirDetalhesRelatorio('dentroPrazo','Entregas dentro do prazo')" onkeydown="if(event.key==='Enter')this.click()"><b>${taxaPrazo}%</b><span>Índice dentro do prazo</span><span class="kpi-dica">${L.dentroPrazo.length} de ${concluidas.length} entregas</span></div>
+    </div>
+    <div class="relatorio-bloco"><h3>📦 Situação atual da operação · tempo real</h3>
+      <div class="relatorio-kpis" style="margin-bottom:0">
+        <div class="kpi clicavel" tabindex="0" onclick="abrirDetalhesRelatorio('aguardSep','Pedidos em separação')" onkeydown="if(event.key==='Enter')this.click()"><b>${aguardSep.length}</b><span>Em separação</span><span class="kpi-dica">Clique para ver</span></div>
+        <div class="kpi clicavel destaque-erro" tabindex="0" onclick="abrirDetalhesRelatorio('aguardComp','Aguardando complemento')" onkeydown="if(event.key==='Enter')this.click()"><b>${aguardComp.length}</b><span>Aguardando complemento</span><span class="kpi-dica">Clique para ver</span></div>
+        <div class="kpi clicavel destaque-ok" tabindex="0" onclick="abrirDetalhesRelatorio('prontos','Pedidos prontos para saída')" onkeydown="if(event.key==='Enter')this.click()"><b>${prontos.length}</b><span>Prontos para saída</span><span class="kpi-dica">Clique para ver</span></div>
+        <div class="kpi clicavel" tabindex="0" onclick="abrirDetalhesRelatorio('emRota','Pedidos em rota agora')" onkeydown="if(event.key==='Enter')this.click()"><b>${emRota.length}</b><span>Em rota agora</span><span class="kpi-dica">Clique para ver quais são</span></div>
+      </div>
+    </div>
+    <div class="relatorio-bloco"><h3>📋 Entregas concluídas de ${formatarData(REL_INICIO+'T12:00:00')} até ${formatarData(REL_FIM+'T12:00:00')}</h3>
+      <div class="relatorio-tabela-wrap"><table class="relatorio-tabela"><thead><tr><th>Pedido</th><th>Cliente</th><th>Consultor</th><th>Previsão</th><th>Entregue</th><th>Motorista</th><th>Montador</th><th>Resultado</th></tr></thead><tbody>${linhas||'<tr><td colspan="8">Nenhuma entrega concluída no período.</td></tr>'}</tbody></table></div>
+    </div>`;
+}
+
+function renderizar(){
+  if (ABA_ATUAL === 'relatorios') { renderizarRelatorios(); return; }
+  if (ABA_ATUAL === 'anteriores') { renderizarArquivoAnual(); return; }
+  const area = document.getElementById('areaConteudo');
+  let lista = ABA_ATUAL === 'ativos' ? (DADOS.ativos || []) : (DADOS.historico || []);
+
+  if (ABA_ATUAL === 'historico') {
+    lista = lista.filter(p => {
+      const data = dataISOnoFuso(p.DataConclusao);
+      if (!data) return false;
+      if (FILTRO_HIST_INICIO && data < FILTRO_HIST_INICIO) return false;
+      if (FILTRO_HIST_FIM && data > FILTRO_HIST_FIM) return false;
+      return true;
+    });
+  }
+
+  const ordenada = [...lista].sort((a,b) => {
+    if (ABA_ATUAL === 'ativos') return infoUrgenciaPedido(a).ordem - infoUrgenciaPedido(b).ordem;
+    return new Date(b.DataConclusao || 0) - new Date(a.DataConclusao || 0);
+  });
+
+  const filtroHtml = ABA_ATUAL === 'historico' ? `
+    <div class="filtro-historico">
+      <div class="campo-filtro"><label>De</label><input type="date" id="histDataInicio" value="${FILTRO_HIST_INICIO}"></div>
+      <div class="campo-filtro"><label>Até</label><input type="date" id="histDataFim" value="${FILTRO_HIST_FIM}"></div>
+      <button class="btn btn-primario" onclick="aplicarFiltroHistorico()">Filtrar</button>
+      <button class="btn btn-secundario" onclick="mostrarHistoricoHoje()">Hoje</button>
+      <div class="filtro-resumo">${ordenada.length} pedido${ordenada.length === 1 ? '' : 's'} encontrado${ordenada.length === 1 ? '' : 's'}</div>
+    </div>` : '';
+
+  if (ordenada.length === 0) {
+    area.innerHTML = filtroHtml + '<div class="vazio">' + (ABA_ATUAL === 'ativos' ? 'Nenhum pedido ativo no momento.' : 'Nenhum pedido concluído no período selecionado.') + '</div>';
     return;
   }
 
-  const ordenada = [...lista].sort((a,b) => new Date(a.DataPrevista) - new Date(b.DataPrevista));
-
-  area.innerHTML = ordenada.map(p => {
+  const cards = ordenada.map(p => {
     const cor = CORES_STATUS[p.Status] || '#6b7280';
     const podeEditar = PAPEL_ATUAL === 'cadastro' && ABA_ATUAL === 'ativos';
+    const total = Number(p.QuantidadeVendida || 0);
+    const pronta = Number(p.QuantidadeDisponivel || 0);
+    const pendente = Math.max(0, total - pronta);
+    const temQtd = total > 0;
+    const incompleto = temQtd && pendente > 0;
+    const emRota = p.Status === 'Saiu para entrega' || p.Status === 'Em rota de entrega';
+    const pronto = !incompleto && (p.Status === 'Pronto para entrega' || p.Status === 'Pronto para retirada' || p.Status === 'Separado');
+    const urg = infoUrgenciaPedido(p);
+
+    let botoes = '';
+    if (podeEditar) {
+      botoes += `<button class="btn btn-secundario" onclick='abrirModalEditar(${JSON.stringify(p)})'>Atualizar</button>`;
+      if (incompleto) botoes += `<button class="btn btn-sucesso" onclick="completarPedido('${p.ID}')">✓ Complemento pronto</button>`;
+      else if (p.TipoDestino === 'Entrega' && !emRota) botoes += `<button class="btn btn-primario" onclick='abrirModalSaidaEntrega(${JSON.stringify(p)})'>🚚 Saiu para entrega</button>`;
+      else if (p.TipoDestino === 'Entrega' && emRota) botoes += `<button class="btn btn-sucesso" onclick="concluirPedido('${p.ID}')">✓ Concluir entrega</button>`;
+      else if (p.TipoDestino === 'Retirada' && pronto) botoes += `<button class="btn btn-sucesso" onclick="concluirPedido('${p.ID}')">✓ Confirmar retirada</button>`;
+      else if (p.TipoDestino === 'Retirada' && !incompleto) botoes += `<button class="btn btn-primario" onclick="marcarProntoRetirada('${p.ID}')">✓ Pronto para retirada</button>`;
+    }
+
+    if (ABA_ATUAL === 'historico') {
+      return `
+      <div class="card card-historico">
+        <div class="card-top">
+          <div class="pedido-num">#${p.NumeroPedido}</div>
+          <span class="badge" style="background:#1e8e5a">ENTREGUE</span>
+        </div>
+        <div class="entregue-banner">
+          <strong>✓ Pedido entregue</strong>
+          <span>Entregue em ${formatarData(p.DataConclusao)}</span>
+        </div>
+        <div class="historico-auditoria">
+          <div class="hist-item"><b>Cliente</b><span>${p.Cliente || '-'}</span></div>
+          <div class="hist-item"><b>Consultor</b><span>${p.Consultor || '-'}</span></div>
+          <div class="hist-item"><b>Previsão</b><span>${formatarData(p.DataPrevista)}</span></div>
+          <div class="hist-item"><b>Destino</b><span>${p.TipoDestino || '-'}</span></div>
+          <div class="hist-item"><b>Montagem</b><span>${p.TipoDestino === 'Entrega' ? (p.TipoMontagem || '-') : 'Não se aplica'}</span></div>
+          <div class="hist-item equipe"><b>Motorista</b><span>${p.Motorista || '-'}</span></div>
+          <div class="hist-item equipe"><b>Montador</b><span>${p.Montador || '-'}</span></div>
+          <div class="hist-item tempo"><b>Saiu em</b><span>${p.DataSaidaEntrega ? formatarData(p.DataSaidaEntrega) : '-'}</span></div>
+          <div class="hist-item tempo"><b>Concluído em</b><span>${formatarData(p.DataConclusao)}</span></div>
+        </div>
+      </div>`;
+    }
+
     return `
     <div class="card">
       <div class="card-top">
-        <div class="pedido-num">#${p.NumeroPedido}${p.Parte === 'Pendente' ? '<span class="sub-tag">SALDO PENDENTE</span>' : ''}</div>
+        <div class="pedido-num">#${p.NumeroPedido}${incompleto ? '<span class="sub-tag" style="background:#fff2f0;color:#c0392b">PEDIDO INCOMPLETO</span>' : ''}</div>
         <span class="badge" style="background:${cor}">${p.Status}</span>
       </div>
+      <div class="urgencia ${urg.classe}">
+        <div class="urgencia-top">
+          <span class="urgencia-titulo">🌡️ Termômetro de entrega</span>
+          <span class="urgencia-texto">${urg.texto}</span>
+          <span class="sub-tag" style="margin-left:0">${urg.nivel}</span>
+        </div>
+        <div class="termometro"><div class="termometro-fill" style="width:${urg.largura}%"></div></div>
+      </div>
       <div class="grid">
-        <div><b>Cliente</b>${p.Cliente || '-'}</div>
-        <div><b>Consultor</b>${p.Consultor || '-'}</div>
-        <div><b>Previsão</b>${formatarData(p.DataPrevista)}</div>
-        <div><b>Destino</b>${p.TipoDestino || '-'}</div>
-        ${p.TipoDestino === 'Entrega' ? `<div><b>Montagem</b>${p.TipoMontagem || '-'}</div>` : ''}
-        ${p.QuantidadeVendida ? `<div><b>Qtd. vendida</b>${p.QuantidadeVendida}</div>` : ''}
-        ${p.QuantidadeDisponivel !== '' && p.QuantidadeDisponivel !== undefined ? `<div><b>${p.Parte === 'Pendente' ? 'Qtd. pendente' : 'Qtd. disponível'}</b>${p.QuantidadeDisponivel}</div>` : ''}
+        <div class="dado-destaque"><b>Cliente</b>${p.Cliente || '-'}</div>
+        <div class="dado-destaque"><b>Consultor</b>${p.Consultor || '-'}</div>
+        <div class="dado-destaque"><b>Previsão</b>${formatarData(p.DataPrevista)}</div>
+        <div class="dado-destaque"><b>Destino</b>${p.TipoDestino || '-'}</div>
+        ${p.TipoDestino === 'Entrega' ? `<div class="dado-destaque"><b>Montagem</b>${p.TipoMontagem || '-'}</div>` : ''}
         ${p.Motorista ? `<div><b>Motorista</b>${p.Motorista}</div>` : ''}
         ${p.Montador ? `<div><b>Montador</b>${p.Montador}</div>` : ''}
-        ${ABA_ATUAL === 'historico' ? `<div><b>Concluído em</b>${formatarData(p.DataConclusao)}</div>` : ''}
+        ${p.DataSaidaEntrega ? `<div><b>Saiu em</b>${formatarDataHora(p.DataSaidaEntrega)}</div>` : ''}
       </div>
+      ${temQtd ? `<div class="quantidades"><div class="qtd-box"><b>${total}</b><span>Vendidas</span></div><div class="qtd-box pronta"><b>${pronta}</b><span>Prontas</span></div><div class="qtd-box ${pendente > 0 ? 'pendente' : ''}"><b>${pendente}</b><span>Pendentes</span></div></div>` : ''}
+      ${incompleto ? '<div class="obs" style="border-left-color:#c0392b;background:#fff7f6;color:#8f2d23"><b>Pedido incompleto:</b> aguardando o complemento dos itens pendentes antes da liberação.</div>' : ''}
       ${p.Observacoes ? `<div class="obs">${p.Observacoes}</div>` : ''}
-      ${podeEditar ? `
-        <div class="acoes">
-          <button class="btn btn-secundario" onclick='abrirModalEditar(${JSON.stringify(p)})'>Atualizar</button>
-          <button class="btn btn-sucesso" onclick="concluirPedido('${p.ID}')">OK - Concluir</button>
-        </div>` : ''}
+      ${podeEditar ? `<div class="acoes">${botoes}</div>` : ''}
     </div>`;
   }).join('');
+
+  area.innerHTML = filtroHtml + cards;
+}
+
+
+
+// ================== ARQUIVO ANUAL ==================
+async function carregarAnosArquivados(){
+  const area=document.getElementById('areaConteudo');
+  area.innerHTML='<div class="carregando">Consultando anos arquivados...</div>';
+  try{
+    const resp=await chamarBackend({acao:'listarAnosArquivados',senha:SENHA_ATUAL});
+    if(resp.erro) throw new Error(resp.erro);
+    ANOS_ARQUIVADOS=resp.anos||[];
+    if(!ANO_ARQUIVO_ATUAL && ANOS_ARQUIVADOS.length) ANO_ARQUIVO_ATUAL=String(ANOS_ARQUIVADOS[0]);
+    if(ANO_ARQUIVO_ATUAL) await consultarAnoArquivado(ANO_ARQUIVO_ATUAL,true);
+    else {DADOS_ARQUIVO=[];renderizarArquivoAnual();}
+  }catch(e){area.innerHTML='<div class="vazio"><b>Erro ao consultar arquivos anuais.</b><br>'+escaparHtml(e.message||e)+'</div>';}
+}
+async function consultarAnoArquivado(ano,silencioso=false){
+  ANO_ARQUIVO_ATUAL=String(ano||'');
+  if(!ANO_ARQUIVO_ATUAL){DADOS_ARQUIVO=[];renderizarArquivoAnual();return;}
+  if(!silencioso) document.getElementById('areaConteudo').innerHTML='<div class="carregando">Carregando '+escaparHtml(ANO_ARQUIVO_ATUAL)+'...</div>';
+  try{
+    const resp=await chamarBackend({acao:'consultarHistoricoAno',senha:SENHA_ATUAL,ano:Number(ANO_ARQUIVO_ATUAL)});
+    if(resp.erro) throw new Error(resp.erro);
+    DADOS_ARQUIVO=resp.historico||[]; renderizarArquivoAnual();
+  }catch(e){document.getElementById('areaConteudo').innerHTML='<div class="vazio"><b>Erro ao carregar o ano.</b><br>'+escaparHtml(e.message||e)+'</div>';}
+}
+function renderizarArquivoAnual(){
+  const area=document.getElementById('areaConteudo');
+  const ops=ANOS_ARQUIVADOS.map(a=>`<option value="${a}" ${String(a)===String(ANO_ARQUIVO_ATUAL)?'selected':''}>${a}</option>`).join('');
+  const topo=`<div class="arquivo-toolbar"><div class="campo-filtro"><label>Ano arquivado</label><select onchange="consultarAnoArquivado(this.value)"><option value="">Selecione</option>${ops}</select></div><button class="btn btn-secundario" onclick="carregarAnosArquivados()">↻ Atualizar lista</button><div class="filtro-resumo">${DADOS_ARQUIVO.length} registro${DADOS_ARQUIVO.length===1?'':'s'}</div></div><div class="arquivo-aviso"><b>Somente leitura.</b> O arquivo anual fica separado do Histórico operacional.</div>`;
+  if(!ANO_ARQUIVO_ATUAL || !DADOS_ARQUIVO.length){area.innerHTML=topo+'<div class="vazio">'+(ANOS_ARQUIVADOS.length?'Nenhum registro neste ano.':'Ainda não existe ano arquivado.')+'</div>';return;}
+  const cards=[...DADOS_ARQUIVO].sort((a,b)=>new Date(b.DataConclusao||0)-new Date(a.DataConclusao||0)).map(p=>`
+  <div class="card card-historico"><div class="card-top"><div class="pedido-num">#${escaparHtml(p.NumeroPedido||'')}</div><span class="badge" style="background:#1e8e5a">ARQUIVADO ${ANO_ARQUIVO_ATUAL}</span></div>
+  <div class="entregue-banner"><strong>✓ Pedido concluído</strong><span>Concluído em ${formatarData(p.DataConclusao)}</span></div>
+  <div class="historico-auditoria">
+  <div class="hist-item"><b>Cliente</b><span>${escaparHtml(p.Cliente||'-')}</span></div><div class="hist-item"><b>Consultor</b><span>${escaparHtml(p.Consultor||'-')}</span></div>
+  <div class="hist-item"><b>Previsão</b><span>${formatarData(p.DataPrevista)}</span></div><div class="hist-item"><b>Destino</b><span>${escaparHtml(p.TipoDestino||'-')}</span></div>
+  <div class="hist-item"><b>Montagem</b><span>${escaparHtml(p.TipoMontagem||'-')}</span></div><div class="hist-item"><b>Motorista</b><span>${escaparHtml(p.Motorista||'-')}</span></div>
+  <div class="hist-item"><b>Montador</b><span>${escaparHtml(p.Montador||'-')}</span></div><div class="hist-item"><b>Saiu em</b><span>${p.DataSaidaEntrega?formatarData(p.DataSaidaEntrega):'-'}</span></div>
+  <div class="hist-item"><b>Concluído em</b><span>${formatarData(p.DataConclusao)}</span></div></div></div>`).join('');
+  area.innerHTML=topo+cards;
+}
+function abrirEncerramentoAno(){
+  document.getElementById('anoEncerrar').value=new Date().getFullYear()-1;
+  document.getElementById('erroEncerrarAno').textContent='';
+  abrirModal('modalEncerrarAno');
+}
+async function confirmarEncerramentoAno(){
+  const ano=Number(document.getElementById('anoEncerrar').value), erro=document.getElementById('erroEncerrarAno');
+  erro.textContent=''; if(!ano){erro.textContent='Informe o ano.';return;}
+  if(!confirm('Arquivar os pedidos concluídos de '+ano+'? Pedidos ativos não serão movidos.')) return;
+  if(!confirm('Confirma o encerramento do histórico de '+ano+'? A cópia será conferida antes da limpeza.')) return;
+  try{
+    const resp=await chamarBackend({acao:'encerrarAno',senha:SENHA_ATUAL,ano});
+    if(resp.erro){erro.textContent=resp.erro;return;}
+    fecharModal('modalEncerrarAno');
+    alert('Ano '+ano+' arquivado. '+resp.removidosDoHistoricoAtual+' registro(s) movido(s) para '+resp.aba+'.');
+    await carregarDados();
+  }catch(e){erro.textContent=e.message||e;}
+}
+
+// ================== CADASTROS DE EQUIPE ==================
+function equipeAtiva(tipo){
+  return (DADOS.equipe || []).filter(x => x.Tipo === tipo && String(x.Ativo).toLowerCase() !== 'false' && String(x.Ativo) !== '0');
+}
+function preencherSelectEquipe(id, tipo, valorAtual){
+  const el = document.getElementById(id);
+  if (!el) return;
+  const atual = valorAtual !== undefined ? String(valorAtual || '') : String(el.value || '');
+  const pessoas = equipeAtiva(tipo).sort((a,b) => String(a.Nome).localeCompare(String(b.Nome), 'pt-BR'));
+  el.innerHTML = '<option value="">Selecione ' + (tipo === 'Consultor' ? 'o consultor' : tipo === 'Motorista' ? 'o motorista' : 'o montador') + '</option>' +
+    pessoas.map(p => `<option value="${escaparHtml(p.Nome)}">${escaparHtml(p.Nome)}</option>`).join('');
+  if (atual) {
+    if (![...el.options].some(o => o.value === atual)) el.add(new Option(atual + ' (inativo)', atual));
+    el.value = atual;
+  }
+}
+function atualizarListasEquipe(){
+  preencherSelectEquipe('fConsultor','Consultor');
+  preencherSelectEquipe('eMotorista','Motorista');
+  preencherSelectEquipe('eMontador','Montador');
+  preencherSelectEquipe('sMotorista','Motorista');
+  preencherSelectEquipe('sMontador','Montador');
+}
+function abrirCadastros(){
+  TIPO_CADASTRO_ATUAL = 'Consultor';
+  selecionarTipoCadastro('Consultor');
+  document.getElementById('novoNomeEquipe').value = '';
+  document.getElementById('erroCadastroEquipe').textContent = '';
+  abrirModal('modalCadastros');
+}
+function selecionarTipoCadastro(tipo){
+  TIPO_CADASTRO_ATUAL = tipo;
+  ['Consultor','Motorista','Montador'].forEach(t => document.getElementById('cadTab'+t).classList.toggle('ativa', t === tipo));
+  document.getElementById('labelNovoCadastro').textContent = 'Novo ' + tipo.toLowerCase();
+  renderizarListaEquipeCadastro();
+}
+function ativoEquipe(item){
+  return String(item.Ativo).toLowerCase() !== 'false' && String(item.Ativo) !== '0';
+}
+function renderizarListaEquipeCadastro(){
+  const area = document.getElementById('listaEquipeCadastro');
+  const itens = (DADOS.equipe || []).filter(x => x.Tipo === TIPO_CADASTRO_ATUAL).sort((a,b) => String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+  if (!itens.length) { area.innerHTML = '<div class="vazio" style="padding:18px">Nenhum cadastro ainda.</div>'; return; }
+  area.innerHTML = itens.map(x => {
+    const ativo = ativoEquipe(x);
+    return `<div class="equipe-linha ${ativo ? '' : 'inativo'}"><div><div class="equipe-nome">${escaparHtml(x.Nome)}</div><span class="equipe-status">${ativo ? 'ATIVO' : 'INATIVO'}</span></div><button class="btn ${ativo ? 'btn-perigo' : 'btn-sucesso'}" style="padding:6px 10px;font-size:12px" onclick="alterarStatusEquipe('${x.ID}', ${ativo ? 'false' : 'true'})">${ativo ? 'Inativar' : 'Reativar'}</button></div>`;
+  }).join('');
+}
+function cadastrarEquipe(){
+  const nome = document.getElementById('novoNomeEquipe').value.trim();
+  if (!nome) { document.getElementById('erroCadastroEquipe').textContent = 'Digite o nome.'; return; }
+  document.getElementById('erroCadastroEquipe').textContent = '';
+  chamarBackend({acao:'cadastrarEquipe', senha:SENHA_ATUAL, tipo:TIPO_CADASTRO_ATUAL, nome}).then(resp => {
+    if (!resp.ok) { document.getElementById('erroCadastroEquipe').textContent = resp.erro || 'Erro ao cadastrar.'; return; }
+    document.getElementById('novoNomeEquipe').value = '';
+    carregarDados().then(() => renderizarListaEquipeCadastro());
+  }).catch(e => document.getElementById('erroCadastroEquipe').textContent = e.message || e);
+}
+function alterarStatusEquipe(id, ativo){
+  chamarBackend({acao:'alterarStatusEquipe', senha:SENHA_ATUAL, id, ativo}).then(resp => {
+    if (!resp.ok) { alert(resp.erro || 'Erro ao alterar cadastro.'); return; }
+    carregarDados().then(() => renderizarListaEquipeCadastro());
+  }).catch(e => alert(e.message || e));
 }
 
 // ================== MODAIS ==================
@@ -290,7 +1055,8 @@ function abrirModal(id){ document.getElementById(id).classList.add('aberto'); }
 function fecharModal(id){ document.getElementById(id).classList.remove('aberto'); }
 
 function abrirModalNovoPedido(){
-  ['fNumero','fCliente','fConsultor','fData','fQtdVendida','fQtdDisponivel','fObs'].forEach(id => document.getElementById(id).value = '');
+  ['fNumero','fCliente','fData','fQtdVendida','fQtdDisponivel','fObs'].forEach(id => document.getElementById(id).value = '');
+  preencherSelectEquipe('fConsultor','Consultor','');
   document.getElementById('fDestino').value = 'Retirada';
   document.getElementById('fTemSaldo').checked = false;
   atualizarCamposDestino();
@@ -307,6 +1073,8 @@ function atualizarCamposSaldo(){
 }
 
 function salvarNovoPedido(){
+  const botao = document.getElementById('btnSalvarPedido');
+  if (botao.disabled) return;
   const pedido = {
     numeroPedido: document.getElementById('fNumero').value.trim(),
     cliente: document.getElementById('fCliente').value.trim(),
@@ -320,22 +1088,39 @@ function salvarNovoPedido(){
     observacoes: document.getElementById('fObs').value.trim()
   };
 
-  if (!pedido.numeroPedido || !pedido.cliente) {
-    document.getElementById('erroNovoPedido').textContent = 'Preencha ao menos número do pedido e cliente.';
+  if (!pedido.numeroPedido || !pedido.cliente || !pedido.consultor) {
+    document.getElementById('erroNovoPedido').textContent = 'Preencha número do pedido, cliente e consultor.';
     return;
   }
 
+  botao.disabled = true;
+  const textoOriginal = botao.textContent;
+  botao.textContent = 'Salvando...';
   chamarBackend({ acao: 'criarPedido', senha: SENHA_ATUAL, pedido }).then(resp => {
     if (resp.ok) { fecharModal('modalNovoPedido'); carregarDados(); }
     else document.getElementById('erroNovoPedido').textContent = resp.erro || 'Erro ao salvar.';
+  }).catch(erro => {
+    document.getElementById('erroNovoPedido').textContent = 'Erro ao salvar: ' + (erro.message || erro);
+  }).finally(() => {
+    botao.disabled = false;
+    botao.textContent = textoOriginal;
   });
 }
 
 function abrirModalEditar(p){
   document.getElementById('eId').value = p.ID;
-  document.getElementById('eStatus').value = p.Status;
-  document.getElementById('eMotorista').value = p.Motorista || '';
-  document.getElementById('eMontador').value = p.Montador || '';
+  const statusSelect = document.getElementById('eStatus');
+  if (![...statusSelect.options].some(o => o.value === p.Status)) {
+    statusSelect.add(new Option(p.Status, p.Status));
+  }
+  statusSelect.value = p.Status;
+  const total = Number(p.QuantidadeVendida || 0);
+  document.getElementById('eQtdPronta').value = p.QuantidadeDisponivel !== '' ? p.QuantidadeDisponivel : '';
+  document.getElementById('eQtdPronta').max = total > 0 ? total : '';
+  document.getElementById('campoQtdProntaEditar').style.display = total > 0 ? 'block' : 'none';
+  document.getElementById('eResumoQtd').textContent = total > 0 ? `Total vendido: ${total}. O sistema calcula automaticamente o que ainda falta.` : '';
+  preencherSelectEquipe('eMotorista','Motorista',p.Motorista || '');
+  preencherSelectEquipe('eMontador','Montador',p.Montador || '');
   document.getElementById('eObs').value = p.Observacoes || '';
   document.getElementById('erroEditar').textContent = '';
   abrirModal('modalEditar');
@@ -347,7 +1132,8 @@ function salvarEdicao(){
     Status: document.getElementById('eStatus').value,
     Motorista: document.getElementById('eMotorista').value.trim(),
     Montador: document.getElementById('eMontador').value.trim(),
-    Observacoes: document.getElementById('eObs').value.trim()
+    Observacoes: document.getElementById('eObs').value.trim(),
+    QuantidadeDisponivel: document.getElementById('eQtdPronta').value
   };
   chamarBackend({ acao: 'atualizarPedido', senha: SENHA_ATUAL, id, campos }).then(resp => {
     if (resp.ok) { fecharModal('modalEditar'); carregarDados(); }
@@ -355,9 +1141,95 @@ function salvarEdicao(){
   });
 }
 
+function marcarProntoRetirada(id){
+  if (!confirm('Confirmar que o pedido já foi separado e está pronto para retirada na loja?')) return;
+  chamarBackend({ acao: 'marcarProntoRetirada', senha: SENHA_ATUAL, id }).then(resp => {
+    if (resp.ok) carregarDados();
+    else alert(resp.erro || 'Erro ao marcar o pedido como pronto para retirada.');
+  }).catch(erro => alert(erro.message || erro));
+}
+
+function completarPedido(id){
+  const p = (DADOS.ativos || []).find(x => String(x.ID) === String(id));
+  if (p && p.TipoDestino === 'Retirada') {
+    document.getElementById('crId').value = id;
+    preencherSelectEquipe('crMontador','Montador',p.Montador || '');
+    document.getElementById('crResumo').innerHTML = `<b>Pedido #${p.NumeroPedido}</b><br>Este pedido de retirada teve complemento por falta de estoque. Informe quem realizou a montagem antes de liberar para retirada.`;
+    document.getElementById('erroComplementoRetirada').textContent = '';
+    abrirModal('modalComplementoRetirada');
+    return;
+  }
+  if (!confirm('Confirmar que todo o complemento pendente já está pronto?')) return;
+  chamarBackend({ acao: 'completarPedido', senha: SENHA_ATUAL, id, montador: '' }).then(resp => {
+    if (resp.ok) carregarDados();
+    else alert(resp.erro || 'Erro ao atualizar o complemento.');
+  });
+}
+
+function confirmarComplementoRetirada(){
+  const id = document.getElementById('crId').value;
+  const montador = document.getElementById('crMontador').value.trim();
+  const erro = document.getElementById('erroComplementoRetirada');
+  erro.textContent = '';
+  if (!montador) {
+    erro.textContent = 'Selecione o montador responsável pela montagem.';
+    return;
+  }
+  chamarBackend({ acao: 'completarPedido', senha: SENHA_ATUAL, id, montador }).then(resp => {
+    if (resp.ok) { fecharModal('modalComplementoRetirada'); carregarDados(); }
+    else erro.textContent = resp.erro || 'Erro ao atualizar o complemento.';
+  }).catch(e => erro.textContent = e.message || String(e));
+}
+
+function abrirModalSaidaEntrega(p){
+  document.getElementById('sId').value = p.ID;
+  preencherSelectEquipe('sMotorista','Motorista',p.Motorista || '');
+  preencherSelectEquipe('sMontador','Montador',p.Montador || '');
+  const precisaMontador = p.TipoMontagem === 'Desmontada';
+  document.getElementById('campoSaidaMontador').style.display = precisaMontador ? 'block' : 'none';
+  document.getElementById('sResumo').innerHTML = `<b>Pedido #${p.NumeroPedido}</b><br>${precisaMontador ? 'Entrega com montagem no local. Informe motorista e montador.' : 'Informe o motorista.'}`;
+  document.getElementById('erroSaidaEntrega').textContent = '';
+  abrirModal('modalSaidaEntrega');
+}
+
+function confirmarSaidaEntrega(){
+  const id = document.getElementById('sId').value;
+  const motorista = document.getElementById('sMotorista').value.trim();
+  const montador = document.getElementById('sMontador').value.trim();
+  const pedido = DADOS.ativos.find(p => String(p.ID) === String(id));
+  const precisaMontador = pedido && pedido.TipoMontagem === 'Desmontada';
+
+  if (!motorista) {
+    document.getElementById('erroSaidaEntrega').textContent = 'Informe o nome do motorista.';
+    return;
+  }
+  if (precisaMontador && !montador) {
+    document.getElementById('erroSaidaEntrega').textContent = 'Para entrega com montagem no local, informe também o montador.';
+    return;
+  }
+
+  chamarBackend({ acao: 'sairParaEntrega', senha: SENHA_ATUAL, id, equipe: { Motorista: motorista, Montador: montador } }).then(resp => {
+    if (resp.ok) { fecharModal('modalSaidaEntrega'); carregarDados(); }
+    else document.getElementById('erroSaidaEntrega').textContent = resp.erro || 'Erro ao liberar a entrega.';
+  });
+}
+
+function fazerBackup(){
+  if (!confirm('Criar agora um backup dos Pedidos e do Histórico dentro da planilha?')) return;
+  const btn = document.getElementById('btnBackup');
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Salvando backup...';
+  chamarBackend({ acao: 'criarBackup', senha: SENHA_ATUAL }).then(resp => {
+    if (resp.ok) alert('Backup criado com sucesso na aba "Backups". Registro: ' + (resp.backupId || 'OK'));
+    else alert(resp.erro || 'Erro ao criar backup.');
+  }).catch(erro => alert('Erro ao criar backup: ' + (erro.message || erro)))
+    .finally(() => { btn.disabled = false; btn.textContent = original; });
+}
+
 function concluirPedido(id){
-  if (!confirm('Confirmar conclusão deste pedido? Ele vai para o histórico.')) return;
-  chamarBackend({ acao: 'concluirPedido', senha: SENHA_ATUAL, id }).then(resp => {
+  if (!confirm('Confirmar que a entrega/retirada foi concluída? Só agora o pedido irá para o histórico.')) return;
+  chamarBackend({ acao: 'concluirEntrega', senha: SENHA_ATUAL, id }).then(resp => {
     if (resp.ok) carregarDados();
     else alert(resp.erro || 'Erro ao concluir.');
   });
