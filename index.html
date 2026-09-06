@@ -434,7 +434,7 @@
   <h2>Controle de Saída de Mercadoria</h2>
   <div class="campo">
     <label>Usuário</label>
-    <input id="inputUsuario" placeholder="Usuário (Motorista/Estoque) — opcional para Gestor/Consulta/Programador" autocomplete="username">
+    <input id="inputUsuario" placeholder="Usuário (Motorista/Estoque) ou seu nome (Gestor/Consulta/Programador)" autocomplete="username">
   </div>
   <div class="campo">
     <label>Senha de acesso</label>
@@ -666,7 +666,6 @@
       <button class="tab-btn" id="cadTabMotorista" onclick="selecionarTipoCadastro('Motorista')">Motoristas/Entregadores</button>
       <button class="tab-btn" id="cadTabMontador" onclick="selecionarTipoCadastro('Montador')">Montadores</button>
       <button class="tab-btn" id="cadTabEstoque" onclick="selecionarTipoCadastro('Estoque')">Estoque</button>
-      <button class="tab-btn" id="cadTabVendedor" onclick="selecionarTipoCadastro('Vendedor')">Vendedores</button>
     </div>
     <div class="form-grid" style="grid-template-columns:1fr auto;align-items:end">
       <div class="campo" style="margin-bottom:0"><label id="labelNovoCadastro">Novo consultor</label><input id="novoNomeEquipe" placeholder="Digite o nome completo"></div>
@@ -926,7 +925,8 @@ function entrarNoApp(){
   }
   document.getElementById('telaEntrega').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  document.getElementById('labelPapel').textContent = PAPEL_ATUAL === 'programador' ? '🛠️ Modo Programador' : (PAPEL_ATUAL === 'cadastro' ? '✏️ Modo Cadastro' : (PAPEL_ATUAL === 'gestor' ? '👤 Modo Gestor' : '👁 Somente Visualização'));
+  const rotuloPapel = PAPEL_ATUAL === 'programador' ? '🛠️ Modo Programador' : (PAPEL_ATUAL === 'cadastro' ? '✏️ Modo Cadastro' : (PAPEL_ATUAL === 'gestor' ? '👤 Modo Gestor' : '👁 Somente Visualização'));
+  document.getElementById('labelPapel').textContent = rotuloPapel + (ENTREGA_NOME ? ' — ' + ENTREGA_NOME : '');
   document.getElementById('btnNovoPedido').style.display = (PAPEL_ATUAL === 'cadastro' || PAPEL_ATUAL === 'programador') ? 'inline-block' : 'none';
   const btnAtualizarConsulta = document.getElementById('btnAtualizarConsulta');
   if (btnAtualizarConsulta) atualizarVisibilidadeBotaoAtualizar();
@@ -1573,25 +1573,25 @@ function renderizarDashboard(){
     </div>
 
     <div class="dash-kpis">
-      <div class="dash-kpi azul" onclick="irParaRelatorioDetalhe('emRota','Pedidos em rota agora')" tabindex="0"><b>${L.emRota.length}</b><span>Em rota agora</span><small>Clique para identificar</small></div>
-      <div class="dash-kpi alerta" onclick="irParaRelatorioDetalhe('pendentesEntrega','Entregas pendentes agora')" tabindex="0"><b>${L.pendentesEntrega.length}</b><span>Pendentes de entrega</span><small>Ainda não saíram</small></div>
-      <div class="dash-kpi erro" onclick="irParaRelatorioDetalhe('aguardComp','Aguardando complemento')" tabindex="0"><b>${L.aguardComp.length}</b><span>Aguardando complemento</span><small>Falta estoque / produção</small></div>
-      <div class="dash-kpi ok" onclick="irParaRelatorioDetalhe('prontos','Pedidos prontos para saída')" tabindex="0"><b>${L.prontos.length}</b><span>Prontos p/ entrega externa</span><small>Só entrega, veja retirada abaixo</small></div>
-      <div class="dash-kpi" onclick="irParaRelatorioDetalhe('aguardSep','Pedidos em separação')" tabindex="0"><b>${L.aguardSep.length}</b><span>Em separação</span><small>Operação atual</small></div>
-      <div class="dash-kpi ok" onclick="abrirConcluidosHojeTodos()" tabindex="0"><b>${concluidasHoje.length}</b><span>Concluídos hoje</span><small>${entregasHoje.length} externa(s) · ${retiradasHoje.length} retirada(s)</small></div>
+      <div class="dash-kpi azul" title="Pedidos que já saíram para entrega e ainda não foram confirmados como entregues." onclick="irParaRelatorioDetalhe('emRota','Pedidos em rota agora')" tabindex="0"><b>${L.emRota.length}</b><span>Em rota agora</span><small>Clique para identificar</small></div>
+      <div class="dash-kpi alerta" title="Pedidos de entrega externa já prontos, mas que ainda não saíram da loja." onclick="irParaRelatorioDetalhe('pendentesEntrega','Entregas pendentes agora')" tabindex="0"><b>${L.pendentesEntrega.length}</b><span>Pendentes de entrega</span><small>Ainda não saíram</small></div>
+      <div class="dash-kpi erro" title="Pedidos vendidos sem ter todo o estoque disponível, aguardando produção ou reposição para poderem ser liberados." onclick="irParaRelatorioDetalhe('aguardComp','Aguardando complemento')" tabindex="0"><b>${L.aguardComp.length}</b><span>Aguardando complemento</span><small>Falta estoque / produção</small></div>
+      <div class="dash-kpi ok" title="Pedidos de entrega externa já separados e prontos, só falta sair com o motorista." onclick="irParaRelatorioDetalhe('prontos','Pedidos prontos para saída')" tabindex="0"><b>${L.prontos.length}</b><span>Prontos p/ entrega externa</span><small>Só entrega, veja retirada abaixo</small></div>
+      <div class="dash-kpi" title="Pedidos que a equipe do estoque está separando agora." onclick="irParaRelatorioDetalhe('aguardSep','Pedidos em separação')" tabindex="0"><b>${L.aguardSep.length}</b><span>Em separação</span><small>Operação atual</small></div>
+      <div class="dash-kpi ok" title="Total de pedidos finalizados hoje, somando entregas externas e retiradas na loja." onclick="abrirConcluidosHojeTodos()" tabindex="0"><b>${concluidasHoje.length}</b><span>Concluídos hoje</span><small>${entregasHoje.length} externa(s) · ${retiradasHoje.length} retirada(s)</small></div>
     </div>
 
     <div class="dash-grid-secundario">
-      <div class="mini-indicador clicavel" onclick="abrirPedidosEstoqueIncompleto()"><b>${est.incompletos.length}</b><span>Pedidos incompletos</span><small>Venda sem estoque completo</small></div>
-      <div class="mini-indicador clicavel" onclick="abrirPedidosEstoqueIncompleto()"><b>${est.unidadesFaltantes}</b><span>Unidades faltando</span><small>Quantidade ainda a produzir/montar</small></div>
-      <div class="mini-indicador"><b>${pctProntas}%</b><span>Unidades prontas</span><small>Dos itens ativos com quantidade informada</small></div>
-      <div class="mini-indicador"><b>${dentroHoje}</b><span>Sucesso hoje</span><small>Entregas antes ou no prazo</small></div>
-      <div class="mini-indicador"><b>${taxaAtraso}%</b><span>Taxa de atraso hoje</span><small>${atrasadasHoje.length} entrega(s) atrasada(s)</small></div>
-      <div class="mini-indicador clicavel destaque-retorno" onclick="abrirRetornosAtuaisDashboard()"><b>${(DADOS.ativos||[]).filter(p=>p.Status==='Mercadoria retornada').length}</b><span>Mercadoria retornada</span><small>Todo retorno exige justificativa e permanece auditável</small></div>
-      <div class="mini-indicador clicavel" tabindex="0" onclick="abrirDetalhesRelatorio('ativosEntrega','Entregas em aberto')" onkeydown="if(event.key==='Enter')this.click()"><b>${L.ativosEntrega.length}</b><span>Entregas em aberto</span><small>Clique para ver motorista e montador de cada uma</small></div>
-      <div class="mini-indicador clicavel" tabindex="0" onclick="abrirDetalhesRelatorio('prontosRetirada','Aguardando retirada na loja')" onkeydown="if(event.key==='Enter')this.click()"><b>${L.prontosRetirada.length}</b><span>Aguardando retirada</span><small>Pronto, só falta o cliente retirar na loja</small></div>
+      <div class="mini-indicador clicavel" title="Pedidos vendidos sem ter todo o estoque disponível — falta produzir ou montar parte dos itens." onclick="abrirPedidosEstoqueIncompleto()"><b>${est.incompletos.length}</b><span>Pedidos incompletos</span><small>Venda sem estoque completo</small></div>
+      <div class="mini-indicador clicavel" title="Quantidade total de unidades que ainda faltam produzir ou montar, somando todos os pedidos incompletos." onclick="abrirPedidosEstoqueIncompleto()"><b>${est.unidadesFaltantes}</b><span>Unidades faltando</span><small>Quantidade ainda a produzir/montar</small></div>
+      <div class="mini-indicador" title="Percentual de unidades já prontas em relação ao total de itens ativos com quantidade informada."><b>${pctProntas}%</b><span>Unidades prontas</span><small>Dos itens ativos com quantidade informada</small></div>
+      <div class="mini-indicador" title="Quantidade de entregas concluídas hoje dentro do prazo (antes ou no dia previsto)."><b>${dentroHoje}</b><span>Sucesso hoje</span><small>Entregas antes ou no prazo</small></div>
+      <div class="mini-indicador" title="Percentual das entregas concluídas hoje que passaram do prazo previsto ao cliente."><b>${taxaAtraso}%</b><span>Taxa de atraso hoje</span><small>${atrasadasHoje.length} entrega(s) atrasada(s)</small></div>
+      <div class="mini-indicador clicavel destaque-retorno" title="Pedidos que saíram para entrega mas voltaram sem serem entregues. Todo retorno exige um motivo registrado." onclick="abrirRetornosAtuaisDashboard()"><b>${(DADOS.ativos||[]).filter(p=>p.Status==='Mercadoria retornada').length}</b><span>Mercadoria retornada</span><small>Todo retorno exige justificativa e permanece auditável</small></div>
+      <div class="mini-indicador clicavel" title="Todos os pedidos de entrega externa ainda não concluídos, em qualquer etapa do fluxo (separação, prontos ou em rota)." tabindex="0" onclick="abrirDetalhesRelatorio('ativosEntrega','Entregas em aberto')" onkeydown="if(event.key==='Enter')this.click()"><b>${L.ativosEntrega.length}</b><span>Entregas em aberto</span><small>Clique para ver motorista e montador de cada uma</small></div>
+      <div class="mini-indicador clicavel" title="Pedidos de retirada na loja que já estão prontos, só falta o cliente vir buscar." tabindex="0" onclick="abrirDetalhesRelatorio('prontosRetirada','Aguardando retirada na loja')" onkeydown="if(event.key==='Enter')this.click()"><b>${L.prontosRetirada.length}</b><span>Aguardando retirada</span><small>Pronto, só falta o cliente retirar na loja</small></div>
 
-      <div class="mini-indicador clicavel resumo-dia-card" onclick="abrirConcluidosHojePorTipo('entrega')">
+      <div class="mini-indicador clicavel resumo-dia-card" title="Entregas externas concluídas hoje, divididas entre manhã e tarde." onclick="abrirConcluidosHojePorTipo('entrega')">
         <b>${entregasHoje.length}</b>
         <span>Entregas externas hoje</span>
         <div class="resumo-dia-sub">
@@ -1600,7 +1600,7 @@ function renderizarDashboard(){
         </div>
       </div>
 
-      <div class="mini-indicador clicavel resumo-dia-card" onclick="abrirConcluidosHojePorTipo('retirada')">
+      <div class="mini-indicador clicavel resumo-dia-card" title="Retiradas na loja concluídas hoje, divididas entre manhã e tarde." onclick="abrirConcluidosHojePorTipo('retirada')">
         <b>${retiradasHoje.length}</b>
         <span>Retiradas na loja hoje</span>
         <div class="resumo-dia-sub">
@@ -1611,7 +1611,7 @@ function renderizarDashboard(){
     </div>
 
     <div class="dashboard-graficos dashboard-graficos-duplo">
-      <div class="grafico-card grafico-status-card">
+      <div class="grafico-card grafico-status-card" title="Mostra quantos pedidos ativos estão em cada etapa do processo, da separação até a entrega.">
         <h3>Fluxo operacional atual</h3>
         <div class="grafico-sub">Clique em qualquer linha para ver os pedidos</div>
         ${htmlBarrasOperacaoDashboard(L)}
@@ -1623,7 +1623,7 @@ function renderizarDashboard(){
         </div>
       </div>
 
-      <div class="grafico-card grafico-tendencia-card">
+      <div class="grafico-card grafico-tendencia-card" title="Mostra a evolução da quantidade de entregas concluídas dia a dia, nos últimos 7 dias.">
         <h3>Tendência de produtividade</h3>
         <div class="grafico-sub">Evolução das entregas concluídas nos últimos 7 dias</div>
         ${htmlGraficoPulso()}
@@ -1631,19 +1631,19 @@ function renderizarDashboard(){
     </div>
 
     <div class="dash-faixa">
-      <div class="gauge-card">
+      <div class="gauge-card" title="Percentual de unidades já prontas (produzidas ou montadas) entre todos os itens de pedidos ativos.">
         <h3>Disponibilidade dos itens em pedidos ativos</h3>
         <strong>${pctProntas}%</strong>
         <div class="gauge-linha"><div class="gauge-fill" style="--pct:${pctProntas}%"></div></div>
         <div class="grafico-sub">${est.unidadesProntas} unidade(s) pronta(s) de ${est.totalUnidadesAtivas} informada(s)</div>
       </div>
-      <div class="gauge-card">
+      <div class="gauge-card" title="Percentual das entregas concluídas hoje que chegaram no prazo ou antes do combinado.">
         <h3>Entregas dentro do prazo hoje</h3>
         <strong>${taxaHoje}%</strong>
         <div class="gauge-linha"><div class="gauge-fill" style="--pct:${taxaHoje}%"></div></div>
         <div class="grafico-sub">${dentroHoje} de ${concluidasHoje.length}</div>
       </div>
-      <div class="gauge-card">
+      <div class="gauge-card" title="Percentual das entregas concluídas hoje que passaram do prazo previsto ao cliente.">
         <h3>Atrasos hoje</h3>
         <strong>${taxaAtraso}%</strong>
         <div class="gauge-linha"><div class="gauge-fill erro" style="--pct:${taxaAtraso}%"></div></div>
@@ -1982,8 +1982,8 @@ function abrirCadastros(){
 }
 function selecionarTipoCadastro(tipo){
   TIPO_CADASTRO_ATUAL = tipo;
-  ['Consultor','Motorista','Montador','Estoque','Vendedor'].forEach(t => document.getElementById('cadTab'+t).classList.toggle('ativa', t === tipo));
-  const rotulos = {Consultor:'consultor', Motorista:'motorista/entregador', Montador:'montador', Estoque:'estoquista', Vendedor:'vendedor'};
+  ['Consultor','Motorista','Montador','Estoque'].forEach(t => document.getElementById('cadTab'+t).classList.toggle('ativa', t === tipo));
+  const rotulos = {Consultor:'consultor', Motorista:'motorista/entregador', Montador:'montador', Estoque:'estoquista'};
   document.getElementById('labelNovoCadastro').textContent = 'Novo ' + (rotulos[tipo] || tipo.toLowerCase());
   renderizarListaEquipeCadastro();
 }
