@@ -30,6 +30,7 @@
   .btn-perigo{background:var(--vermelho);color:#fff;}
   .btn:disabled{opacity:.5;cursor:not-allowed;}
   .card{background:var(--card);border:1px solid var(--borda);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+  .card-prioridade{border:1px solid #e0a800;border-left:4px solid #e0a800;background:linear-gradient(0deg,#fffdf6,#fffdf6);}
   .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;}
   .pedido-num{font-size:16px;font-weight:700;color:var(--azul-esc);}
   .badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;}
@@ -433,7 +434,7 @@
   <h2>Controle de Saída de Mercadoria</h2>
   <div class="campo">
     <label>Usuário</label>
-    <input id="inputUsuario" placeholder="Motorista/Entregador (opcional para Estoque/Consulta)" autocomplete="username">
+    <input id="inputUsuario" placeholder="Usuário (Motorista/Estoque) — opcional para Gestor/Consulta/Programador" autocomplete="username">
   </div>
   <div class="campo">
     <label>Senha de acesso</label>
@@ -486,6 +487,7 @@
       <button class="btn btn-secundario" id="btnEquipe" style="margin-left:auto" onclick="abrirCadastros()">👥 Cadastros</button>
       <button class="btn btn-secundario" id="btnBackup" onclick="fazerBackup()">💾 Backup</button>
       <button class="btn btn-secundario" id="btnEncerrarAno" onclick="abrirEncerramentoAno()">📦 Encerrar ano</button>
+      <button class="btn btn-perigo" id="btnZerarBanco" style="display:none" onclick="abrirModalZerarBanco()">☢️ Zerar banco</button>
       <button class="btn btn-primario" id="btnNovoPedido" onclick="abrirModalNovoPedido()">+ Novo Pedido</button>
     </div>
 
@@ -663,6 +665,8 @@
       <button class="tab-btn ativa" id="cadTabConsultor" onclick="selecionarTipoCadastro('Consultor')">Consultores</button>
       <button class="tab-btn" id="cadTabMotorista" onclick="selecionarTipoCadastro('Motorista')">Motoristas/Entregadores</button>
       <button class="tab-btn" id="cadTabMontador" onclick="selecionarTipoCadastro('Montador')">Montadores</button>
+      <button class="tab-btn" id="cadTabEstoque" onclick="selecionarTipoCadastro('Estoque')">Estoque</button>
+      <button class="tab-btn" id="cadTabVendedor" onclick="selecionarTipoCadastro('Vendedor')">Vendedores</button>
     </div>
     <div class="form-grid" style="grid-template-columns:1fr auto;align-items:end">
       <div class="campo" style="margin-bottom:0"><label id="labelNovoCadastro">Novo consultor</label><input id="novoNomeEquipe" placeholder="Digite o nome completo"></div>
@@ -693,6 +697,21 @@
     <div class="campo"><label>Ano a encerrar</label><input type="number" id="anoEncerrar" min="2020" max="2100" placeholder="Ex.: 2026"></div>
     <button class="btn btn-primario" style="width:100%" onclick="confirmarEncerramentoAno()">Arquivar histórico deste ano</button>
     <div class="msg-erro" id="erroEncerrarAno"></div>
+  </div>
+</div>
+
+<!-- MODAL ZERAR BANCO (exclusivo Programador) -->
+<div class="modal-fundo" id="modalZerarBanco">
+  <div class="modal" style="max-width:520px">
+    <button class="fechar-modal" onclick="fecharModal('modalZerarBanco')">×</button>
+    <h3>☢️ Zerar banco de dados</h3>
+    <div class="arquivo-aviso" style="border-left-color:#c0392b;background:#fff7f6;color:#8f2d23">
+      <b>Atenção — ação irreversível.</b> Isso apaga TODOS os pedidos e todo o histórico da planilha (não mexe nos cadastros de equipe: motoristas, montadores, estoquistas, consultores, vendedores continuam intactos).
+      Um backup completo é feito automaticamente antes de apagar, guardado na aba "Backups" da planilha — mas o app volta a mostrar tudo zerado.
+    </div>
+    <div class="campo"><label>Para confirmar, digite exatamente: <b>ZERAR BANCO</b></label><input type="text" id="confirmacaoZerarBanco" placeholder="ZERAR BANCO" autocomplete="off"></div>
+    <button class="btn btn-perigo" style="width:100%" onclick="confirmarZerarBanco()">Apagar todos os pedidos e o histórico</button>
+    <div class="msg-erro" id="erroZerarBanco"></div>
   </div>
 </div>
 
@@ -881,12 +900,12 @@ function iniciarAtualizacaoAutomaticaConsulta(){
     // estiver com o foco em um campo de digitação — evita perder o que está sendo preenchido.
     if (!podeAtualizarConsultaAgora()) return;
 
-    if (PAPEL_ATUAL === 'consulta' && ABA_ATUAL === 'dashboard') {
+    if ((PAPEL_ATUAL === 'consulta' || PAPEL_ATUAL === 'gestor') && ABA_ATUAL === 'dashboard') {
       carregarDados(true);
       return;
     }
 
-    if (PAPEL_ATUAL === 'cadastro' && ABA_ATUAL === 'ativos') {
+    if ((PAPEL_ATUAL === 'cadastro' || PAPEL_ATUAL === 'programador') && ABA_ATUAL === 'ativos') {
       carregarDados(true);
     }
   }, INTERVALO_CONSULTA_MS);
@@ -895,7 +914,7 @@ function iniciarAtualizacaoAutomaticaConsulta(){
 function atualizarVisibilidadeBotaoAtualizar(){
   const btn = document.getElementById('btnAtualizarConsulta');
   if (!btn) return;
-  const mostrar = PAPEL_ATUAL === 'consulta' || (PAPEL_ATUAL === 'cadastro' && ABA_ATUAL === 'ativos');
+  const mostrar = PAPEL_ATUAL === 'consulta' || PAPEL_ATUAL === 'gestor' || ((PAPEL_ATUAL === 'cadastro' || PAPEL_ATUAL === 'programador') && ABA_ATUAL === 'ativos');
   btn.style.display = mostrar ? 'inline-block' : 'none';
 }
 
@@ -907,13 +926,15 @@ function entrarNoApp(){
   }
   document.getElementById('telaEntrega').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  document.getElementById('labelPapel').textContent = PAPEL_ATUAL === 'cadastro' ? '✏️ Modo Cadastro' : '👁 Somente Visualização';
-  document.getElementById('btnNovoPedido').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
+  document.getElementById('labelPapel').textContent = PAPEL_ATUAL === 'programador' ? '🛠️ Modo Programador' : (PAPEL_ATUAL === 'cadastro' ? '✏️ Modo Cadastro' : (PAPEL_ATUAL === 'gestor' ? '👤 Modo Gestor' : '👁 Somente Visualização'));
+  document.getElementById('btnNovoPedido').style.display = (PAPEL_ATUAL === 'cadastro' || PAPEL_ATUAL === 'programador') ? 'inline-block' : 'none';
   const btnAtualizarConsulta = document.getElementById('btnAtualizarConsulta');
   if (btnAtualizarConsulta) atualizarVisibilidadeBotaoAtualizar();
-  document.getElementById('btnBackup').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
-  document.getElementById('btnEquipe').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
-  document.getElementById('btnEncerrarAno').style.display = PAPEL_ATUAL === 'cadastro' ? 'inline-block' : 'none';
+  document.getElementById('btnBackup').style.display = (PAPEL_ATUAL === 'cadastro' || PAPEL_ATUAL === 'programador') ? 'inline-block' : 'none';
+  document.getElementById('btnEquipe').style.display = (PAPEL_ATUAL === 'gestor' || PAPEL_ATUAL === 'programador') ? 'inline-block' : 'none';
+  document.getElementById('btnEncerrarAno').style.display = (PAPEL_ATUAL === 'cadastro' || PAPEL_ATUAL === 'programador') ? 'inline-block' : 'none';
+  const btnZerarBanco = document.getElementById('btnZerarBanco');
+  if (btnZerarBanco) btnZerarBanco.style.display = PAPEL_ATUAL === 'programador' ? 'inline-block' : 'none';
   carregarDados();
   iniciarAtualizacaoAutomaticaConsulta();
 }
@@ -1086,7 +1107,7 @@ function mudarAba(aba){
   document.getElementById('btnTabDashboard').classList.toggle('ativa', aba === 'dashboard');
   document.getElementById('btnTabRelatorios').classList.toggle('ativa', aba === 'relatorios');
   document.getElementById('btnTabAnteriores').classList.toggle('ativa', aba === 'anteriores');
-  document.getElementById('btnNovoPedido').style.display = (aba === 'ativos' && PAPEL_ATUAL === 'cadastro') ? 'inline-block' : 'none';
+  document.getElementById('btnNovoPedido').style.display = (aba === 'ativos' && (PAPEL_ATUAL === 'cadastro' || PAPEL_ATUAL === 'programador')) ? 'inline-block' : 'none';
   atualizarVisibilidadeBotaoAtualizar();
   if (aba === 'anteriores') { carregarAnosArquivados(); return; }
   renderizar();
@@ -1707,7 +1728,12 @@ function renderizar(){
   }
 
   const ordenada = [...lista].sort((a,b) => {
-    if (ABA_ATUAL === 'ativos') return infoUrgenciaPedido(a).ordem - infoUrgenciaPedido(b).ordem;
+    if (ABA_ATUAL === 'ativos') {
+      const prioA = a.Prioridade === true || String(a.Prioridade).toLowerCase() === 'true';
+      const prioB = b.Prioridade === true || String(b.Prioridade).toLowerCase() === 'true';
+      if (prioA !== prioB) return prioA ? -1 : 1;
+      return infoUrgenciaPedido(a).ordem - infoUrgenciaPedido(b).ordem;
+    }
     return new Date(b.DataConclusao || 0) - new Date(a.DataConclusao || 0);
   });
 
@@ -1727,7 +1753,7 @@ function renderizar(){
 
   const cards = ordenada.map(p => {
     const cor = CORES_STATUS[p.Status] || '#6b7280';
-    const podeEditar = PAPEL_ATUAL === 'cadastro' && ABA_ATUAL === 'ativos';
+    const podeEditar = (PAPEL_ATUAL === 'cadastro' || PAPEL_ATUAL === 'programador') && ABA_ATUAL === 'ativos';
     const total = Number(p.QuantidadeVendida || 0);
     const pronta = Number(p.QuantidadeDisponivel || 0);
     const pendente = Math.max(0, total - pronta);
@@ -1738,6 +1764,7 @@ function renderizar(){
     const aguardandoSeparacao = p.Status === 'Aguardando separação' || p.Status === 'Separando';
     const prontoRetirada = p.Status === 'Pronto para retirada';
     const retornado = p.Status === 'Mercadoria retornada';
+    const ehPrioridade = p.Prioridade === true || String(p.Prioridade).toLowerCase() === 'true';
     const urg = infoUrgenciaPedido(p);
 
     let botoes = '';
@@ -1757,12 +1784,16 @@ function renderizar(){
       } else if (p.TipoDestino === 'Retirada' && prontoRetirada) {
         botoes += `<button class="btn btn-sucesso" onclick="concluirPedido('${p.ID}')">✓ Produto entregue</button>`;
       }
+
+      if (PAPEL_ATUAL === 'programador') {
+        botoes += `<button class="btn btn-secundario" onclick="alternarPrioridade('${p.ID}', ${ehPrioridade ? 'false' : 'true'})">${ehPrioridade ? '☆ Remover prioridade' : '⭐ Marcar prioridade'}</button>`;
+      }
     }
 
     return `
-    <div class="card">
+    <div class="card${ehPrioridade ? ' card-prioridade' : ''}">
       <div class="card-top">
-        <div class="pedido-num">#${p.NumeroPedido}${incompleto ? '<span class="sub-tag" style="background:#fff2f0;color:#c0392b">PEDIDO INCOMPLETO</span>' : ''}</div>
+        <div class="pedido-num">${ehPrioridade ? '<span title="Prioridade" style="margin-right:4px">⭐</span>' : ''}#${p.NumeroPedido}${incompleto ? '<span class="sub-tag" style="background:#fff2f0;color:#c0392b">PEDIDO INCOMPLETO</span>' : ''}</div>
         <span class="badge" style="background:${cor}">${p.Status}</span>
       </div>
       <div class="urgencia ${urg.classe}">
@@ -1857,6 +1888,29 @@ async function confirmarEncerramentoAno(){
   }catch(e){erro.textContent=e.message||e;}
 }
 
+function abrirModalZerarBanco(){
+  document.getElementById('confirmacaoZerarBanco').value='';
+  document.getElementById('erroZerarBanco').textContent='';
+  abrirModal('modalZerarBanco');
+}
+async function confirmarZerarBanco(){
+  const confirmacao=document.getElementById('confirmacaoZerarBanco').value;
+  const erro=document.getElementById('erroZerarBanco');
+  erro.textContent='';
+  if(String(confirmacao||'').trim().toUpperCase()!=='ZERAR BANCO'){
+    erro.textContent='Digite exatamente "ZERAR BANCO" para confirmar.';
+    return;
+  }
+  if(!confirm('Isso vai apagar TODOS os pedidos e todo o histórico. Um backup automático será feito antes, mas o app ficará vazio depois. Confirma?')) return;
+  try{
+    const resp=await chamarBackend({acao:'zerarBanco',senha:SENHA_ATUAL,confirmacao});
+    if(resp.erro){erro.textContent=resp.erro;return;}
+    fecharModal('modalZerarBanco');
+    alert('Banco zerado. Backup salvo em "Backups" com o código '+resp.backupId+' ('+resp.registrosSalvosNoBackup+' registro(s)).');
+    await carregarDados();
+  }catch(e){erro.textContent=e.message||e;}
+}
+
 
 
 function abrirAcessoMotoristaPorId(id){
@@ -1874,7 +1928,7 @@ function abrirAcessoMotorista(x){
     return;
   }
   document.getElementById('amId').value=x.ID;
-  document.getElementById('amNome').innerHTML='<b>'+escaparHtml(x.Nome||'Motorista')+'</b><br>Motorista/Entregador';
+  document.getElementById('amNome').innerHTML='<b>'+escaparHtml(x.Nome||'')+'</b><br>'+(x.Tipo==='Estoque'?'Estoque':'Motorista/Entregador');
   document.getElementById('amUsuario').value=(x.Usuario||'').toUpperCase();
   document.getElementById('amSenha').value='';
   document.getElementById('erroAcessoMotorista').textContent='';
@@ -1928,9 +1982,13 @@ function abrirCadastros(){
 }
 function selecionarTipoCadastro(tipo){
   TIPO_CADASTRO_ATUAL = tipo;
-  ['Consultor','Motorista','Montador'].forEach(t => document.getElementById('cadTab'+t).classList.toggle('ativa', t === tipo));
-  document.getElementById('labelNovoCadastro').textContent = 'Novo ' + tipo.toLowerCase();
+  ['Consultor','Motorista','Montador','Estoque','Vendedor'].forEach(t => document.getElementById('cadTab'+t).classList.toggle('ativa', t === tipo));
+  const rotulos = {Consultor:'consultor', Motorista:'motorista/entregador', Montador:'montador', Estoque:'estoquista', Vendedor:'vendedor'};
+  document.getElementById('labelNovoCadastro').textContent = 'Novo ' + (rotulos[tipo] || tipo.toLowerCase());
   renderizarListaEquipeCadastro();
+}
+function temLoginProprio(tipo){
+  return tipo === 'Motorista' || tipo === 'Estoque';
 }
 function ativoEquipe(item){
   return String(item.Ativo).toLowerCase() !== 'false' && String(item.Ativo) !== '0';
@@ -1950,16 +2008,24 @@ function renderizarListaEquipeCadastro(){
     return `<div class="equipe-linha ${ativo ? '' : 'inativo'}">
       <div>
         <div class="equipe-nome">${escaparHtml(x.Nome)}</div>
-        ${x.Tipo==='Motorista' ? `<div style="font-size:11px;color:var(--cinza)">Usuário: <b>${escaparHtml(x.Usuario||'não configurado')}</b>${x.Usuario?'':' · clique em Acesso para configurar'}</div>` : ''}
+        ${temLoginProprio(x.Tipo) ? `<div style="font-size:11px;color:var(--cinza)">Usuário: <b>${escaparHtml(x.Usuario||'não configurado')}</b>${x.Usuario?'':' · clique em Acesso para configurar'}</div>` : ''}
         <span class="equipe-status">${ativo ? 'ATIVO' : 'INATIVO'}</span>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <button class="btn btn-secundario" style="padding:6px 10px;font-size:12px" onclick="abrirEditarEquipe('${x.ID}')">✏️ Editar</button>
-        ${x.Tipo==='Motorista' ? `<button class="btn btn-secundario" style="padding:6px 10px;font-size:12px" onclick="abrirAcessoMotoristaPorId('${x.ID}')">🔐 Acesso</button>` : ''}
+        ${temLoginProprio(x.Tipo) ? `<button class="btn btn-secundario" style="padding:6px 10px;font-size:12px" onclick="abrirAcessoMotoristaPorId('${x.ID}')">🔐 Acesso</button>` : ''}
         <button class="btn ${ativo ? 'btn-perigo' : 'btn-sucesso'}" style="padding:6px 10px;font-size:12px" onclick="alterarStatusEquipe('${x.ID}', ${ativo ? 'false' : 'true'})">${ativo ? 'Inativar' : 'Reativar'}</button>
+        ${PAPEL_ATUAL === 'programador' ? `<button class="btn btn-perigo" style="padding:6px 10px;font-size:12px" onclick="excluirEquipeDefinitivo('${x.ID}','${escaparHtml(x.Nome)}')">🗑️ Excluir</button>` : ''}
       </div>
     </div>`;
   }).join('');
+}
+function excluirEquipeDefinitivo(id, nome){
+  if (!confirm('Excluir definitivamente "'+nome+'"?\n\nIsso remove o cadastro por completo (diferente de Inativar) e não pode ser desfeito. Use apenas se foi cadastrado por engano.')) return;
+  chamarBackend({acao:'excluirEquipe', senha:SENHA_ATUAL, id}).then(resp => {
+    if (!resp.ok) { alert(resp.erro || 'Erro ao excluir.'); return; }
+    carregarDados().then(() => renderizarListaEquipeCadastro());
+  }).catch(e => alert(e.message || e));
 }
 function cadastrarEquipe(){
   const nome = document.getElementById('novoNomeEquipe').value.trim();
@@ -1977,13 +2043,19 @@ function alterarStatusEquipe(id, ativo){
     carregarDados().then(() => renderizarListaEquipeCadastro());
   }).catch(e => alert(e.message || e));
 }
+function alternarPrioridade(id, prioridade){
+  chamarBackend({acao:'definirPrioridade', senha:SENHA_ATUAL, id, prioridade}).then(resp => {
+    if (!resp.ok) { alert(resp.erro || 'Erro ao alterar prioridade.'); return; }
+    carregarDados();
+  }).catch(e => alert(e.message || e));
+}
 function abrirEditarEquipe(id){
   const x = (DADOS.equipe || []).find(item => String(item.ID) === String(id));
   if (!x) { alert('Não foi possível localizar este cadastro. Clique em Atualizar e tente novamente.'); return; }
   document.getElementById('eeId').value = x.ID;
   document.getElementById('eeNome').value = x.Nome || '';
   const camposMotorista = document.getElementById('eeCamposMotorista');
-  camposMotorista.style.display = x.Tipo === 'Motorista' ? 'block' : 'none';
+  camposMotorista.style.display = temLoginProprio(x.Tipo) ? 'block' : 'none';
   document.getElementById('eeUsuario').value = (x.Usuario || '').toUpperCase();
   document.getElementById('eeSenha').value = '';
   document.getElementById('erroEditarEquipe').textContent = '';
