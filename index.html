@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Controle de Saída de Mercadoria</title>
+<title>Controle de Mercadorias e Entregas</title>
 <style>
   :root{
     --azul:#1e5aa8; --azul-esc:#123b73; --verde:#1e8e5a; --amarelo:#c98a08;
@@ -14,6 +14,7 @@
   body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--texto);}
   header{background:var(--azul-esc);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
   header h1{font-size:18px;margin:0;}
+  .marca-sistema{display:flex;align-items:center;gap:11px;min-width:0}.marca-sistema h1{line-height:1.2}.tpx-logo-redonda{position:relative;display:block;flex:0 0 auto;border-radius:50%;overflow:hidden;background-color:#080808;background-image:url("data:image/png;base64,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");background-size:134% auto;background-position:50% 46.5%;background-repeat:no-repeat;box-shadow:0 2px 10px rgba(0,0,0,.22)}.tpx-logo-login{width:158px;height:158px;margin:0 auto 16px;border:3px solid #e7ebf1}.tpx-logo-header{width:46px;height:46px;border:2px solid rgba(255,255,255,.72)}
   header .papel{font-size:12px;background:rgba(255,255,255,.15);padding:4px 10px;border-radius:12px;}
   .container{max-width:1380px;margin:0 auto;padding:16px;}
   .tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
@@ -49,6 +50,8 @@
   .campo{margin-bottom:12px;}
   .login-box{max-width:340px;margin:80px auto;background:#fff;padding:28px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);text-align:center;}
   .login-box h2{margin-top:0;}
+  .login-separador{display:flex;align-items:center;gap:9px;color:var(--cinza);font-size:11px;font-weight:700;margin:14px 0}.login-separador::before,.login-separador::after{content:'';height:1px;background:var(--borda);flex:1}
+  #telaBuscaPublica{display:none;min-height:100vh;background:var(--bg)}.busca-publica-topo{background:var(--azul-esc);color:#fff;padding:14px 18px}.busca-publica-topo-conteudo{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.busca-publica-topo h1{margin:0;font-size:18px}.busca-publica-main{max-width:1100px;margin:auto;padding:18px 15px 50px}.busca-publica-aviso{font-size:12px;color:var(--cinza);margin:5px 0 14px}
   .msg-erro{color:var(--vermelho);font-size:13px;margin-top:8px;}
   .vazio{text-align:center;color:var(--cinza);padding:30px;font-size:14px;}
   .modal-fundo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);align-items:center;justify-content:center;padding:16px;z-index:50;}
@@ -425,13 +428,34 @@
     text-transform:uppercase;
   }
 
+  /* LOCALIZAÇÃO E ESTOQUE */
+  .est-cabecalho{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  .est-cabecalho h2{margin:0;color:var(--azul-esc);font-size:20px}.est-sub{margin:3px 0 0;color:var(--cinza);font-size:12px}
+  .est-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}.est-nav .btn{min-height:36px;padding:7px 11px;font-size:12px}
+  .est-grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.est-painel{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:14px}
+  .est-painel h3{margin:0 0 10px;color:var(--azul-esc);font-size:15px}.est-busca{font-size:17px;padding:13px 14px;border:2px solid #b9c9df;border-radius:10px;width:100%}
+  .est-resultado{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-top:12px}.est-item{background:#fff;border:1px solid var(--borda);border-left:5px solid var(--azul);border-radius:10px;padding:13px}
+  .est-item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.est-item h3{margin:0;color:var(--azul-esc);font-size:16px}.est-saldo{font-size:24px;font-weight:800;color:var(--verde);white-space:nowrap}.est-local{margin:7px 0;font-weight:700;color:#7c3aed}.est-componentes{display:flex;gap:5px;flex-wrap:wrap}.est-chip{font-size:11px;background:#eef2f7;border:1px solid #d9e0ea;border-radius:999px;padding:3px 8px}
+  .est-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-bottom:12px}.est-kpi{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:12px}.est-kpi b{font-size:25px;color:var(--azul-esc);display:block}.est-kpi span{font-size:11px;text-transform:uppercase;color:var(--cinza);font-weight:700}
+  .est-alerta{background:#fff3e7;border:1px solid #efc58b;color:#8f4f00;padding:10px 12px;border-radius:9px;margin-bottom:10px}.est-tabela-wrap{overflow:auto}.est-tabela{width:100%;border-collapse:collapse;min-width:650px}.est-tabela th,.est-tabela td{padding:8px;border-bottom:1px solid var(--borda);text-align:left;font-size:12px}.est-tabela th{font-size:10px;color:var(--cinza);text-transform:uppercase;background:#f8fafc}
+  .est-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.est-form .campo{margin:0}.est-form .campo.largo{grid-column:1/-1}.est-acoes{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.est-lista-simples{display:grid;gap:7px}.est-linha{display:flex;justify-content:space-between;gap:8px;align-items:center;border:1px solid var(--borda);border-radius:8px;padding:8px 10px;background:#fafbfc}.est-vazio{text-align:center;color:var(--cinza);padding:28px 10px}.est-aba-ativa{background:var(--azul)!important;color:#fff!important}
+  .est-filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px;align-items:end;background:#f8fafc;border:1px solid var(--borda);border-radius:10px;padding:11px;margin-bottom:12px}.est-filtros .campo{margin:0}.est-filtros .btn{width:100%}
+  .est-selecao{max-height:230px;overflow:auto;border:1px solid var(--borda);border-radius:9px;background:#fff}.est-check{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--borda);font-size:12px}.est-check:last-child{border-bottom:0}.est-check input{width:17px;height:17px;flex:0 0 auto}.est-check span{flex:1}.est-check b{color:var(--azul-esc)}
+  .est-relatorio-topo{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:2px solid var(--azul-esc);padding-bottom:9px;margin-bottom:10px}.est-relatorio-topo h3{font-size:18px;margin:0}.est-relatorio-data{font-size:11px;color:var(--cinza);text-align:right}.est-contagem{font-size:12px;color:var(--cinza);font-weight:700;margin:8px 0}
+  .est-toast{position:fixed;right:20px;top:20px;z-index:9999;max-width:390px;background:#eaf8f1;color:#166b43;border:1px solid #87c9a8;border-left:6px solid var(--verde);border-radius:10px;padding:14px 18px;box-shadow:0 12px 32px rgba(0,0,0,.18);font-size:14px;font-weight:800;animation:estToastEntrada .22s ease}.est-toast.erro{background:#fff1ef;color:#9c2f24;border-color:#e1a49e;border-left-color:var(--vermelho)}@keyframes estToastEntrada{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+  .est-etiqueta{width:340px;max-width:100%;background:#fff;border:3px solid #1f2937;border-radius:4px;padding:18px;margin:14px auto}.est-etiqueta-local{color:#7c3aed;font-weight:800;border-bottom:2px solid #1f2937;padding-bottom:8px}.est-etiqueta-nome{font-size:23px;font-weight:800;margin:10px 0}.est-etiqueta-comp{font-size:15px;padding:5px 0}
+  @media(max-width:620px){.est-form{grid-template-columns:1fr}.est-form .campo.largo{grid-column:auto}.est-nav .btn{flex:1 1 130px}.est-resultado{grid-template-columns:1fr}}
+  @media print{body.est-imprimindo *{visibility:hidden!important}body.est-imprimindo .est-etiqueta-area,body.est-imprimindo .est-etiqueta-area *{visibility:visible!important}body.est-imprimindo .est-etiqueta-area{position:absolute;left:0;top:0;width:100%}}
+  @media print{body.est-imprimindo-relatorio *{visibility:hidden!important}body.est-imprimindo-relatorio #estRelatorioImpressao,body.est-imprimindo-relatorio #estRelatorioImpressao *{visibility:visible!important}body.est-imprimindo-relatorio #estRelatorioImpressao{position:absolute;left:0;top:0;width:100%;padding:8px}body.est-imprimindo-relatorio .est-tabela{min-width:0}body.est-imprimindo-relatorio .est-tabela th,body.est-imprimindo-relatorio .est-tabela td{font-size:10px}}
+
 
 </style>
 </head>
 <body>
 
 <div id="telaLogin" class="login-box">
-  <h2>Controle de Saída de Mercadoria</h2>
+  <div class="tpx-logo-redonda tpx-logo-login" role="img" aria-label="Logo TPX Office"></div>
+  <h2>Controle de Mercadorias e Entregas</h2>
   <div class="campo">
     <label>Usuário</label>
     <input id="inputUsuario" placeholder="Usuário (Motorista/Estoque) ou seu nome (Gestor/Consulta/Programador)" autocomplete="username">
@@ -441,13 +465,35 @@
     <input type="password" id="inputSenha" placeholder="Digite sua senha" autocomplete="current-password">
   </div>
   <button class="btn btn-primario" style="width:100%" onclick="fazerLogin()">Entrar</button>
+  <div class="login-separador">OU</div>
+  <button class="btn btn-secundario" style="width:100%" onclick="abrirBuscaPublica()">🔎 Busca de mercadoria</button>
+  <div style="font-size:11px;color:var(--cinza);margin-top:8px">CONSULTE LOCALIZAÇÃO E SALDO SEM FAZER LOGIN</div>
   <div class="msg-erro" id="erroLogin"></div>
+</div>
+
+
+<div id="telaBuscaPublica">
+  <div class="busca-publica-topo">
+    <div class="busca-publica-topo-conteudo">
+      <div class="marca-sistema"><div class="tpx-logo-redonda tpx-logo-header" role="img" aria-label="Logo TPX Office"></div><h1>🔎 Busca de mercadoria</h1></div>
+      <button class="btn btn-secundario" style="min-height:36px;padding:7px 12px" onclick="voltarLoginPublico()">← Voltar ao login</button>
+    </div>
+  </div>
+  <div class="busca-publica-main">
+    <div class="est-painel">
+      <h3>Encontrar cadeira ou mercadoria</h3>
+      <p class="busca-publica-aviso">DIGITE O NOME OU PARTE DELE PARA CONSULTAR A LOCALIZAÇÃO, OS COMPONENTES E A QUANTIDADE DISPONÍVEL.</p>
+      <input class="est-busca" id="buscaPublicaInput" placeholder="EX.: UNIQUE, GOAH OU PRESIDENTE" oninput="renderizarBuscaPublica()">
+      <div id="buscaPublicaStatus" class="est-sub" style="margin-top:9px"></div>
+      <div id="buscaPublicaResultado" class="est-resultado"></div>
+    </div>
+  </div>
 </div>
 
 
 <div id="telaEntrega">
   <div class="entrega-header">
-    <h1>🚚 Entregas em rota</h1>
+    <div class="marca-sistema"><div class="tpx-logo-redonda tpx-logo-header" role="img" aria-label="Logo TPX Office"></div><h1>🚚 Entregas em rota</h1></div>
     <button class="btn btn-secundario" style="padding:6px 10px;font-size:12px" onclick="sair()">Sair</button>
   </div>
   <div class="entrega-main">
@@ -469,7 +515,7 @@
 
 <div id="app" style="display:none">
   <header>
-    <h1>📦 Controle de Saída de Mercadoria</h1>
+    <div class="marca-sistema"><div class="tpx-logo-redonda tpx-logo-header" role="img" aria-label="Logo TPX Office"></div><h1>📦 Controle de Mercadorias e Entregas</h1></div>
     <div>
       <span class="papel" id="labelPapel"></span>
       <button class="btn btn-secundario" style="margin-left:8px;padding:6px 12px;font-size:12px" onclick="sair()">Sair</button>
@@ -483,6 +529,7 @@
       <button class="tab-btn" id="btnTabDashboard" onclick="mudarAba('dashboard')">📈 Dashboard</button>
       <button class="tab-btn" id="btnTabRelatorios" onclick="mudarAba('relatorios')">📊 Relatórios</button>
       <button class="tab-btn" id="btnTabAnteriores" onclick="mudarAba('anteriores')">🗄️ Anos anteriores</button>
+      <button class="tab-btn" id="btnTabEstoque" onclick="mudarAba('estoque')">📍 Localização e Estoque</button>
       <button class="btn btn-secundario" id="btnAtualizarConsulta" style="display:none;margin-left:auto" onclick="atualizarAgoraConsulta()">↻ Atualizar agora</button>
       <button class="btn btn-secundario" id="btnEquipe" style="margin-left:auto" onclick="abrirCadastros()">👥 Cadastros</button>
       <button class="btn btn-secundario" id="btnBackup" onclick="fazerBackup()">💾 Backup</button>
@@ -780,7 +827,12 @@ let ENTREGA_USUARIO = '';
 let TIMER_ENTREGA = null;
 let TIMER_ATUALIZACAO_CONSULTA = null;
 const INTERVALO_CONSULTA_MS = 60 * 1000;
-let DADOS = { ativos: [], historico: [], equipe: [] };
+let DADOS = { ativos: [], historico: [], equipe: [], estoque: { produtos: [], locais: [], movimentos: [] } };
+let ESTOQUE_VIEW = 'buscar';
+let ESTOQUE_EDIT_ID = '';
+let ESTOQUE_REL_SELECIONADOS = new Set();
+let ESTOQUE_REL_INICIALIZADO = false;
+let ESTOQUE_REL_TERMO = '';
 let DADOS_ARQUIVO = [];
 let ANOS_ARQUIVADOS = [];
 let ANO_ARQUIVO_ATUAL = '';
@@ -844,6 +896,57 @@ document.addEventListener('input', (e) => {
     }
   }
 });
+
+// ================== BUSCA PÚBLICA DE MERCADORIA ==================
+let BUSCA_PUBLICA_DADOS = { produtos: [], locais: [] };
+
+async function abrirBuscaPublica(){
+  document.getElementById('telaLogin').style.display='none';
+  document.getElementById('app').style.display='none';
+  document.getElementById('telaEntrega').style.display='none';
+  document.getElementById('telaBuscaPublica').style.display='block';
+  const status=document.getElementById('buscaPublicaStatus');
+  const resultado=document.getElementById('buscaPublicaResultado');
+  status.textContent='CARREGANDO MERCADORIAS...';
+  resultado.innerHTML='<div class="carregando">Carregando dados...</div>';
+  try{
+    const resposta=await fetch(APPS_SCRIPT_URL+'?acao=buscarEstoquePublico&t='+Date.now(),{redirect:'follow',cache:'no-store'});
+    const dados=await lerRespostaBackend(resposta);
+    if(dados.erro)throw new Error(dados.erro);
+    if(!Array.isArray(dados.produtos)||!Array.isArray(dados.locais))throw new Error('A busca pública ainda não está disponível no backend. Atualize a implantação do Google Apps Script.');
+    BUSCA_PUBLICA_DADOS={produtos:dados.produtos,locais:dados.locais};
+    status.textContent=dados.produtos.length+' MERCADORIA(S) DISPONÍVEL(IS) PARA CONSULTA.';
+    resultado.innerHTML='';
+    const input=document.getElementById('buscaPublicaInput');input.value='';setTimeout(()=>input.focus(),50);
+  }catch(e){
+    status.textContent='NÃO FOI POSSÍVEL CARREGAR A BUSCA.';
+    resultado.innerHTML='<div class="est-alerta"><b>ERRO AO CARREGAR:</b> '+escaparHtml(e.message||String(e))+'</div>';
+  }
+}
+
+function voltarLoginPublico(){
+  document.getElementById('telaBuscaPublica').style.display='none';
+  document.getElementById('telaLogin').style.display='block';
+  BUSCA_PUBLICA_DADOS={produtos:[],locais:[]};
+  const senha=document.getElementById('inputSenha');if(senha)setTimeout(()=>senha.focus(),50);
+}
+
+function nomeLocalBuscaPublica(localId){
+  const local=(BUSCA_PUBLICA_DADOS.locais||[]).find(l=>String(l.ID)===String(localId));
+  return local?local.Nome:'LOCAL NÃO DEFINIDO';
+}
+
+function renderizarBuscaPublica(){
+  const termo=String(document.getElementById('buscaPublicaInput')?.value||'').trim().toLocaleLowerCase('pt-BR');
+  const resultado=document.getElementById('buscaPublicaResultado');
+  if(!termo){resultado.innerHTML='';return;}
+  const encontrados=(BUSCA_PUBLICA_DADOS.produtos||[]).filter(p=>String(p.Nome||'').toLocaleLowerCase('pt-BR').includes(termo));
+  if(!encontrados.length){resultado.innerHTML='<div class="est-vazio">NENHUMA MERCADORIA ENCONTRADA COM ESSE NOME.</div>';return;}
+  resultado.innerHTML=encontrados.sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR')).map(p=>{
+    const componentes=Array.isArray(p.Componentes)?p.Componentes:[];
+    return `<div class="est-item"><div class="est-item-top"><h3>${escaparHtml(p.Nome||'')}</h3><span class="est-saldo">${Number(p.Saldo)||0}</span></div><div class="est-local">📍 ${escaparHtml(nomeLocalBuscaPublica(p.LocalID))}</div><div class="est-componentes">${componentes.length?componentes.map(c=>`<span class="est-chip">${escaparHtml(c)}</span>`).join(''):'<span class="est-sub">SEM COMPONENTES CADASTRADOS</span>'}</div><div class="est-sub" style="margin-top:7px">QUANTIDADE DISPONÍVEL: ${Number(p.Saldo)||0}</div></div>`;
+  }).join('');
+}
 
 // ================== LOGIN ==================
 function fazerLogin(){
@@ -919,6 +1022,7 @@ function atualizarVisibilidadeBotaoAtualizar(){
 
 function entrarNoApp(){
   document.getElementById('telaLogin').style.display = 'none';
+  document.getElementById('telaBuscaPublica').style.display = 'none';
   if (PAPEL_ATUAL === 'entrega') {
     entrarModoEntrega();
     return;
@@ -1107,6 +1211,7 @@ function mudarAba(aba){
   document.getElementById('btnTabDashboard').classList.toggle('ativa', aba === 'dashboard');
   document.getElementById('btnTabRelatorios').classList.toggle('ativa', aba === 'relatorios');
   document.getElementById('btnTabAnteriores').classList.toggle('ativa', aba === 'anteriores');
+  document.getElementById('btnTabEstoque').classList.toggle('ativa', aba === 'estoque');
   document.getElementById('btnNovoPedido').style.display = (aba === 'ativos' && (PAPEL_ATUAL === 'cadastro' || PAPEL_ATUAL === 'programador')) ? 'inline-block' : 'none';
   atualizarVisibilidadeBotaoAtualizar();
   if (aba === 'anteriores') { carregarAnosArquivados(); return; }
@@ -1714,6 +1819,7 @@ function renderizar(){
   if (ABA_ATUAL === 'dashboard') { renderizarDashboard(); return; }
   if (ABA_ATUAL === 'relatorios') { renderizarRelatorios(); return; }
   if (ABA_ATUAL === 'anteriores') { renderizarArquivoAnual(); return; }
+  if (ABA_ATUAL === 'estoque') { renderizarEstoque(); return; }
   const area = document.getElementById('areaConteudo');
   let lista = ABA_ATUAL === 'ativos' ? (DADOS.ativos || []) : (DADOS.historico || []);
 
@@ -2339,6 +2445,250 @@ function concluirPedido(id){
     if(resp.ok) carregarDados();
     else alert(resp.erro||'Erro ao concluir.');
   });
+}
+
+// ================== LOCALIZAÇÃO E ESTOQUE ==================
+function estoqueDados(){
+  return DADOS.estoque || {produtos:[],locais:[],movimentos:[]};
+}
+function estoquePodeEditar(){
+  return PAPEL_ATUAL === 'cadastro' || PAPEL_ATUAL === 'programador';
+}
+function estoqueLocalNome(id){
+  const l=(estoqueDados().locais||[]).find(x=>String(x.ID)===String(id));
+  return l ? l.Nome : 'LOCAL NÃO DEFINIDO';
+}
+function estoqueProduto(id){
+  return (estoqueDados().produtos||[]).find(x=>String(x.ID)===String(id));
+}
+function estoqueOpcoesProdutos(selecionado=''){
+  return '<option value="">SELECIONE A MERCADORIA</option>'+(estoqueDados().produtos||[])
+    .slice().sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'))
+    .map(p=>`<option value="${escaparHtml(p.ID)}" ${String(p.ID)===String(selecionado)?'selected':''}>${escaparHtml(p.Nome)} (SALDO: ${Number(p.Saldo)||0})</option>`).join('');
+}
+function estoqueOpcoesLocais(selecionado=''){
+  return '<option value="">SEM LOCAL DEFINIDO</option>'+(estoqueDados().locais||[])
+    .slice().sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'))
+    .map(l=>`<option value="${escaparHtml(l.ID)}" ${String(l.ID)===String(selecionado)?'selected':''}>${escaparHtml(l.Nome)}</option>`).join('');
+}
+function selecionarViewEstoque(view){
+  ESTOQUE_VIEW=view;
+  if(view!=='cadastros') ESTOQUE_EDIT_ID='';
+  renderizarEstoque();
+}
+function navEstoque(){
+  const itens=[['buscar','🔎 Localizar'],['movimentar','↕ Entrada e saída'],['painel','📦 Estoque'],['cadastros','⚙️ Cadastros'],['historico','🕘 Histórico'],['etiquetas','🏷️ Etiquetas']];
+  return `<div class="est-nav">${itens.map(i=>`<button class="btn btn-secundario ${ESTOQUE_VIEW===i[0]?'est-aba-ativa':''}" onclick="selecionarViewEstoque('${i[0]}')">${i[1]}</button>`).join('')}</div>`;
+}
+function renderizarEstoque(){
+  const area=document.getElementById('areaConteudo');
+  if(!area) return;
+  const corpo = ESTOQUE_VIEW==='movimentar' ? telaMovimentarEstoque()
+    : ESTOQUE_VIEW==='painel' ? telaPainelEstoque()
+    : ESTOQUE_VIEW==='cadastros' ? telaCadastrosEstoque()
+    : ESTOQUE_VIEW==='historico' ? telaHistoricoEstoque()
+    : ESTOQUE_VIEW==='etiquetas' ? telaEtiquetasEstoque()
+    : telaBuscarEstoque();
+  area.innerHTML=`<div class="est-cabecalho"><div><h2>📍 Localização e controle de estoque</h2><p class="est-sub">Mercadorias, componentes, alas e saldo físico registrados na planilha.</p></div><button class="btn btn-secundario" onclick="carregarDados()">↻ Atualizar</button></div>${navEstoque()}${corpo}`;
+  if(ESTOQUE_VIEW==='buscar') filtrarBuscaEstoque();
+  if(ESTOQUE_VIEW==='painel'){filtrarOpcoesRelatorioEstoque();atualizarRelatorioEstoqueArea();}
+  if(ESTOQUE_VIEW==='historico') filtrarHistoricoEstoque();
+}
+function telaBuscarEstoque(){
+  return `<div class="est-painel"><h3>Encontrar mercadoria</h3><input class="est-busca" id="estBusca" placeholder="DIGITE O NOME DA CADEIRA OU MERCADORIA" oninput="filtrarBuscaEstoque()" autofocus><div id="estBuscaResultado" class="est-resultado"></div></div>`;
+}
+function cardProdutoEstoque(p){
+  const comps=Array.isArray(p.Componentes)?p.Componentes:[];
+  const minimo=Number(p.EstoqueMinimo)||0, saldo=Number(p.Saldo)||0;
+  return `<div class="est-item" ${minimo>0&&saldo<minimo?'style="border-left-color:var(--vermelho);background:#fff8f7"':''}>
+    <div class="est-item-top"><h3>${escaparHtml(p.Nome)}</h3><span class="est-saldo">${saldo}</span></div>
+    <div class="est-local">📍 ${escaparHtml(estoqueLocalNome(p.LocalID))}</div>
+    <div class="est-componentes">${comps.length?comps.map(c=>`<span class="est-chip">${escaparHtml(c)}</span>`).join(''):'<span class="est-sub">SEM COMPONENTES CADASTRADOS</span>'}</div>
+    ${minimo>0?`<div class="est-sub" style="margin-top:7px">ESTOQUE MÍNIMO: ${minimo}${saldo<minimo?' • ABAIXO DO MÍNIMO':''}</div>`:''}
+    ${estoquePodeEditar()?`<div class="est-acoes"><button class="btn btn-secundario" onclick="irMovimentoProdutoEstoque('${p.ID}')">MOVIMENTAR</button><button class="btn btn-secundario" onclick="editarProdutoEstoque('${p.ID}')">EDITAR</button></div>`:''}
+  </div>`;
+}
+function filtrarBuscaEstoque(){
+  const input=document.getElementById('estBusca'), out=document.getElementById('estBuscaResultado');
+  if(!out) return;
+  const termo=String(input?.value||'').trim().toLocaleLowerCase('pt-BR');
+  const lista=(estoqueDados().produtos||[]).filter(p=>!termo||String(p.Nome).toLocaleLowerCase('pt-BR').includes(termo));
+  out.innerHTML=lista.length?lista.map(cardProdutoEstoque).join(''):'<div class="est-vazio">NENHUMA MERCADORIA ENCONTRADA.</div>';
+}
+function irMovimentoProdutoEstoque(id){
+  ESTOQUE_VIEW='movimentar'; renderizarEstoque();
+  const el=document.getElementById('estMovProduto'); if(el) el.value=id;
+}
+function telaMovimentarEstoque(){
+  if(!estoquePodeEditar()) return '<div class="est-alerta">SEU PERFIL PODE CONSULTAR O ESTOQUE, MAS NÃO PODE REGISTRAR MOVIMENTAÇÕES.</div>'+telaPainelEstoque();
+  return `<div class="est-painel" style="max-width:820px"><h3>Registrar movimentação</h3><div class="est-form">
+    <div class="campo largo"><label>Pesquisar mercadoria</label><input id="estMovBusca" placeholder="DIGITE O NOME PARA FILTRAR" oninput="filtrarSelectProdutosEstoque('estMovBusca','estMovProduto')"></div>
+    <div class="campo largo"><label>Mercadoria</label><select id="estMovProduto">${estoqueOpcoesProdutos()}</select></div>
+    <div class="campo"><label>Tipo</label><select id="estMovTipo"><option>Entrada</option><option>Saída</option><option>Ajuste</option></select></div>
+    <div class="campo"><label>Quantidade</label><input type="number" id="estMovQtd" min="0" value="0" onfocus="this.select()"></div>
+    <div class="campo"><label>Data</label><input type="date" id="estMovData" value="${dataHojeISO()}"></div>
+    <div class="campo"><label>Motivo ou observação</label><input id="estMovMotivo" placeholder="EX.: COMPRA, VENDA, AVARIA OU CORREÇÃO"></div>
+  </div><div class="est-alerta" style="margin-top:10px">SAÍDA DIMINUI O SALDO. AJUSTE TAMBÉM DIMINUI O SALDO E DEVE SER USADO PARA AVARIA, QUEBRA OU PEÇA RETIRADA.</div><button class="btn btn-primario" onclick="registrarMovimentoEstoque()">SALVAR MOVIMENTAÇÃO</button></div>`;
+}
+function telaPainelEstoque(){
+  const produtos=(estoqueDados().produtos||[]).slice().sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+  const idsAtuais=new Set(produtos.map(p=>String(p.ID)));
+  ESTOQUE_REL_SELECIONADOS.forEach(id=>{if(!idsAtuais.has(String(id)))ESTOQUE_REL_SELECIONADOS.delete(id)});
+  if(!ESTOQUE_REL_INICIALIZADO){produtos.forEach(p=>ESTOQUE_REL_SELECIONADOS.add(String(p.ID)));ESTOQUE_REL_INICIALIZADO=true;}
+  return `<div class="est-painel"><h3>Filtros do relatório de estoque</h3>
+    <div class="est-filtros"><div class="campo"><label>Pesquisar cadeira ou mercadoria</label><input id="estRelBusca" value="${escaparHtml(ESTOQUE_REL_TERMO)}" placeholder="DIGITE O NOME" oninput="filtrarOpcoesRelatorioEstoque()"></div><button class="btn btn-secundario" onclick="selecionarProdutosRelatorioEstoque(true)">SELECIONAR FILTRADAS</button><button class="btn btn-secundario" onclick="limparSelecaoRelatorioEstoque()">LIMPAR SELEÇÃO</button><button class="btn btn-primario" onclick="imprimirRelatorioEstoque()">🖨️ IMPRIMIR OU SALVAR EM PDF</button></div>
+    <div class="est-contagem" id="estRelContagem"></div><div class="est-selecao" id="estRelSelecao">${produtos.length?produtos.map(p=>`<label class="est-check" data-nome="${escaparHtml(String(p.Nome).toLocaleLowerCase('pt-BR'))}"><input type="checkbox" value="${escaparHtml(p.ID)}" ${ESTOQUE_REL_SELECIONADOS.has(String(p.ID))?'checked':''} onchange="alternarProdutoRelatorioEstoque('${p.ID}',this.checked)"><span>${escaparHtml(p.Nome)}</span><b>SALDO: ${Number(p.Saldo)||0}</b></label>`).join(''):'<div class="est-vazio">NENHUMA MERCADORIA CADASTRADA.</div>'}</div>
+  </div><div id="estRelatorioImpressao" style="margin-top:12px">${relatorioEstoqueHtml()}</div>`;
+}
+function produtosSelecionadosRelatorioEstoque(){
+  return (estoqueDados().produtos||[]).filter(p=>ESTOQUE_REL_SELECIONADOS.has(String(p.ID))).sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+}
+function relatorioEstoqueHtml(){
+  const produtos=produtosSelecionadosRelatorioEstoque();
+  const total=produtos.reduce((s,p)=>s+(Number(p.Saldo)||0),0);
+  const abaixo=produtos.filter(p=>Number(p.EstoqueMinimo)>0&&Number(p.Saldo)<Number(p.EstoqueMinimo));
+  const semLocal=produtos.filter(p=>!p.LocalID);
+  const agora=new Date().toLocaleString('pt-BR',{timeZone:FUSO});
+  return `<div class="est-painel"><div class="est-relatorio-topo"><div><h3>RELATÓRIO DE ESTOQUE</h3><div class="est-sub">LOCALIZAÇÃO E SALDO FÍSICO DAS MERCADORIAS SELECIONADAS</div></div><div class="est-relatorio-data">EMITIDO EM<br><b>${escaparHtml(agora)}</b></div></div>
+    <div class="est-kpis"><div class="est-kpi"><b>${produtos.length}</b><span>Mercadorias selecionadas</span></div><div class="est-kpi"><b>${total}</b><span>Unidades em estoque</span></div><div class="est-kpi"><b>${abaixo.length}</b><span>Abaixo do mínimo</span></div><div class="est-kpi"><b>${semLocal.length}</b><span>Sem local definido</span></div></div>
+    ${produtos.length?`<div class="est-tabela-wrap"><table class="est-tabela"><thead><tr><th>Mercadoria</th><th>Localização</th><th>Entradas</th><th>Saídas</th><th>Saldo atual</th><th>Mínimo</th><th>Situação</th></tr></thead><tbody>${produtos.map(p=>{const baixo=Number(p.EstoqueMinimo)>0&&Number(p.Saldo)<Number(p.EstoqueMinimo);return `<tr><td><b>${escaparHtml(p.Nome)}</b></td><td>${escaparHtml(estoqueLocalNome(p.LocalID))}</td><td>${Number(p.Entradas)||0}</td><td>${Number(p.Saidas)||0}</td><td><b>${Number(p.Saldo)||0}</b></td><td>${Number(p.EstoqueMinimo)||0}</td><td style="color:${baixo?'var(--vermelho)':'var(--verde)'};font-weight:800">${baixo?'ABAIXO DO MÍNIMO':'NORMAL'}</td></tr>`}).join('')}</tbody></table></div>`:'<div class="est-vazio">SELECIONE PELO MENOS UMA MERCADORIA PARA GERAR O RELATÓRIO.</div>'}
+  </div>`;
+}
+function atualizarRelatorioEstoqueArea(){
+  const area=document.getElementById('estRelatorioImpressao');if(area)area.innerHTML=relatorioEstoqueHtml();
+  const c=document.getElementById('estRelContagem');if(c)c.textContent=ESTOQUE_REL_SELECIONADOS.size+' MERCADORIA(S) SELECIONADA(S)';
+}
+function alternarProdutoRelatorioEstoque(id,marcado){
+  if(marcado)ESTOQUE_REL_SELECIONADOS.add(String(id));else ESTOQUE_REL_SELECIONADOS.delete(String(id));
+  atualizarRelatorioEstoqueArea();
+}
+function filtrarOpcoesRelatorioEstoque(){
+  const termo=String(document.getElementById('estRelBusca')?.value||'').trim().toLocaleLowerCase('pt-BR');ESTOQUE_REL_TERMO=termo;
+  document.querySelectorAll('#estRelSelecao .est-check').forEach(el=>el.style.display=!termo||String(el.dataset.nome||'').includes(termo)?'flex':'none');
+  atualizarRelatorioEstoqueArea();
+}
+function selecionarProdutosRelatorioEstoque(apenasVisiveis=false){
+  document.querySelectorAll('#estRelSelecao .est-check').forEach(el=>{if(apenasVisiveis&&el.style.display==='none')return;const cb=el.querySelector('input');cb.checked=true;ESTOQUE_REL_SELECIONADOS.add(String(cb.value));});
+  atualizarRelatorioEstoqueArea();
+}
+function limparSelecaoRelatorioEstoque(){
+  ESTOQUE_REL_SELECIONADOS.clear();document.querySelectorAll('#estRelSelecao input[type="checkbox"]').forEach(cb=>cb.checked=false);atualizarRelatorioEstoqueArea();
+}
+function imprimirRelatorioEstoque(){
+  if(!ESTOQUE_REL_SELECIONADOS.size)return mostrarAvisoEstoque('SELECIONE PELO MENOS UMA MERCADORIA PARA IMPRIMIR.','erro');
+  document.body.classList.add('est-imprimindo-relatorio');window.print();setTimeout(()=>document.body.classList.remove('est-imprimindo-relatorio'),300);
+}
+function telaCadastrosEstoque(){
+  if(!estoquePodeEditar()) return '<div class="est-alerta">CADASTROS E ALTERAÇÕES SÃO EXCLUSIVOS DO ESTOQUE E DO PROGRAMADOR.</div>';
+  const p=ESTOQUE_EDIT_ID?estoqueProduto(ESTOQUE_EDIT_ID):null;
+  const produtos=(estoqueDados().produtos||[]).slice().sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+  const locais=(estoqueDados().locais||[]).slice().sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+  return `<div class="est-grade"><div class="est-painel"><h3>${p?'Editar mercadoria':'Nova mercadoria'}</h3><div class="est-form">
+    <div class="campo largo"><label>Nome</label><input id="estProdNome" value="${p?escaparHtml(p.Nome):''}" placeholder="NOME DA CADEIRA OU MERCADORIA"></div>
+    <div class="campo"><label>Local</label><select id="estProdLocal">${estoqueOpcoesLocais(p?.LocalID||'')}</select></div>
+    <div class="campo"><label>Estoque mínimo</label><input type="number" id="estProdMinimo" min="0" value="${p?Number(p.EstoqueMinimo)||0:0}"></div>
+    ${p?'':`<div class="campo"><label>Quantidade inicial</label><input type="number" id="estProdInicial" min="0" value="0"></div>`}
+    <div class="campo largo"><label>Componentes, separados por vírgula</label><textarea id="estProdComponentes" placeholder="ASSENTO, ENCOSTO, BASE, PISTÃO, BRAÇOS">${p?escaparHtml((p.Componentes||[]).join(', ')):''}</textarea></div>
+  </div><div class="est-acoes"><button class="btn btn-primario" onclick="salvarProdutoEstoque()">${p?'SALVAR ALTERAÇÕES':'CADASTRAR MERCADORIA'}</button>${p?'<button class="btn btn-secundario" onclick="ESTOQUE_EDIT_ID=\'\';renderizarEstoque()">CANCELAR</button>':''}</div></div>
+  <div class="est-painel"><h3>Locais de armazenagem</h3><div class="campo"><label>Novo local, ala, sala ou vão</label><input id="estNovoLocal" placeholder="EX.: ALA 01, SALA DOS FUNDOS"></div><button class="btn btn-primario" style="margin-top:8px" onclick="salvarLocalEstoque()">ADICIONAR LOCAL</button><div class="campo" style="margin-top:12px"><label>Filtrar locais cadastrados</label><input id="estFiltroLocais" placeholder="DIGITE O NOME DO LOCAL" oninput="filtrarLinhasEstoque('estFiltroLocais','estListaLocais')"></div><div class="est-lista-simples" id="estListaLocais" style="margin-top:12px">${locais.length?locais.map(l=>`<div class="est-linha" data-busca="${escaparHtml(String(l.Nome).toLocaleLowerCase('pt-BR'))}"><b>${escaparHtml(l.Nome)}</b><span><button class="btn btn-secundario" onclick="renomearLocalEstoque('${l.ID}')">EDITAR</button> <button class="btn btn-perigo" onclick="excluirLocalEstoque('${l.ID}')">REMOVER</button></span></div>`).join(''):'<div class="est-vazio">NENHUM LOCAL CADASTRADO.</div>'}</div></div></div>
+  <div class="est-painel" style="margin-top:12px"><h3>Mercadorias cadastradas</h3><div class="est-filtros"><div class="campo"><label>Filtrar mercadorias</label><input id="estFiltroProdutos" placeholder="DIGITE O NOME OU LOCAL" oninput="filtrarLinhasEstoque('estFiltroProdutos','estTabelaProdutos')"></div></div><div class="est-tabela-wrap"><table class="est-tabela"><thead><tr><th>Mercadoria</th><th>Local</th><th>Saldo</th><th>Mínimo</th><th>Ações</th></tr></thead><tbody id="estTabelaProdutos">${produtos.map(x=>`<tr data-busca="${escaparHtml((String(x.Nome)+' '+estoqueLocalNome(x.LocalID)).toLocaleLowerCase('pt-BR'))}"><td><b>${escaparHtml(x.Nome)}</b></td><td>${escaparHtml(estoqueLocalNome(x.LocalID))}</td><td>${Number(x.Saldo)||0}</td><td>${Number(x.EstoqueMinimo)||0}</td><td><button class="btn btn-secundario" onclick="editarProdutoEstoque('${x.ID}')">EDITAR</button> <button class="btn btn-perigo" onclick="excluirProdutoEstoque('${x.ID}')">REMOVER</button></td></tr>`).join('')}</tbody></table></div></div>`;
+}
+function filtrarLinhasEstoque(inputId,containerId){
+  const termo=String(document.getElementById(inputId)?.value||'').trim().toLocaleLowerCase('pt-BR');
+  document.querySelectorAll('#'+containerId+' [data-busca]').forEach(el=>el.style.display=!termo||String(el.dataset.busca||'').includes(termo)?'':'none');
+}
+function telaHistoricoEstoque(){
+  const movs=estoqueDados().movimentos||[];
+  return `<div class="est-painel"><h3>Últimas movimentações</h3><div class="est-filtros">
+    <div class="campo"><label>Mercadoria</label><select id="estHistProduto" onchange="filtrarHistoricoEstoque()">${estoqueOpcoesProdutos()}</select></div>
+    <div class="campo"><label>Tipo</label><select id="estHistTipo" onchange="filtrarHistoricoEstoque()"><option value="">TODOS</option><option>Entrada</option><option>Saída</option><option>Ajuste</option></select></div>
+    <div class="campo"><label>Data inicial</label><input type="date" id="estHistInicio" onchange="filtrarHistoricoEstoque()"></div>
+    <div class="campo"><label>Data final</label><input type="date" id="estHistFim" onchange="filtrarHistoricoEstoque()"></div>
+    <div class="campo"><label>Pesquisar motivo ou usuário</label><input id="estHistTexto" placeholder="DIGITE PARA FILTRAR" oninput="filtrarHistoricoEstoque()"></div>
+    <button class="btn btn-secundario" onclick="limparFiltrosHistoricoEstoque()">LIMPAR FILTROS</button>
+  </div><div class="est-contagem" id="estHistContagem"></div><div class="est-tabela-wrap"><table class="est-tabela"><thead><tr><th>Data</th><th>Tipo</th><th>Mercadoria</th><th>Quantidade</th><th>Motivo</th><th>Usuário</th></tr></thead><tbody id="estHistLinhas">${movs.length?movs.map(m=>{const p=estoqueProduto(m.ProdutoID), nome=p?p.Nome:'MERCADORIA REMOVIDA', data=String(m.DataMovimento||'').slice(0,10), busca=(nome+' '+(m.Motivo||'')+' '+(m.Usuario||'')).toLocaleLowerCase('pt-BR');return `<tr data-produto="${escaparHtml(m.ProdutoID)}" data-tipo="${escaparHtml(m.Tipo)}" data-data="${escaparHtml(data)}" data-busca="${escaparHtml(busca)}"><td>${formatarDataEstoque(m.DataMovimento)}</td><td><b style="color:${m.Tipo==='Entrada'?'var(--verde)':'var(--vermelho)'}">${escaparHtml(m.Tipo)}</b></td><td>${escaparHtml(nome)}</td><td>${Number(m.Quantidade)||0}</td><td>${escaparHtml(m.Motivo||'-')}</td><td>${escaparHtml(m.Usuario||'-')}</td></tr>`}).join(''):'<tr><td colspan="6" class="est-vazio">NENHUMA MOVIMENTAÇÃO REGISTRADA.</td></tr>'}</tbody></table></div><p class="est-sub" style="margin-top:9px">SÃO EXIBIDAS AS 500 MOVIMENTAÇÕES MAIS RECENTES. O HISTÓRICO COMPLETO PERMANECE NA PLANILHA.</p></div>`;
+}
+function filtrarHistoricoEstoque(){
+  const produto=document.getElementById('estHistProduto')?.value||'',tipo=document.getElementById('estHistTipo')?.value||'',inicio=document.getElementById('estHistInicio')?.value||'',fim=document.getElementById('estHistFim')?.value||'',texto=String(document.getElementById('estHistTexto')?.value||'').trim().toLocaleLowerCase('pt-BR');let visiveis=0;
+  document.querySelectorAll('#estHistLinhas tr[data-produto]').forEach(tr=>{const ok=(!produto||tr.dataset.produto===produto)&&(!tipo||tr.dataset.tipo===tipo)&&(!inicio||tr.dataset.data>=inicio)&&(!fim||tr.dataset.data<=fim)&&(!texto||String(tr.dataset.busca||'').includes(texto));tr.style.display=ok?'':'none';if(ok)visiveis++;});
+  const c=document.getElementById('estHistContagem');if(c)c.textContent=visiveis+' MOVIMENTAÇÃO(ÕES) ENCONTRADA(S)';
+}
+function limparFiltrosHistoricoEstoque(){
+  ['estHistProduto','estHistTipo','estHistInicio','estHistFim','estHistTexto'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});filtrarHistoricoEstoque();
+}
+function formatarDataEstoque(valor){
+  const m=String(valor||'').match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m?`${m[3]}/${m[2]}/${m[1]}`:formatarData(valor);
+}
+function telaEtiquetasEstoque(){
+  return `<div class="est-painel"><h3>Gerar etiquetas de identificação</h3><div class="est-form"><div class="campo largo"><label>Pesquisar mercadoria</label><input id="estEtiquetaBusca" placeholder="DIGITE O NOME PARA FILTRAR" oninput="filtrarSelectProdutosEstoque('estEtiquetaBusca','estEtiquetaProduto')"></div><div class="campo largo"><label>Mercadoria</label><select id="estEtiquetaProduto">${estoqueOpcoesProdutos()}</select></div></div><div class="est-acoes"><button class="btn btn-primario" onclick="gerarEtiquetaEstoque()">GERAR ETIQUETAS</button><button class="btn btn-secundario" onclick="imprimirEtiquetaEstoque()">IMPRIMIR</button></div><div id="estEtiquetaArea" class="est-etiqueta-area"></div></div>`;
+}
+function filtrarSelectProdutosEstoque(inputId,selectId){
+  const input=document.getElementById(inputId),select=document.getElementById(selectId);if(!select)return;
+  const termo=String(input?.value||'').trim().toLocaleLowerCase('pt-BR'), atual=select.value;
+  const produtos=(estoqueDados().produtos||[]).filter(p=>!termo||String(p.Nome).toLocaleLowerCase('pt-BR').includes(termo)).sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+  select.innerHTML='<option value="">SELECIONE A MERCADORIA</option>'+produtos.map(p=>`<option value="${escaparHtml(p.ID)}">${escaparHtml(p.Nome)} (SALDO: ${Number(p.Saldo)||0})</option>`).join('');
+  if(produtos.some(p=>String(p.ID)===String(atual)))select.value=atual;else if(produtos.length===1)select.value=produtos[0].ID;
+}
+async function acaoEstoque(payload, mensagem){
+  payload.senha=SENHA_ATUAL;
+  payload.usuario=ENTREGA_NOME||ENTREGA_USUARIO||'';
+  const resp=await chamarBackend(payload);
+  if(resp.erro) throw new Error(resp.erro);
+  await carregarDados(true);
+  if(mensagem) mostrarAvisoEstoque(mensagem);
+  return resp;
+}
+function mostrarAvisoEstoque(mensagem,tipo='sucesso'){
+  document.querySelectorAll('.est-toast').forEach(el=>el.remove());
+  const aviso=document.createElement('div');aviso.className='est-toast'+(tipo==='erro'?' erro':'');aviso.setAttribute('role','status');aviso.textContent=mensagem;document.body.appendChild(aviso);
+  setTimeout(()=>{aviso.style.opacity='0';aviso.style.transform='translateY(-8px)';aviso.style.transition='.2s';setTimeout(()=>aviso.remove(),220)},3600);
+}
+async function registrarMovimentoEstoque(){
+  const produtoId=document.getElementById('estMovProduto').value;
+  const tipo=document.getElementById('estMovTipo').value;
+  const quantidade=Number(document.getElementById('estMovQtd').value);
+  const data=document.getElementById('estMovData').value;
+  const motivo=document.getElementById('estMovMotivo').value.trim();
+  if(!produtoId) return alert('SELECIONE A MERCADORIA.');
+  if(!quantidade||quantidade<=0) return alert('INFORME UMA QUANTIDADE MAIOR QUE ZERO.');
+  if(tipo==='Ajuste'&&!motivo) return alert('INFORME O MOTIVO DO AJUSTE.');
+  try{await acaoEstoque({acao:'registrarMovimentoEstoque',movimento:{produtoId,tipo,quantidade,data,motivo}},tipo.toUpperCase()+' REGISTRADA COM SUCESSO.');const qtd=document.getElementById('estMovQtd');if(qtd)qtd.value='0';}
+  catch(e){mostrarAvisoEstoque(e.message||String(e),'erro')}
+}
+async function salvarProdutoEstoque(){
+  const nome=document.getElementById('estProdNome').value.trim();
+  const localId=document.getElementById('estProdLocal').value;
+  const minimo=Number(document.getElementById('estProdMinimo').value)||0;
+  const quantidadeInicial=Number(document.getElementById('estProdInicial')?.value)||0;
+  const componentes=document.getElementById('estProdComponentes').value.split(',').map(x=>x.trim()).filter(Boolean);
+  if(!nome) return alert('INFORME O NOME DA MERCADORIA.');
+  try{const editando=!!ESTOQUE_EDIT_ID;await acaoEstoque({acao:'salvarProdutoEstoque',produto:{id:ESTOQUE_EDIT_ID,nome,localId,minimo,quantidadeInicial,componentes,data:dataHojeISO()}},editando?'MERCADORIA ATUALIZADA.':'MERCADORIA CADASTRADA.');ESTOQUE_EDIT_ID='';renderizarEstoque();}
+  catch(e){alert(e.message||e)}
+}
+function editarProdutoEstoque(id){ESTOQUE_EDIT_ID=id;ESTOQUE_VIEW='cadastros';renderizarEstoque();window.scrollTo({top:0,behavior:'smooth'});}
+async function excluirProdutoEstoque(id){
+  const p=estoqueProduto(id);if(!p||!confirm('REMOVER O CADASTRO DE '+p.Nome+'?')) return;
+  try{await acaoEstoque({acao:'excluirProdutoEstoque',id},'MERCADORIA REMOVIDA.')}catch(e){alert(e.message||e)}
+}
+async function salvarLocalEstoque(id='',nome=''){
+  nome=nome||document.getElementById('estNovoLocal')?.value.trim()||'';if(!nome)return alert('INFORME O NOME DO LOCAL.');
+  try{await acaoEstoque({acao:'salvarLocalEstoque',local:{id,nome}},id?'LOCAL ATUALIZADO.':'LOCAL CADASTRADO.')}catch(e){alert(e.message||e)}
+}
+function renomearLocalEstoque(id){const l=(estoqueDados().locais||[]).find(x=>String(x.ID)===String(id));if(!l)return;const nome=prompt('NOVO NOME DO LOCAL:',l.Nome);if(nome&&nome.trim())salvarLocalEstoque(id,nome.trim());}
+async function excluirLocalEstoque(id){
+  const l=(estoqueDados().locais||[]).find(x=>String(x.ID)===String(id));if(!l||!confirm('REMOVER O LOCAL '+l.Nome+'?'))return;
+  try{await acaoEstoque({acao:'excluirLocalEstoque',id},'LOCAL REMOVIDO.')}catch(e){alert(e.message||e)}
+}
+function gerarEtiquetaEstoque(){
+  const p=estoqueProduto(document.getElementById('estEtiquetaProduto').value), out=document.getElementById('estEtiquetaArea');
+  if(!p){out.innerHTML='<div class="est-vazio">SELECIONE UMA MERCADORIA.</div>';return;}
+  const comps=(p.Componentes||[]).length?p.Componentes:['CADEIRA COMPLETA'];
+  out.innerHTML=comps.map(c=>`<div class="est-etiqueta"><div class="est-etiqueta-local">📍 ${escaparHtml(estoqueLocalNome(p.LocalID))}</div><div class="est-etiqueta-nome">${escaparHtml(p.Nome)}</div><div class="est-etiqueta-comp">${escaparHtml(c)}</div></div>`).join('');
+}
+function imprimirEtiquetaEstoque(){
+  if(!document.getElementById('estEtiquetaArea')?.innerHTML.trim())gerarEtiquetaEstoque();
+  document.body.classList.add('est-imprimindo');window.print();setTimeout(()=>document.body.classList.remove('est-imprimindo'),300);
 }
 </script>
 </body>
