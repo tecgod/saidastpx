@@ -441,11 +441,13 @@
   .est-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.est-form .campo{margin:0}.est-form .campo.largo{grid-column:1/-1}.est-acoes{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.est-lista-simples{display:grid;gap:7px}.est-linha{display:flex;justify-content:space-between;gap:8px;align-items:center;border:1px solid var(--borda);border-radius:8px;padding:8px 10px;background:#fafbfc}.est-vazio{text-align:center;color:var(--cinza);padding:28px 10px}.est-aba-ativa{background:var(--azul)!important;color:#fff!important}
   .est-filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px;align-items:end;background:#f8fafc;border:1px solid var(--borda);border-radius:10px;padding:11px;margin-bottom:12px}.est-filtros .campo{margin:0}.est-filtros .btn{width:100%}
   .est-selecao{max-height:230px;overflow:auto;border:1px solid var(--borda);border-radius:9px;background:#fff}.est-check{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--borda);font-size:12px}.est-check:last-child{border-bottom:0}.est-check input{width:17px;height:17px;flex:0 0 auto}.est-check span{flex:1}.est-check b{color:var(--azul-esc)}
+  .est-mov-resultados{max-height:300px;overflow:auto;border:1px solid var(--borda);border-radius:9px;background:#fff;margin-top:7px}.est-mov-opcao{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;border:0;border-bottom:1px solid var(--borda);background:#fff;padding:10px 12px;cursor:pointer}.est-mov-opcao:last-child{border-bottom:0}.est-mov-opcao:hover,.est-mov-opcao.selecionada{background:#eef5ff}.est-mov-opcao b{display:block;color:var(--azul-esc);font-size:14px}.est-mov-opcao span{display:block;color:var(--cinza);font-size:11px;margin-top:2px}.est-mov-opcao strong{font-size:18px;color:var(--verde);white-space:nowrap}.est-mov-selecionado{margin:10px 0;padding:11px 13px;border:2px solid #9bbce4;background:#eef5ff;border-radius:9px}.est-mov-selecionado b{color:var(--azul-esc)}
+  .est-tipos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.est-tipo-btn{min-height:48px;border:2px solid var(--borda);border-radius:9px;background:#fff;font-size:14px;font-weight:800;cursor:pointer}.est-tipo-btn.entrada.ativa{background:#e9f8f1;border-color:var(--verde);color:#166b43}.est-tipo-btn.saida.ativa{background:#fff0ee;border-color:var(--vermelho);color:#9c2f24}.est-tipo-btn.ajuste.ativa{background:#fff6df;border-color:var(--amarelo);color:#8b5b00}
   .est-relatorio-topo{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:2px solid var(--azul-esc);padding-bottom:9px;margin-bottom:10px}.est-relatorio-topo h3{font-size:18px;margin:0}.est-relatorio-data{font-size:11px;color:var(--cinza);text-align:right}.est-contagem{font-size:12px;color:var(--cinza);font-weight:700;margin:8px 0}
   .est-toast{position:fixed;right:20px;top:20px;z-index:9999;max-width:390px;background:#eaf8f1;color:#166b43;border:1px solid #87c9a8;border-left:6px solid var(--verde);border-radius:10px;padding:14px 18px;box-shadow:0 12px 32px rgba(0,0,0,.18);font-size:14px;font-weight:800;animation:estToastEntrada .22s ease}.est-toast.erro{background:#fff1ef;color:#9c2f24;border-color:#e1a49e;border-left-color:var(--vermelho)}@keyframes estToastEntrada{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
-  .est-etiqueta{width:340px;max-width:100%;background:#fff;border:3px solid #1f2937;border-radius:4px;padding:18px;margin:14px auto}.est-etiqueta-local{color:#7c3aed;font-weight:800;border-bottom:2px solid #1f2937;padding-bottom:8px}.est-etiqueta-nome{font-size:23px;font-weight:800;margin:10px 0}.est-etiqueta-comp{font-size:15px;padding:5px 0}
-  @media(max-width:620px){.est-form{grid-template-columns:1fr}.est-form .campo.largo{grid-column:auto}.est-nav .btn{flex:1 1 130px}.est-resultado{grid-template-columns:1fr}}
-  @media print{body.est-imprimindo *{visibility:hidden!important}body.est-imprimindo .est-etiqueta-area,body.est-imprimindo .est-etiqueta-area *{visibility:visible!important}body.est-imprimindo .est-etiqueta-area{position:absolute;left:0;top:0;width:100%}}
+  .est-folha-etiquetas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0;padding:12px;background:#eef2f7;border:1px dashed #94a3b8;border-radius:10px}.est-etiqueta{width:auto;max-width:100%;background:#fff;border:3px solid #1f2937;border-radius:4px;padding:18px;margin:0;box-sizing:border-box;break-inside:avoid}.est-etiqueta-local{color:#7c3aed;font-weight:800;border-bottom:2px solid #1f2937;padding-bottom:8px}.est-etiqueta-nome{font-size:23px;font-weight:800;margin:10px 0}.est-etiqueta-comp{font-size:13px;line-height:1.45;padding:5px 0}.est-etiqueta-numero{font-size:11px;color:var(--cinza);margin-top:10px;text-align:right}
+  @media(max-width:620px){.est-form{grid-template-columns:1fr}.est-form .campo.largo{grid-column:auto}.est-nav .btn{flex:1 1 130px}.est-resultado{grid-template-columns:1fr}.est-tipos{grid-template-columns:1fr}.est-mov-opcao{align-items:flex-start}}
+  @media print{@page{size:A4 portrait;margin:8mm}body.est-imprimindo *{visibility:hidden!important}body.est-imprimindo .est-etiqueta-area,body.est-imprimindo .est-etiqueta-area *{visibility:visible!important}body.est-imprimindo .est-etiqueta-area{position:absolute;left:0;top:0;width:100%}body.est-imprimindo .est-folha-etiquetas{visibility:visible!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:6mm;width:100%;height:270mm;margin:0;padding:0;background:#fff;border:0;border-radius:0;box-sizing:border-box;break-after:page;page-break-after:always}body.est-imprimindo .est-folha-etiquetas:last-child{break-after:auto;page-break-after:auto}body.est-imprimindo .est-folha-etiquetas.qtd-4{grid-template-rows:repeat(2,minmax(0,1fr))}body.est-imprimindo .est-folha-etiquetas.qtd-5,body.est-imprimindo .est-folha-etiquetas.qtd-6{grid-template-rows:repeat(3,minmax(0,1fr))}body.est-imprimindo .est-etiqueta{width:auto;height:auto;min-height:0;margin:0;padding:8mm;display:flex;flex-direction:column;justify-content:center;overflow:hidden}}
   @media print{body.est-imprimindo-relatorio *{visibility:hidden!important}body.est-imprimindo-relatorio #estRelatorioImpressao,body.est-imprimindo-relatorio #estRelatorioImpressao *{visibility:visible!important}body.est-imprimindo-relatorio #estRelatorioImpressao{position:absolute;left:0;top:0;width:100%;padding:8px}body.est-imprimindo-relatorio .est-tabela{min-width:0}body.est-imprimindo-relatorio .est-tabela th,body.est-imprimindo-relatorio .est-tabela td{font-size:10px}}
 
 
@@ -831,8 +833,13 @@ let DADOS = { ativos: [], historico: [], equipe: [], estoque: { produtos: [], lo
 let ESTOQUE_VIEW = 'buscar';
 let ESTOQUE_EDIT_ID = '';
 let ESTOQUE_REL_SELECIONADOS = new Set();
-let ESTOQUE_REL_INICIALIZADO = false;
 let ESTOQUE_REL_TERMO = '';
+let ESTOQUE_REL_SITUACAO = '';
+let ESTOQUE_REL_CLASSIFICACAO = '';
+let ESTOQUE_REL_ORDEM = 'nome';
+let ESTOQUE_MOV_PRODUTO_ID = '';
+let ESTOQUE_MOV_TIPO = 'Entrada';
+let ESTOQUE_ETIQUETA_SELECIONADOS = new Set();
 let DADOS_ARQUIVO = [];
 let ANOS_ARQUIVADOS = [];
 let ANO_ARQUIVO_ATUAL = '';
@@ -2477,7 +2484,7 @@ function selecionarViewEstoque(view){
   renderizarEstoque();
 }
 function navEstoque(){
-  const itens=[['buscar','🔎 Localizar'],['movimentar','↕ Entrada e saída'],['painel','📦 Estoque'],['cadastros','⚙️ Cadastros'],['historico','🕘 Histórico'],['etiquetas','🏷️ Etiquetas']];
+  const itens=[['buscar','🔎 Localizar'],['movimentar','↕ Entrada e saída'],['painel','📦 Relatório de estoque'],['cadastros','⚙️ Cadastros'],['historico','🕘 Histórico'],['etiquetas','🏷️ Etiquetas']];
   return `<div class="est-nav">${itens.map(i=>`<button class="btn btn-secundario ${ESTOQUE_VIEW===i[0]?'est-aba-ativa':''}" onclick="selecionarViewEstoque('${i[0]}')">${i[1]}</button>`).join('')}</div>`;
 }
 function renderizarEstoque(){
@@ -2491,8 +2498,10 @@ function renderizarEstoque(){
     : telaBuscarEstoque();
   area.innerHTML=`<div class="est-cabecalho"><div><h2>📍 Localização e controle de estoque</h2><p class="est-sub">Mercadorias, componentes, alas e saldo físico registrados na planilha.</p></div><button class="btn btn-secundario" onclick="carregarDados()">↻ Atualizar</button></div>${navEstoque()}${corpo}`;
   if(ESTOQUE_VIEW==='buscar') filtrarBuscaEstoque();
+  if(ESTOQUE_VIEW==='movimentar'){renderizarSugestoesMovimentoEstoque();renderProdutoSelecionadoMovimento();atualizarBotoesTipoMovimento();}
   if(ESTOQUE_VIEW==='painel'){filtrarOpcoesRelatorioEstoque();atualizarRelatorioEstoqueArea();}
   if(ESTOQUE_VIEW==='historico') filtrarHistoricoEstoque();
+  if(ESTOQUE_VIEW==='etiquetas'){renderizarSugestoesEtiquetaEstoque();renderProdutosSelecionadosEtiquetaEstoque();}
 }
 function telaBuscarEstoque(){
   return `<div class="est-painel"><h3>Encontrar mercadoria</h3><input class="est-busca" id="estBusca" placeholder="DIGITE O NOME DA CADEIRA OU MERCADORIA" oninput="filtrarBuscaEstoque()" autofocus><div id="estBuscaResultado" class="est-resultado"></div></div>`;
@@ -2516,67 +2525,150 @@ function filtrarBuscaEstoque(){
   out.innerHTML=lista.length?lista.map(cardProdutoEstoque).join(''):'<div class="est-vazio">NENHUMA MERCADORIA ENCONTRADA.</div>';
 }
 function irMovimentoProdutoEstoque(id){
+  ESTOQUE_MOV_PRODUTO_ID=String(id||'');
   ESTOQUE_VIEW='movimentar'; renderizarEstoque();
-  const el=document.getElementById('estMovProduto'); if(el) el.value=id;
 }
 function telaMovimentarEstoque(){
   if(!estoquePodeEditar()) return '<div class="est-alerta">SEU PERFIL PODE CONSULTAR O ESTOQUE, MAS NÃO PODE REGISTRAR MOVIMENTAÇÕES.</div>'+telaPainelEstoque();
+  const selecionado=estoqueProduto(ESTOQUE_MOV_PRODUTO_ID);
   return `<div class="est-painel" style="max-width:820px"><h3>Registrar movimentação</h3><div class="est-form">
-    <div class="campo largo"><label>Pesquisar mercadoria</label><input id="estMovBusca" placeholder="DIGITE O NOME PARA FILTRAR" oninput="filtrarSelectProdutosEstoque('estMovBusca','estMovProduto')"></div>
-    <div class="campo largo"><label>Mercadoria</label><select id="estMovProduto">${estoqueOpcoesProdutos()}</select></div>
-    <div class="campo"><label>Tipo</label><select id="estMovTipo"><option>Entrada</option><option>Saída</option><option>Ajuste</option></select></div>
+    <div class="campo largo"><label>🔎 Pesquisar mercadoria</label><input class="est-busca" id="estMovBusca" value="${selecionado?escaparHtml(selecionado.Nome):''}" placeholder="COMECE A DIGITAR O NOME DA MERCADORIA" oninput="renderizarSugestoesMovimentoEstoque()" autocomplete="off" autofocus><div class="est-sub" style="margin-top:5px">DIGITE PARTE DO NOME E CLIQUE NA MERCADORIA ENCONTRADA.</div><div id="estMovResultados" class="est-mov-resultados"></div><div id="estMovSelecionado"></div></div>
+    <div class="campo largo"><label>Tipo de movimentação</label><div class="est-tipos"><button type="button" class="est-tipo-btn entrada" data-tipo="Entrada" onclick="selecionarTipoMovimentoEstoque('Entrada')">＋ ENTRADA</button><button type="button" class="est-tipo-btn saida" data-tipo="Saída" onclick="selecionarTipoMovimentoEstoque('Saída')">－ SAÍDA</button><button type="button" class="est-tipo-btn ajuste" data-tipo="Ajuste" onclick="selecionarTipoMovimentoEstoque('Ajuste')">⚙ AJUSTE</button></div></div>
     <div class="campo"><label>Quantidade</label><input type="number" id="estMovQtd" min="0" value="0" onfocus="this.select()"></div>
     <div class="campo"><label>Data</label><input type="date" id="estMovData" value="${dataHojeISO()}"></div>
     <div class="campo"><label>Motivo ou observação</label><input id="estMovMotivo" placeholder="EX.: COMPRA, VENDA, AVARIA OU CORREÇÃO"></div>
   </div><div class="est-alerta" style="margin-top:10px">SAÍDA DIMINUI O SALDO. AJUSTE TAMBÉM DIMINUI O SALDO E DEVE SER USADO PARA AVARIA, QUEBRA OU PEÇA RETIRADA.</div><button class="btn btn-primario" onclick="registrarMovimentoEstoque()">SALVAR MOVIMENTAÇÃO</button></div>`;
 }
+function normalizarBuscaEstoque(valor){
+  return String(valor||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+}
+function renderizarSugestoesMovimentoEstoque(){
+  const input=document.getElementById('estMovBusca'),area=document.getElementById('estMovResultados');if(!area)return;
+  const termo=normalizarBuscaEstoque(input?.value||'');
+  const selecionado=estoqueProduto(ESTOQUE_MOV_PRODUTO_ID);
+  if(selecionado&&normalizarBuscaEstoque(input?.value)!==normalizarBuscaEstoque(selecionado.Nome)){ESTOQUE_MOV_PRODUTO_ID='';renderProdutoSelecionadoMovimento();}
+  if(!termo){area.innerHTML='<div class="est-vazio">COMECE A DIGITAR PARA PESQUISAR A MERCADORIA.</div>';return;}
+  const lista=(estoqueDados().produtos||[]).filter(p=>!termo||normalizarBuscaEstoque(p.Nome).includes(termo)).sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+  if(!lista.length){area.innerHTML='<div class="est-vazio">NENHUMA MERCADORIA ENCONTRADA. TENTE DIGITAR APENAS PARTE DO NOME.</div>';return;}
+  area.innerHTML=lista.map(p=>`<button type="button" class="est-mov-opcao ${String(p.ID)===String(ESTOQUE_MOV_PRODUTO_ID)?'selecionada':''}" onclick="selecionarProdutoMovimentoEstoque('${p.ID}')"><span><b>${escaparHtml(p.Nome)}</b><span>📍 ${escaparHtml(estoqueLocalNome(p.LocalID))}</span></span><strong>${Number(p.Saldo)||0}</strong></button>`).join('');
+}
+function selecionarProdutoMovimentoEstoque(id){
+  const p=estoqueProduto(id);if(!p)return;ESTOQUE_MOV_PRODUTO_ID=String(id);const input=document.getElementById('estMovBusca');if(input)input.value=p.Nome;renderizarSugestoesMovimentoEstoque();renderProdutoSelecionadoMovimento();const qtd=document.getElementById('estMovQtd');if(qtd){qtd.focus();qtd.select();}
+}
+function renderProdutoSelecionadoMovimento(){
+  const area=document.getElementById('estMovSelecionado');if(!area)return;const p=estoqueProduto(ESTOQUE_MOV_PRODUTO_ID);
+  area.innerHTML=p?`<div class="est-mov-selecionado"><b>✓ MERCADORIA SELECIONADA:</b> ${escaparHtml(p.Nome)}<br><span class="est-sub">LOCAL: ${escaparHtml(estoqueLocalNome(p.LocalID))} | SALDO ATUAL: ${Number(p.Saldo)||0}</span></div>`:'<div class="est-sub" style="margin-top:7px">DIGITE O NOME E TOQUE EM UMA MERCADORIA DA LISTA.</div>';
+}
+function selecionarTipoMovimentoEstoque(tipo){
+  if(!['Entrada','Saída','Ajuste'].includes(tipo))return;ESTOQUE_MOV_TIPO=tipo;atualizarBotoesTipoMovimento();
+}
+function atualizarBotoesTipoMovimento(){
+  document.querySelectorAll('.est-tipo-btn').forEach(btn=>btn.classList.toggle('ativa',btn.dataset.tipo===ESTOQUE_MOV_TIPO));
+}
 function telaPainelEstoque(){
   const produtos=(estoqueDados().produtos||[]).slice().sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
   const idsAtuais=new Set(produtos.map(p=>String(p.ID)));
   ESTOQUE_REL_SELECIONADOS.forEach(id=>{if(!idsAtuais.has(String(id)))ESTOQUE_REL_SELECIONADOS.delete(id)});
-  if(!ESTOQUE_REL_INICIALIZADO){produtos.forEach(p=>ESTOQUE_REL_SELECIONADOS.add(String(p.ID)));ESTOQUE_REL_INICIALIZADO=true;}
-  return `<div class="est-painel"><h3>Filtros do relatório de estoque</h3>
-    <div class="est-filtros"><div class="campo"><label>Pesquisar cadeira ou mercadoria</label><input id="estRelBusca" value="${escaparHtml(ESTOQUE_REL_TERMO)}" placeholder="DIGITE O NOME" oninput="filtrarOpcoesRelatorioEstoque()"></div><button class="btn btn-secundario" onclick="selecionarProdutosRelatorioEstoque(true)">SELECIONAR FILTRADAS</button><button class="btn btn-secundario" onclick="limparSelecaoRelatorioEstoque()">LIMPAR SELEÇÃO</button><button class="btn btn-primario" onclick="imprimirRelatorioEstoque()">🖨️ IMPRIMIR OU SALVAR EM PDF</button></div>
-    <div class="est-contagem" id="estRelContagem"></div><div class="est-selecao" id="estRelSelecao">${produtos.length?produtos.map(p=>`<label class="est-check" data-nome="${escaparHtml(String(p.Nome).toLocaleLowerCase('pt-BR'))}"><input type="checkbox" value="${escaparHtml(p.ID)}" ${ESTOQUE_REL_SELECIONADOS.has(String(p.ID))?'checked':''} onchange="alternarProdutoRelatorioEstoque('${p.ID}',this.checked)"><span>${escaparHtml(p.Nome)}</span><b>SALDO: ${Number(p.Saldo)||0}</b></label>`).join(''):'<div class="est-vazio">NENHUMA MERCADORIA CADASTRADA.</div>'}</div>
+  return `<div class="est-painel"><h3>Relatório de estoque</h3><p class="est-sub" style="margin-bottom:12px">PESQUISE, APLIQUE OS FILTROS OU MARQUE MANUALMENTE AS MERCADORIAS QUE DESEJA IMPRIMIR.</p>
+    <div class="est-filtros"><div class="campo"><label>Pesquisar mercadoria</label><input id="estRelBusca" value="${escaparHtml(ESTOQUE_REL_TERMO)}" placeholder="DIGITE O NOME" oninput="filtrarOpcoesRelatorioEstoque()"></div><div class="campo"><label>Situação do estoque</label><select id="estRelSituacao" onchange="filtrarOpcoesRelatorioEstoque()"><option value="" ${!ESTOQUE_REL_SITUACAO?'selected':''}>TODAS</option><option value="baixo" ${ESTOQUE_REL_SITUACAO==='baixo'?'selected':''}>NO MÍNIMO OU ABAIXO</option><option value="zerado" ${ESTOQUE_REL_SITUACAO==='zerado'?'selected':''}>ESTOQUE ZERADO</option><option value="com_estoque" ${ESTOQUE_REL_SITUACAO==='com_estoque'?'selected':''}>COM ESTOQUE DISPONÍVEL</option><option value="sem_local" ${ESTOQUE_REL_SITUACAO==='sem_local'?'selected':''}>SEM LOCALIZAÇÃO DEFINIDA</option></select></div><div class="campo"><label>Classificação por saídas</label><select id="estRelClassificacao" onchange="ajustarClassificacaoRelatorioEstoque()"><option value="" ${!ESTOQUE_REL_CLASSIFICACAO?'selected':''}>TODAS AS MERCADORIAS</option><option value="top5" ${ESTOQUE_REL_CLASSIFICACAO==='top5'?'selected':''}>5 COM MAIS SAÍDAS</option><option value="top10" ${ESTOQUE_REL_CLASSIFICACAO==='top10'?'selected':''}>10 COM MAIS SAÍDAS</option><option value="bottom5" ${ESTOQUE_REL_CLASSIFICACAO==='bottom5'?'selected':''}>5 COM MENOS SAÍDAS</option><option value="bottom10" ${ESTOQUE_REL_CLASSIFICACAO==='bottom10'?'selected':''}>10 COM MENOS SAÍDAS</option><option value="sem_saida" ${ESTOQUE_REL_CLASSIFICACAO==='sem_saida'?'selected':''}>SEM NENHUMA SAÍDA</option></select></div><div class="campo"><label>Ordenar relatório por</label><select id="estRelOrdem" onchange="filtrarOpcoesRelatorioEstoque()"><option value="nome" ${ESTOQUE_REL_ORDEM==='nome'?'selected':''}>NOME, A ATÉ Z</option><option value="saldo_asc" ${ESTOQUE_REL_ORDEM==='saldo_asc'?'selected':''}>MENOR ESTOQUE</option><option value="saldo_desc" ${ESTOQUE_REL_ORDEM==='saldo_desc'?'selected':''}>MAIOR ESTOQUE</option><option value="saidas_desc" ${ESTOQUE_REL_ORDEM==='saidas_desc'?'selected':''}>MAIOR SAÍDA</option><option value="saidas_asc" ${ESTOQUE_REL_ORDEM==='saidas_asc'?'selected':''}>MENOR SAÍDA</option></select></div><button class="btn btn-secundario" onclick="limparFiltrosRelatorioEstoque()">LIMPAR FILTROS</button></div>
+    <div class="est-acoes" style="margin-bottom:10px"><button class="btn btn-secundario" onclick="selecionarProdutosRelatorioEstoque(true)">SELECIONAR RESULTADO DO FILTRO</button><button class="btn btn-secundario" onclick="limparSelecaoRelatorioEstoque()">LIMPAR SELEÇÃO</button><button class="btn btn-primario" onclick="imprimirRelatorioSelecionadoEstoque()">🖨️ IMPRIMIR SELECIONADAS</button><button class="btn btn-secundario" onclick="imprimirRelatorioFiltradoEstoque()">🖨️ IMPRIMIR RESULTADO DO FILTRO</button><button class="btn btn-secundario" onclick="imprimirRelatorioCompletoEstoque()">🖨️ IMPRIMIR TUDO</button></div>
+    <div class="est-contagem" id="estRelContagem"></div><div class="est-selecao" id="estRelSelecao">${produtos.length?produtos.map(p=>`<label class="est-check" data-id="${escaparHtml(p.ID)}"><input type="checkbox" value="${escaparHtml(p.ID)}" ${ESTOQUE_REL_SELECIONADOS.has(String(p.ID))?'checked':''} onchange="alternarProdutoRelatorioEstoque('${p.ID}',this.checked)"><span>${escaparHtml(p.Nome)}</span><b>SALDO: ${Number(p.Saldo)||0} | SAÍDAS: ${Number(p.Saidas)||0}</b></label>`).join(''):'<div class="est-vazio">NENHUMA MERCADORIA CADASTRADA.</div>'}</div>
   </div><div id="estRelatorioImpressao" style="margin-top:12px">${relatorioEstoqueHtml()}</div>`;
 }
 function produtosSelecionadosRelatorioEstoque(){
   return (estoqueDados().produtos||[]).filter(p=>ESTOQUE_REL_SELECIONADOS.has(String(p.ID))).sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
 }
-function relatorioEstoqueHtml(){
-  const produtos=produtosSelecionadosRelatorioEstoque();
+function produtoNoMinimoOuAbaixoEstoque(p){
+  const saldo=Number(p.Saldo)||0,minimo=Number(p.EstoqueMinimo)||0;return saldo<=0||(minimo>0&&saldo<=minimo);
+}
+function saidasProdutoEstoque(p){
+  return Number(p.Saidas)||0;
+}
+function produtosFiltradosRelatorioEstoque(){
+  const termo=normalizarBuscaEstoque(ESTOQUE_REL_TERMO),situacao=ESTOQUE_REL_SITUACAO,classificacao=ESTOQUE_REL_CLASSIFICACAO,ordem=ESTOQUE_REL_ORDEM;
+  let produtos=(estoqueDados().produtos||[]).filter(p=>{
+    const saldo=Number(p.Saldo)||0;
+    const correspondeNome=!termo||normalizarBuscaEstoque(p.Nome).includes(termo);
+    const correspondeSituacao=!situacao||(situacao==='baixo'&&produtoNoMinimoOuAbaixoEstoque(p))||(situacao==='zerado'&&saldo<=0)||(situacao==='com_estoque'&&saldo>0)||(situacao==='sem_local'&&!p.LocalID);
+    return correspondeNome&&correspondeSituacao;
+  });
+  if(classificacao==='sem_saida')return produtos.filter(p=>saidasProdutoEstoque(p)===0).sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+  if(['top5','top10','bottom5','bottom10'].includes(classificacao)){
+    const limite=classificacao.endsWith('5')?5:10,maisSaidas=classificacao.startsWith('top');
+    produtos.sort((a,b)=>(maisSaidas?saidasProdutoEstoque(b)-saidasProdutoEstoque(a):saidasProdutoEstoque(a)-saidasProdutoEstoque(b))||String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+    return produtos.slice(0,limite);
+  }
+  return produtos.sort((a,b)=>{
+    if(ordem==='saldo_asc')return (Number(a.Saldo)||0)-(Number(b.Saldo)||0)||String(a.Nome).localeCompare(String(b.Nome),'pt-BR');
+    if(ordem==='saldo_desc')return (Number(b.Saldo)||0)-(Number(a.Saldo)||0)||String(a.Nome).localeCompare(String(b.Nome),'pt-BR');
+    if(ordem==='saidas_desc')return saidasProdutoEstoque(b)-saidasProdutoEstoque(a)||String(a.Nome).localeCompare(String(b.Nome),'pt-BR');
+    if(ordem==='saidas_asc')return saidasProdutoEstoque(a)-saidasProdutoEstoque(b)||String(a.Nome).localeCompare(String(b.Nome),'pt-BR');
+    return String(a.Nome).localeCompare(String(b.Nome),'pt-BR');
+  });
+}
+function relatorioEstoqueHtml(produtosForcados,subtituloForcado=''){
+  const produtos=Array.isArray(produtosForcados)?produtosForcados.slice():produtosSelecionadosRelatorioEstoque();
+  const relatorioForcado=Array.isArray(produtosForcados);
   const total=produtos.reduce((s,p)=>s+(Number(p.Saldo)||0),0);
-  const abaixo=produtos.filter(p=>Number(p.EstoqueMinimo)>0&&Number(p.Saldo)<Number(p.EstoqueMinimo));
+  const totalSaidas=produtos.reduce((s,p)=>s+saidasProdutoEstoque(p),0);
+  const abaixo=produtos.filter(produtoNoMinimoOuAbaixoEstoque);
   const semLocal=produtos.filter(p=>!p.LocalID);
+  const rankingGeral=(estoqueDados().produtos||[]).slice().sort((a,b)=>saidasProdutoEstoque(b)-saidasProdutoEstoque(a)||String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+  const posicoes=new Map(rankingGeral.map((p,i)=>[String(p.ID),i+1]));
   const agora=new Date().toLocaleString('pt-BR',{timeZone:FUSO});
-  return `<div class="est-painel"><div class="est-relatorio-topo"><div><h3>RELATÓRIO DE ESTOQUE</h3><div class="est-sub">LOCALIZAÇÃO E SALDO FÍSICO DAS MERCADORIAS SELECIONADAS</div></div><div class="est-relatorio-data">EMITIDO EM<br><b>${escaparHtml(agora)}</b></div></div>
-    <div class="est-kpis"><div class="est-kpi"><b>${produtos.length}</b><span>Mercadorias selecionadas</span></div><div class="est-kpi"><b>${total}</b><span>Unidades em estoque</span></div><div class="est-kpi"><b>${abaixo.length}</b><span>Abaixo do mínimo</span></div><div class="est-kpi"><b>${semLocal.length}</b><span>Sem local definido</span></div></div>
-    ${produtos.length?`<div class="est-tabela-wrap"><table class="est-tabela"><thead><tr><th>Mercadoria</th><th>Localização</th><th>Entradas</th><th>Saídas</th><th>Saldo atual</th><th>Mínimo</th><th>Situação</th></tr></thead><tbody>${produtos.map(p=>{const baixo=Number(p.EstoqueMinimo)>0&&Number(p.Saldo)<Number(p.EstoqueMinimo);return `<tr><td><b>${escaparHtml(p.Nome)}</b></td><td>${escaparHtml(estoqueLocalNome(p.LocalID))}</td><td>${Number(p.Entradas)||0}</td><td>${Number(p.Saidas)||0}</td><td><b>${Number(p.Saldo)||0}</b></td><td>${Number(p.EstoqueMinimo)||0}</td><td style="color:${baixo?'var(--vermelho)':'var(--verde)'};font-weight:800">${baixo?'ABAIXO DO MÍNIMO':'NORMAL'}</td></tr>`}).join('')}</tbody></table></div>`:'<div class="est-vazio">SELECIONE PELO MENOS UMA MERCADORIA PARA GERAR O RELATÓRIO.</div>'}
+  return `<div class="est-painel"><div class="est-relatorio-topo"><div><h3>RELATÓRIO DE ESTOQUE</h3><div class="est-sub">${escaparHtml(subtituloForcado||(relatorioForcado?'RESULTADO PERSONALIZADO DO ESTOQUE':'MERCADORIAS SELECIONADAS MANUALMENTE'))}</div></div><div class="est-relatorio-data">EMITIDO EM<br><b>${escaparHtml(agora)}</b></div></div>
+    <div class="est-kpis"><div class="est-kpi"><b>${produtos.length}</b><span>Mercadorias no relatório</span></div><div class="est-kpi"><b>${total}</b><span>Unidades em estoque</span></div><div class="est-kpi"><b>${totalSaidas}</b><span>Saídas registradas</span></div><div class="est-kpi"><b>${abaixo.length}</b><span>No mínimo ou abaixo</span></div><div class="est-kpi"><b>${semLocal.length}</b><span>Sem local definido</span></div></div>
+    ${produtos.length?`<div class="est-tabela-wrap"><table class="est-tabela"><thead><tr><th>Mercadoria</th><th>Localização</th><th>Entradas</th><th>Saídas</th><th>Classificação de saída</th><th>Saldo atual</th><th>Mínimo</th><th>Situação</th></tr></thead><tbody>${produtos.map(p=>{const baixo=produtoNoMinimoOuAbaixoEstoque(p);return `<tr><td><b>${escaparHtml(p.Nome)}</b></td><td>${escaparHtml(estoqueLocalNome(p.LocalID))}</td><td>${Number(p.Entradas)||0}</td><td><b>${saidasProdutoEstoque(p)}</b></td><td><b>${posicoes.get(String(p.ID))||'-'}º em saídas</b></td><td><b>${Number(p.Saldo)||0}</b></td><td>${Number(p.EstoqueMinimo)||0}</td><td style="color:${baixo?'var(--vermelho)':'var(--verde)'};font-weight:800">${baixo?'NO MÍNIMO OU ABAIXO':'NORMAL'}</td></tr>`}).join('')}</tbody></table></div>`:'<div class="est-vazio">NENHUMA MERCADORIA FOI SELECIONADA PARA ESTE RELATÓRIO.</div>'}
   </div>`;
 }
 function atualizarRelatorioEstoqueArea(){
   const area=document.getElementById('estRelatorioImpressao');if(area)area.innerHTML=relatorioEstoqueHtml();
-  const c=document.getElementById('estRelContagem');if(c)c.textContent=ESTOQUE_REL_SELECIONADOS.size+' MERCADORIA(S) SELECIONADA(S)';
+  const c=document.getElementById('estRelContagem');if(c)c.textContent=produtosFiltradosRelatorioEstoque().length+' MERCADORIA(S) ENCONTRADA(S) | '+ESTOQUE_REL_SELECIONADOS.size+' SELECIONADA(S)';
 }
 function alternarProdutoRelatorioEstoque(id,marcado){
   if(marcado)ESTOQUE_REL_SELECIONADOS.add(String(id));else ESTOQUE_REL_SELECIONADOS.delete(String(id));
   atualizarRelatorioEstoqueArea();
 }
 function filtrarOpcoesRelatorioEstoque(){
-  const termo=String(document.getElementById('estRelBusca')?.value||'').trim().toLocaleLowerCase('pt-BR');ESTOQUE_REL_TERMO=termo;
-  document.querySelectorAll('#estRelSelecao .est-check').forEach(el=>el.style.display=!termo||String(el.dataset.nome||'').includes(termo)?'flex':'none');
+  ESTOQUE_REL_TERMO=String(document.getElementById('estRelBusca')?.value||'').trim();
+  ESTOQUE_REL_SITUACAO=document.getElementById('estRelSituacao')?.value||'';
+  ESTOQUE_REL_CLASSIFICACAO=document.getElementById('estRelClassificacao')?.value||'';
+  ESTOQUE_REL_ORDEM=document.getElementById('estRelOrdem')?.value||'nome';
+  const container=document.getElementById('estRelSelecao'),filtrados=produtosFiltradosRelatorioEstoque(),ids=new Set(filtrados.map(p=>String(p.ID)));
+  if(container){const elementos=new Map([...container.querySelectorAll('.est-check')].map(el=>[String(el.dataset.id),el]));elementos.forEach((el,id)=>el.style.display=ids.has(id)?'flex':'none');filtrados.forEach(p=>{const el=elementos.get(String(p.ID));if(el)container.appendChild(el)});}
   atualizarRelatorioEstoqueArea();
 }
+function ajustarClassificacaoRelatorioEstoque(){
+  const classificacao=document.getElementById('estRelClassificacao')?.value||'',ordem=document.getElementById('estRelOrdem');
+  if(ordem&&classificacao.startsWith('top'))ordem.value='saidas_desc';
+  if(ordem&&classificacao.startsWith('bottom'))ordem.value='saidas_asc';
+  filtrarOpcoesRelatorioEstoque();
+}
 function selecionarProdutosRelatorioEstoque(apenasVisiveis=false){
-  document.querySelectorAll('#estRelSelecao .est-check').forEach(el=>{if(apenasVisiveis&&el.style.display==='none')return;const cb=el.querySelector('input');cb.checked=true;ESTOQUE_REL_SELECIONADOS.add(String(cb.value));});
+  const produtos=apenasVisiveis?produtosFiltradosRelatorioEstoque():(estoqueDados().produtos||[]);produtos.forEach(p=>ESTOQUE_REL_SELECIONADOS.add(String(p.ID)));
+  document.querySelectorAll('#estRelSelecao input[type="checkbox"]').forEach(cb=>cb.checked=ESTOQUE_REL_SELECIONADOS.has(String(cb.value)));
   atualizarRelatorioEstoqueArea();
+}
+function limparFiltrosRelatorioEstoque(){
+  ESTOQUE_REL_TERMO='';ESTOQUE_REL_SITUACAO='';ESTOQUE_REL_CLASSIFICACAO='';ESTOQUE_REL_ORDEM='nome';const busca=document.getElementById('estRelBusca'),situacao=document.getElementById('estRelSituacao'),classificacao=document.getElementById('estRelClassificacao'),ordem=document.getElementById('estRelOrdem');if(busca)busca.value='';if(situacao)situacao.value='';if(classificacao)classificacao.value='';if(ordem)ordem.value='nome';filtrarOpcoesRelatorioEstoque();
 }
 function limparSelecaoRelatorioEstoque(){
   ESTOQUE_REL_SELECIONADOS.clear();document.querySelectorAll('#estRelSelecao input[type="checkbox"]').forEach(cb=>cb.checked=false);atualizarRelatorioEstoqueArea();
 }
-function imprimirRelatorioEstoque(){
+function imprimirRelatorioSelecionadoEstoque(){
   if(!ESTOQUE_REL_SELECIONADOS.size)return mostrarAvisoEstoque('SELECIONE PELO MENOS UMA MERCADORIA PARA IMPRIMIR.','erro');
   document.body.classList.add('est-imprimindo-relatorio');window.print();setTimeout(()=>document.body.classList.remove('est-imprimindo-relatorio'),300);
+}
+function imprimirRelatorioFiltradoEstoque(){
+  const produtos=produtosFiltradosRelatorioEstoque();if(!produtos.length)return mostrarAvisoEstoque('NENHUMA MERCADORIA FOI ENCONTRADA COM ESSES FILTROS.','erro');
+  const area=document.getElementById('estRelatorioImpressao');if(area)area.innerHTML=relatorioEstoqueHtml(produtos,'RESULTADO DOS FILTROS APLICADOS');
+  document.body.classList.add('est-imprimindo-relatorio');window.print();setTimeout(()=>{document.body.classList.remove('est-imprimindo-relatorio');atualizarRelatorioEstoqueArea();},300);
+}
+function imprimirRelatorioCompletoEstoque(){
+  const produtos=(estoqueDados().produtos||[]).slice().sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+  if(!produtos.length)return mostrarAvisoEstoque('NÃO HÁ MERCADORIAS CADASTRADAS PARA IMPRIMIR.','erro');
+  const area=document.getElementById('estRelatorioImpressao');if(area)area.innerHTML=relatorioEstoqueHtml(produtos,'TODAS AS MERCADORIAS CADASTRADAS');
+  document.body.classList.add('est-imprimindo-relatorio');window.print();setTimeout(()=>{document.body.classList.remove('est-imprimindo-relatorio');atualizarRelatorioEstoqueArea();},300);
 }
 function telaCadastrosEstoque(){
   if(!estoquePodeEditar()) return '<div class="est-alerta">CADASTROS E ALTERAÇÕES SÃO EXCLUSIVOS DO ESTOQUE E DO PROGRAMADOR.</div>';
@@ -2621,14 +2713,34 @@ function formatarDataEstoque(valor){
   return m?`${m[3]}/${m[2]}/${m[1]}`:formatarData(valor);
 }
 function telaEtiquetasEstoque(){
-  return `<div class="est-painel"><h3>Gerar etiquetas de identificação</h3><div class="est-form"><div class="campo largo"><label>Pesquisar mercadoria</label><input id="estEtiquetaBusca" placeholder="DIGITE O NOME PARA FILTRAR" oninput="filtrarSelectProdutosEstoque('estEtiquetaBusca','estEtiquetaProduto')"></div><div class="campo largo"><label>Mercadoria</label><select id="estEtiquetaProduto">${estoqueOpcoesProdutos()}</select></div></div><div class="est-acoes"><button class="btn btn-primario" onclick="gerarEtiquetaEstoque()">GERAR ETIQUETAS</button><button class="btn btn-secundario" onclick="imprimirEtiquetaEstoque()">IMPRIMIR</button></div><div id="estEtiquetaArea" class="est-etiqueta-area"></div></div>`;
+  return `<div class="est-painel"><h3>Gerar etiquetas de identificação</h3><div class="est-form"><div class="campo largo"><label>Pesquisar e selecionar mercadorias</label><input class="est-busca" id="estEtiquetaBusca" placeholder="DIGITE O NOME DA MERCADORIA" oninput="renderizarSugestoesEtiquetaEstoque()" autocomplete="off"><div id="estEtiquetaResultados" class="est-mov-resultados"></div></div><div class="campo"><label>Quantas etiquetas deseja imprimir por folha?</label><select id="estEtiquetaPorFolha" onchange="atualizarQuantidadeEtiquetasEstoque()"><option value="4">4 ETIQUETAS</option><option value="5">5 ETIQUETAS</option><option value="6" selected>6 ETIQUETAS</option></select></div></div><div id="estEtiquetaSelecionadas"></div><div class="est-acoes"><button class="btn btn-secundario" onclick="limparSelecaoEtiquetaEstoque()">LIMPAR SELEÇÃO</button><button class="btn btn-primario" onclick="gerarEtiquetaEstoque()">VISUALIZAR ETIQUETAS</button><button class="btn btn-secundario" onclick="imprimirEtiquetaEstoque()">🖨️ IMPRIMIR SELECIONADAS</button></div><div id="estEtiquetaArea" class="est-etiqueta-area"></div></div>`;
 }
-function filtrarSelectProdutosEstoque(inputId,selectId){
-  const input=document.getElementById(inputId),select=document.getElementById(selectId);if(!select)return;
-  const termo=String(input?.value||'').trim().toLocaleLowerCase('pt-BR'), atual=select.value;
-  const produtos=(estoqueDados().produtos||[]).filter(p=>!termo||String(p.Nome).toLocaleLowerCase('pt-BR').includes(termo)).sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
-  select.innerHTML='<option value="">SELECIONE A MERCADORIA</option>'+produtos.map(p=>`<option value="${escaparHtml(p.ID)}">${escaparHtml(p.Nome)} (SALDO: ${Number(p.Saldo)||0})</option>`).join('');
-  if(produtos.some(p=>String(p.ID)===String(atual)))select.value=atual;else if(produtos.length===1)select.value=produtos[0].ID;
+function produtosSelecionadosEtiquetaEstoque(){
+  return (estoqueDados().produtos||[]).filter(p=>ESTOQUE_ETIQUETA_SELECIONADOS.has(String(p.ID))).sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+}
+function renderizarSugestoesEtiquetaEstoque(){
+  const input=document.getElementById('estEtiquetaBusca'),area=document.getElementById('estEtiquetaResultados');if(!area)return;
+  const termo=normalizarBuscaEstoque(input?.value||'');
+  const lista=(estoqueDados().produtos||[]).filter(p=>!termo||normalizarBuscaEstoque(p.Nome).includes(termo)).sort((a,b)=>String(a.Nome).localeCompare(String(b.Nome),'pt-BR'));
+  if(!lista.length){area.innerHTML='<div class="est-vazio">NENHUMA MERCADORIA ENCONTRADA. TENTE DIGITAR APENAS PARTE DO NOME.</div>';return;}
+  area.innerHTML=lista.map(p=>`<button type="button" class="est-mov-opcao ${ESTOQUE_ETIQUETA_SELECIONADOS.has(String(p.ID))?'selecionada':''}" onclick="alternarProdutoEtiquetaEstoque('${p.ID}')"><span><b>${ESTOQUE_ETIQUETA_SELECIONADOS.has(String(p.ID))?'✓ ':''}${escaparHtml(p.Nome)}</b><span>📍 ${escaparHtml(estoqueLocalNome(p.LocalID))}</span></span><strong>${ESTOQUE_ETIQUETA_SELECIONADOS.has(String(p.ID))?'SELECIONADA':'SELECIONAR'}</strong></button>`).join('');
+}
+function alternarProdutoEtiquetaEstoque(id){
+  const chave=String(id);if(ESTOQUE_ETIQUETA_SELECIONADOS.has(chave))ESTOQUE_ETIQUETA_SELECIONADOS.delete(chave);else ESTOQUE_ETIQUETA_SELECIONADOS.add(chave);
+  renderizarSugestoesEtiquetaEstoque();renderProdutosSelecionadosEtiquetaEstoque();const area=document.getElementById('estEtiquetaArea');if(area)area.innerHTML='';
+}
+function renderProdutosSelecionadosEtiquetaEstoque(){
+  const area=document.getElementById('estEtiquetaSelecionadas');if(!area)return;const produtos=produtosSelecionadosEtiquetaEstoque();
+  area.innerHTML=produtos.length?`<div class="est-mov-selecionado"><b>✓ ${produtos.length} MERCADORIA(S) SELECIONADA(S):</b><div class="est-componentes">${produtos.map(p=>`<button type="button" class="est-chip" onclick="alternarProdutoEtiquetaEstoque('${p.ID}')" title="Remover da seleção">${escaparHtml(p.Nome)} ×</button>`).join('')}</div></div>`:'<div class="est-sub" style="margin:10px 0">DIGITE O NOME E TOQUE NAS MERCADORIAS QUE DESEJA IMPRIMIR.</div>';
+}
+function limparSelecaoEtiquetaEstoque(){
+  ESTOQUE_ETIQUETA_SELECIONADOS.clear();renderizarSugestoesEtiquetaEstoque();renderProdutosSelecionadosEtiquetaEstoque();const area=document.getElementById('estEtiquetaArea');if(area)area.innerHTML='';
+}
+function quantidadeEtiquetasPorFolhaEstoque(){
+  const quantidade=Number(document.getElementById('estEtiquetaPorFolha')?.value)||6;return [4,5,6].includes(quantidade)?quantidade:6;
+}
+function atualizarQuantidadeEtiquetasEstoque(){
+  if(ESTOQUE_ETIQUETA_SELECIONADOS.size)gerarEtiquetaEstoque(false);
 }
 async function acaoEstoque(payload, mensagem){
   payload.senha=SENHA_ATUAL;
@@ -2645,12 +2757,12 @@ function mostrarAvisoEstoque(mensagem,tipo='sucesso'){
   setTimeout(()=>{aviso.style.opacity='0';aviso.style.transform='translateY(-8px)';aviso.style.transition='.2s';setTimeout(()=>aviso.remove(),220)},3600);
 }
 async function registrarMovimentoEstoque(){
-  const produtoId=document.getElementById('estMovProduto').value;
-  const tipo=document.getElementById('estMovTipo').value;
+  const produtoId=ESTOQUE_MOV_PRODUTO_ID;
+  const tipo=ESTOQUE_MOV_TIPO;
   const quantidade=Number(document.getElementById('estMovQtd').value);
   const data=document.getElementById('estMovData').value;
   const motivo=document.getElementById('estMovMotivo').value.trim();
-  if(!produtoId) return alert('SELECIONE A MERCADORIA.');
+  if(!produtoId) return mostrarAvisoEstoque('DIGITE O NOME E SELECIONE UMA MERCADORIA NA LISTA.','erro');
   if(!quantidade||quantidade<=0) return alert('INFORME UMA QUANTIDADE MAIOR QUE ZERO.');
   if(tipo==='Ajuste'&&!motivo) return alert('INFORME O MOTIVO DO AJUSTE.');
   try{await acaoEstoque({acao:'registrarMovimentoEstoque',movimento:{produtoId,tipo,quantidade,data,motivo}},tipo.toUpperCase()+' REGISTRADA COM SUCESSO.');const qtd=document.getElementById('estMovQtd');if(qtd)qtd.value='0';}
@@ -2680,14 +2792,16 @@ async function excluirLocalEstoque(id){
   const l=(estoqueDados().locais||[]).find(x=>String(x.ID)===String(id));if(!l||!confirm('REMOVER O LOCAL '+l.Nome+'?'))return;
   try{await acaoEstoque({acao:'excluirLocalEstoque',id},'LOCAL REMOVIDO.')}catch(e){alert(e.message||e)}
 }
-function gerarEtiquetaEstoque(){
-  const p=estoqueProduto(document.getElementById('estEtiquetaProduto').value), out=document.getElementById('estEtiquetaArea');
-  if(!p){out.innerHTML='<div class="est-vazio">SELECIONE UMA MERCADORIA.</div>';return;}
-  const comps=(p.Componentes||[]).length?p.Componentes:['CADEIRA COMPLETA'];
-  out.innerHTML=comps.map(c=>`<div class="est-etiqueta"><div class="est-etiqueta-local">📍 ${escaparHtml(estoqueLocalNome(p.LocalID))}</div><div class="est-etiqueta-nome">${escaparHtml(p.Nome)}</div><div class="est-etiqueta-comp">${escaparHtml(c)}</div></div>`).join('');
+function gerarEtiquetaEstoque(avisar=true){
+  const produtos=produtosSelecionadosEtiquetaEstoque(),out=document.getElementById('estEtiquetaArea');
+  if(!produtos.length){if(out)out.innerHTML='';mostrarAvisoEstoque('SELECIONE PELO MENOS UMA MERCADORIA PARA GERAR ETIQUETAS.','erro');return false;}
+  const porFolha=quantidadeEtiquetasPorFolhaEstoque(),folhas=[];
+  for(let i=0;i<produtos.length;i+=porFolha)folhas.push(produtos.slice(i,i+porFolha));
+  out.innerHTML=folhas.map((folha,indiceFolha)=>`<section class="est-folha-etiquetas qtd-${porFolha}">${folha.map((p,indice)=>{const comps=(p.Componentes||[]).length?p.Componentes:['PRODUTO COMPLETO'];return `<div class="est-etiqueta"><div class="est-etiqueta-local">📍 ${escaparHtml(estoqueLocalNome(p.LocalID))}</div><div class="est-etiqueta-nome">${escaparHtml(p.Nome)}</div><div class="est-etiqueta-comp"><b>COMPONENTES:</b> ${comps.map(escaparHtml).join(' • ')}</div><div class="est-etiqueta-numero">ETIQUETA ${indiceFolha*porFolha+indice+1} DE ${produtos.length}</div></div>`}).join('')}</section>`).join('');
+  if(avisar)mostrarAvisoEstoque(produtos.length+' ETIQUETA(S) ORGANIZADA(S), '+porFolha+' POR FOLHA.');return true;
 }
 function imprimirEtiquetaEstoque(){
-  if(!document.getElementById('estEtiquetaArea')?.innerHTML.trim())gerarEtiquetaEstoque();
+  if(!gerarEtiquetaEstoque(false))return;
   document.body.classList.add('est-imprimindo');window.print();setTimeout(()=>document.body.classList.remove('est-imprimindo'),300);
 }
 </script>
